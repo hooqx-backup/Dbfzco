@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Network | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Libre+Franklin:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .page-hero {
+    background: linear-gradient(rgba(12,30,56,0.82), rgba(12,30,56,0.82)), url('public/3933011.jpg') center/cover no-repeat;
+    padding: clamp(80px,12vw,140px) 0 clamp(60px,8vw,100px);
+    text-align: center;
+    color: #fff;
+  }
+  .page-hero .eyebrow { color: var(--gold); }
+  .page-hero h1 { font-size: clamp(2rem,5vw,3.2rem); margin: 12px 0 0; }
+  .page-hero p { max-width: 640px; margin: 18px auto 0; color: rgba(255,255,255,.75); font-size: 1.1rem; line-height: 1.7; }
+
+  /* Regions section */
+  .regions { padding: clamp(60px,8vw,100px) 0; background: var(--surface,#f7f8fa); }
+  .regions-head { text-align: center; margin-bottom: 48px; }
+  .regions-head h2 { font-size: clamp(1.6rem,3vw,2.4rem); }
+  .regions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 24px; }
+  .region-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px 28px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    border-top: 4px solid var(--gold,#c9a84c);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .region-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.1); }
+  .region-card .rc-ico {
+    width: 52px; height: 52px;
+    background: var(--navy,#0c1e38);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    color: var(--gold,#c9a84c);
+  }
+  .region-card .rc-ico svg { width: 24px; height: 24px; }
+  .region-card h3 { font-size: 1.15rem; margin: 0 0 10px; color: var(--navy,#0c1e38); }
+  .region-card p { font-size: .93rem; color: var(--muted,#6b7280); line-height: 1.6; margin: 0; }
+  .region-card .rc-countries { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .region-card .rc-tag {
+    font-size: .76rem; font-weight: 600;
+    background: rgba(201,168,76,.12);
+    color: var(--navy,#0c1e38);
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .02em;
+  }
+
+  /* Partners section styling (standalone) */
+  .partners-page { padding: clamp(60px,8vw,100px) 0; }
+  .partners-head { text-align: center; margin-bottom: 56px; }
+  .partners-head h2 { font-size: clamp(1.6rem,3vw,2.4rem); }
+  .partners-head p { max-width: 600px; margin: 16px auto 0; color: var(--muted,#6b7280); font-size: 1rem; line-height: 1.7; }
+
+  /* Stats band */
+  .net-stats { background: var(--navy,#0c1e38); padding: 56px 0; }
+  .net-stats .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); }
+  .net-stats .stat { color: #fff; }
+  .net-stats .stat .num { color: var(--gold,#c9a84c); }
+  .net-stats .stat .lab { color: rgba(255,255,255,.7); }
+  .net-stats .stat .ico { color: var(--gold,#c9a84c); }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blogs.html" class="active">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="contact.html" class="btn btn-primary">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Our Network</span>
+    <h1>Trusted Across the Trade Chain</h1>
+    <p>A global web of suppliers, buyers, shipping lines, insurers and financial partners working in sync to move commodities seamlessly from origin to destination.</p>
+  </div>
+</section>
+
+<!-- ============ NETWORK STATS ============ -->
+<section class="net-stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg></span>
+        <div class="num" data-count="30" data-suffix="+">0</div>
+        <div class="lab">Countries Reached</div>
+      </div>
+      <div class="stat reveal d1">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
+        <div class="num" data-count="200" data-suffix="+">0</div>
+        <div class="lab">Trade Partners</div>
+      </div>
+      <div class="stat reveal d2">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+        <div class="num" data-count="1" data-suffix="M+">0</div>
+        <div class="lab">MT Delivered</div>
+      </div>
+      <div class="stat reveal d3">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14.01l-3-3"/></svg></span>
+        <div class="num" data-count="15" data-suffix="+">0</div>
+        <div class="lab">Years of Trust</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGIONAL PRESENCE ============ -->
+<section class="regions">
+  <div class="wrap">
+    <div class="regions-head reveal">
+      <span class="eyebrow">Global Reach</span>
+      <h2>Serving Three Continents from Dubai</h2>
+      <p style="color:var(--muted,#6b7280);max-width:580px;margin:16px auto 0;line-height:1.7;">Our strategic location in Dubai Airport Free Zone (DAFZA) positions us at the intersection of MENA, Africa and Asia trade corridors.</p>
+    </div>
+    <div class="regions-grid">
+      <div class="region-card reveal">
+        <div class="rc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Middle East &amp; North Africa</h3>
+        <p>Our home market. Deep relationships with buyers, government entities and distributors across the Gulf, Levant and North African regions.</p>
+        <div class="rc-countries">
+          <span class="rc-tag">UAE</span><span class="rc-tag">Saudi Arabia</span><span class="rc-tag">Egypt</span><span class="rc-tag">Jordan</span><span class="rc-tag">Iraq</span><span class="rc-tag">Libya</span>
+        </div>
+      </div>
+      <div class="region-card reveal d1">
+        <div class="rc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg>
+        </div>
+        <h3>Sub-Saharan Africa</h3>
+        <p>A rapidly growing frontier for food commodities. We serve sovereign importers, millers and wholesale distributors across East and West Africa.</p>
+        <div class="rc-countries">
+          <span class="rc-tag">Nigeria</span><span class="rc-tag">Kenya</span><span class="rc-tag">Tanzania</span><span class="rc-tag">Ghana</span><span class="rc-tag">Ethiopia</span><span class="rc-tag">Senegal</span>
+        </div>
+      </div>
+      <div class="region-card reveal d2">
+        <div class="rc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>South &amp; Southeast Asia</h3>
+        <p>Origin partnerships with major agricultural producers in India, Pakistan and Southeast Asia, supplying quality commodities to global markets.</p>
+        <div class="rc-countries">
+          <span class="rc-tag">India</span><span class="rc-tag">Pakistan</span><span class="rc-tag">Sri Lanka</span><span class="rc-tag">Bangladesh</span><span class="rc-tag">Vietnam</span><span class="rc-tag">Thailand</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNER LOGOS ============ -->
+<section class="section partners-page" id="partners">
+  <div class="wrap">
+    <div class="partners-head reveal">
+      <span class="eyebrow">Our Partners</span>
+      <h2>Backed by World-Class Partners</h2>
+      <p>From leading commodity houses to global shipping lines and financial institutions, our network is built on trust, compliance and long-term relationships.</p>
+    </div>
+
+    <div class="logo-group reveal">
+      <div class="lg-label"><b>Suppliers</b></div>
+      <div class="logo-marquee">
+        <div class="logo-track">
+          <div class="logo-img"><img src="public/supplier/logo1.png" alt="S&amp;D Sucden" /></div>
+          <div class="logo-img"><img src="public/supplier/logo2.png" alt="ED&amp;F Man Commodities" /></div>
+          <div class="logo-img"><img src="public/supplier/logo3.png" alt="GAR Agribusiness" /></div>
+          <div class="logo-img"><img src="public/supplier/logo4.png" alt="Baramati Agro Sugar" /></div>
+          <div class="logo-img"><img src="public/supplier/logo5.png" alt="Alvean" /></div>
+          <div class="logo-img"><img src="public/supplier/logo6.png" alt="Mewah" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-group reveal">
+      <div class="lg-label"><b>Buyers</b></div>
+      <div class="logo-marquee">
+        <div class="logo-track logo-track--buyers">
+          <div class="logo-img"><img src="public/buyer/logo1.png" alt="Buyer 1" /></div>
+          <div class="logo-img"><img src="public/buyer/logo2.png" alt="Buyer 2" /></div>
+          <div class="logo-img"><img src="public/buyer/logo3.png" alt="Buyer 3" /></div>
+          <div class="logo-img"><img src="public/buyer/logo4.png" alt="Buyer 4" /></div>
+          <div class="logo-img"><img src="public/buyer/logo5.png" alt="Buyer 5" /></div>
+          <div class="logo-img"><img src="public/buyer/logo6.png" alt="Buyer 6" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-group reveal">
+      <div class="lg-label"><b>Shipping Lines</b></div>
+      <div class="logo-marquee">
+        <div class="logo-track logo-track--shipping">
+          <div class="logo-img"><img src="public/ShippingLines/logo1.png" alt="Shipping Line 1" /></div>
+          <div class="logo-img"><img src="public/ShippingLines/logo2.png" alt="Shipping Line 2" /></div>
+          <div class="logo-img"><img src="public/ShippingLines/logo3.png" alt="Shipping Line 3" /></div>
+          <div class="logo-img"><img src="public/ShippingLines/logo4.png" alt="Shipping Line 4" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-group reveal">
+      <div class="lg-label"><b>Insurance</b></div>
+      <div class="logo-marquee">
+        <div class="logo-track logo-track--insurance">
+          <div class="logo-img"><img src="public/Insurance/logo1.png" alt="Insurance 1" /></div>
+          <div class="logo-img"><img src="public/Insurance/logo2.png" alt="Insurance 2" /></div>
+          <div class="logo-img"><img src="public/Insurance/logo3.png" alt="Insurance 3" /></div>
+          <div class="logo-img"><img src="public/Insurance/logo4.png" alt="Insurance 4" /></div>
+          <div class="logo-img"><img src="public/Insurance/logo5.png" alt="Insurance 5" /></div>
+          <div class="logo-img"><img src="public/Insurance/logo6.png" alt="Insurance 6" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-group reveal">
+      <div class="lg-label"><b>Banks</b></div>
+      <div class="logo-marquee">
+        <div class="logo-track logo-track--banks">
+          <div class="logo-img"><img src="public/banks/logo1.png" alt="Bank 1" /></div>
+          <div class="logo-img"><img src="public/banks/logo2.png" alt="Bank 2" /></div>
+          <div class="logo-img"><img src="public/banks/logo3.png" alt="Bank 3" /></div>
+          <div class="logo-img"><img src="public/banks/logo4.png" alt="Bank 4" /></div>
+          <div class="logo-img"><img src="public/banks/logo5.png" alt="Bank 5" /></div>
+          <div class="logo-img"><img src="public/banks/logo6.png" alt="Bank 6" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="cta-band">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div>
+        <span class="eyebrow">Join Our Network</span>
+        <h2>Become a Part of a Global Commodity Trade Network</h2>
+      </div>
+      <a href="contact.html" class="btn btn-gold">Get In Touch <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

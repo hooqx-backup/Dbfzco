@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Libre+Franklin:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { background: #f7f4ed; }
+  .services-page { overflow: hidden; }
+  .svc-hero {
+    min-height: min(820px, calc(100vh - 118px));
+    position: relative;
+    display: grid;
+    align-items: end;
+    isolation: isolate;
+    background: #081222;
+  }
+  .svc-hero__bg,
+  .svc-hero__bg img,
+  .svc-hero__shade { position: absolute; inset: 0; }
+  .svc-hero__bg { z-index: -3; overflow: hidden; }
+  .svc-hero__bg img {
+    width: 100%; height: 112%; object-fit: cover; object-position: center;
+    transform-origin: center;
+    animation: serviceHeroZoom 18s ease-out forwards;
+  }
+  .svc-hero__shade {
+    z-index: -2;
+    background:
+      linear-gradient(90deg, rgba(8,18,34,.92) 0%, rgba(8,18,34,.64) 46%, rgba(8,18,34,.16) 100%),
+      linear-gradient(0deg, rgba(8,18,34,.92), rgba(8,18,34,0) 56%);
+  }
+  .svc-hero__grain {
+    position: absolute; inset: 0; z-index: -1; opacity: .22;
+    background-image: radial-gradient(rgba(255,255,255,.42) 1px, transparent 1.4px);
+    background-size: 20px 20px;
+    mask-image: linear-gradient(90deg, #000, transparent 72%);
+  }
+  .svc-hero__inner {
+    padding-block: clamp(80px, 12vw, 142px) clamp(54px, 8vw, 88px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: end;
+  }
+  .svc-hero h1 {
+    color: #fff;
+    font-size: clamp(38px, 7vw, 86px);
+    line-height: .93;
+    max-width: 11ch;
+    font-weight: 900;
+  }
+  .svc-hero .lede {
+    color: #d5deea;
+    margin-top: 26px;
+    font-size: clamp(16px, 1.6vw, 20px);
+  }
+  .svc-hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+  .svc-hero__panel {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(18px) saturate(1.3);
+    border-radius: 18px;
+    padding: clamp(20px, 3vw, 30px);
+    box-shadow: 0 28px 70px rgba(0,0,0,.24);
+    position: relative;
+    overflow: hidden;
+    transition: transform .45s cubic-bezier(.16,1,.3,1), border-color .45s ease, box-shadow .45s ease, background .45s ease;
+  }
+  .svc-hero__panel::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.2) 34%, transparent 58%);
+    transform: translateX(-120%);
+    transition: transform .9s cubic-bezier(.16,1,.3,1);
+    pointer-events: none;
+  }
+  .svc-hero__panel:hover {
+    transform: translateY(-10px) scale(1.015);
+    border-color: rgba(243,222,172,.46);
+    background: rgba(255,255,255,.11);
+    box-shadow: 0 38px 88px rgba(0,0,0,.34);
+  }
+  .svc-hero__panel:hover::before { transform: translateX(120%); }
+  .svc-hero__panel b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1;
+    color: var(--gold-soft);
+  }
+  .svc-hero__panel span { display: block; color: #d3deec; margin-top: 8px; }
+  .svc-hero__panel hr { border: 0; height: 1px; background: rgba(255,255,255,.16); margin: 22px 0; }
+  .svc-hero__mini { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .svc-hero__mini small {
+    display: block;
+    font-family: var(--font-mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #9fb0c4;
+    font-size: 10px;
+  }
+  .svc-hero__mini strong { display: block; margin-top: 4px; font-family: var(--font-display); color: #fff; }
+
+  .service-strip {
+    margin-top: -38px;
+    position: relative;
+    z-index: 3;
+  }
+  .strip-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #fff;
+    border: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-lg);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .strip-item {
+    padding: 24px;
+    min-height: 132px;
+    border-left: 1px solid var(--line-soft);
+    position: relative;
+    overflow: hidden;
+    transition: background .35s ease, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
+  }
+  .strip-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(210,154,53,.14), rgba(26,95,168,.08) 48%, transparent 70%);
+    opacity: 0;
+    transition: opacity .35s ease;
+  }
+  .strip-item::after {
+    content: "";
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  .strip-item:hover { background: #fbfaf6; transform: translateY(-6px); box-shadow: 0 24px 46px rgba(12,30,56,.12); }
+  .strip-item:hover::before { opacity: 1; }
+  .strip-item:hover::after { transform: scaleX(1); }
+  .strip-item > * { position: relative; }
+  .strip-item:first-child { border-left: 0; }
+  .strip-item span { font-family: var(--font-mono); color: var(--gold-d); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .strip-item h3 { margin-top: 10px; font-size: 20px; }
+  .strip-item p { margin-top: 8px; color: var(--muted); font-size: 14.5px; }
+
+  .builder-section { padding-block: clamp(74px, 10vw, 128px); }
+  .section-intro { display: grid; grid-template-columns: minmax(0, .88fr) minmax(280px, .62fr); gap: clamp(28px, 6vw, 76px); align-items: end; margin-bottom: 46px; }
+  .section-intro h2 { margin-top: 16px; font-size: clamp(34px, 5vw, 62px); }
+  .section-intro p { color: var(--muted); font-size: 18px; }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1.25fr .9fr .9fr;
+    grid-auto-rows: minmax(255px, auto);
+    gap: 18px;
+  }
+  .pillar {
+    position: relative;
+    min-height: 330px;
+    overflow: hidden;
+    border-radius: 18px;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    box-shadow: var(--shadow);
+    isolation: isolate;
+    transform-style: preserve-3d;
+    transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease;
+  }
+  .pillar:first-child { grid-row: span 2; min-height: 560px; }
+  .pillar img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .9s cubic-bezier(.16,1,.3,1), filter .5s ease;
+    z-index: -3;
+  }
+  .pillar::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background: linear-gradient(0deg, rgba(8,18,34,.88), rgba(8,18,34,.18) 72%);
+  }
+  .pillar::after {
+    content: "";
+    position: absolute; inset: auto 20px 20px 20px; height: 1px;
+    background: rgba(255,255,255,.25);
+    transform: scaleX(.2);
+    transform-origin: left;
+    transition: transform .55s cubic-bezier(.16,1,.3,1);
+  }
+  .pillar:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 34px 74px rgba(8,18,34,.26);
+  }
+  .pillar:hover img { transform: scale(1.1); filter: saturate(1.13) contrast(1.04); }
+  .pillar:hover::after { transform: scaleX(1); }
+  .pillar__body {
+    padding: clamp(22px, 3vw, 34px);
+    transform: translateY(8px);
+    transition: transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  .pillar:hover .pillar__body { transform: translateY(0); }
+  .pillar__body span { font-family: var(--font-mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-soft); }
+  .pillar__body h3 { color: #fff; font-size: clamp(24px, 3vw, 38px); margin-top: 12px; }
+  .pillar__body p { color: #d7e1ee; margin-top: 12px; max-width: 42ch; }
+
+  .commodity-band {
+    background: #fff;
+    border-block: 1px solid var(--line-soft);
+  }
+  .commodity-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .commodity {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .commodity::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.62) 42%, transparent 62%);
+    transform: translateX(-120%);
+    transition: transform .85s cubic-bezier(.16,1,.3,1);
+    pointer-events: none;
+  }
+  .commodity:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .commodity:hover::after { transform: translateX(120%); }
+  .commodity__media { height: 250px; overflow: hidden; position: relative; }
+  .commodity__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.16,1,.3,1); }
+  .commodity:hover img { transform: scale(1.08); }
+  .commodity__body { padding: 24px; }
+  .commodity__body h3 { font-size: 25px; }
+  .commodity__body p { color: var(--muted); margin-top: 10px; }
+  .commodity__tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .commodity__tags span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: #fff;
+    transition: transform .28s ease, background .28s ease, color .28s ease, border-color .28s ease;
+  }
+  .commodity:hover .commodity__tags span {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .commodity:hover .commodity__tags span:nth-child(2) { transition-delay: .04s; }
+  .commodity:hover .commodity__tags span:nth-child(3) { transition-delay: .08s; }
+  .commodity__tags span:hover { transform: translateY(-3px); background: var(--gold); border-color: var(--gold); color: #1d1402; }
+
+  .flow-wrap {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: clamp(34px, 7vw, 86px);
+    align-items: center;
+  }
+  .flow-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    min-height: 560px;
+  }
+  .flow-gallery img {
+    width: 100%; height: 100%; object-fit: cover;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .flow-gallery img:nth-child(1) { grid-row: span 2; }
+  .flow-gallery img:nth-child(2) { margin-top: 48px; }
+  .flow-gallery img:nth-child(3) { margin-bottom: 48px; }
+  .flow-steps { display: grid; gap: 14px; margin-top: 34px; }
+  .flow-step {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.66);
+    transition: transform .28s ease, background .28s ease, box-shadow .28s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-step::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--primary), var(--gold));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .42s cubic-bezier(.16,1,.3,1);
+  }
+  .flow-step:hover { transform: translateX(10px); background: #fff; box-shadow: var(--shadow); }
+  .flow-step:hover::before { transform: scaleY(1); }
+  .flow-step span {
+    width: 58px; height: 58px; display: grid; place-items: center;
+    border-radius: 15px;
+    background: var(--navy);
+    color: var(--gold-soft);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    transition: transform .35s cubic-bezier(.16,1,.3,1), background .35s ease, color .35s ease;
+  }
+  .flow-step:hover span {
+    transform: rotate(-4deg) scale(1.08);
+    background: var(--gold);
+    color: #20180a;
+  }
+  .flow-step h3 { font-size: 22px; }
+  .flow-step p { color: var(--muted); margin-top: 6px; }
+
+  .assurance {
+    background:
+      linear-gradient(90deg, rgba(8,18,34,.92), rgba(8,18,34,.58)),
+      url('public/servicesimage/30681.jpg') center/cover no-repeat;
+    color: #fff;
+  }
+  .assurance .section-intro h2,
+  .assurance h3 { color: #fff; }
+  .assurance .section-intro p { color: #cfdaea; }
+  .assurance-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.16); }
+  .assurance-card {
+    background: rgba(8,18,34,.64);
+    padding: clamp(22px, 3vw, 32px);
+    min-height: 210px;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s cubic-bezier(.16,1,.3,1), background .4s ease, box-shadow .4s ease;
+  }
+  .assurance-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(210,154,53,.28), transparent 34%),
+      linear-gradient(135deg, rgba(255,255,255,.08), transparent 55%);
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .assurance-card:hover {
+    transform: translateY(-10px);
+    background: rgba(8,18,34,.78);
+    box-shadow: 0 32px 70px rgba(0,0,0,.28);
+  }
+  .assurance-card:hover::before { opacity: 1; }
+  .assurance-card > * { position: relative; }
+  .assurance-card span { font-family: var(--font-mono); color: var(--gold-soft); letter-spacing: .18em; text-transform: uppercase; font-size: 11px; }
+  .assurance-card h3 { margin-top: 18px; font-size: 23px; }
+  .assurance-card p { color: #c5d2e2; margin-top: 10px; font-size: 15px; }
+
+  .image-cta {
+    position: relative;
+    min-height: 520px;
+    display: grid;
+    align-items: center;
+    isolation: isolate;
+    color: #fff;
+    overflow: hidden;
+  }
+  .image-cta img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3;
+    transition: transform 1.1s cubic-bezier(.16,1,.3,1), filter .5s ease;
+  }
+  .image-cta:hover img { transform: scale(1.045); filter: saturate(1.08) contrast(1.03); }
+  .image-cta::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background: linear-gradient(90deg, rgba(8,18,34,.92), rgba(8,18,34,.42));
+  }
+  .image-cta__content {
+    margin-left: 0;
+    padding-left: clamp(46px, 7vw, 108px);
+    padding-right: var(--gut);
+  }
+  .image-cta h2 { color: #fff; font-size: clamp(34px, 5.6vw, 70px); max-width: 12ch; }
+  .image-cta p { color: #d4deeb; max-width: 52ch; margin-top: 20px; }
+  .image-cta .btn,
+  .svc-hero__actions .btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .image-cta .btn::before,
+  .svc-hero__actions .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.38) 42%, transparent 64%);
+    transform: translateX(-130%);
+    transition: transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .image-cta .btn:hover,
+  .svc-hero__actions .btn:hover { transform: translateY(-4px); }
+  .image-cta .btn:hover::before,
+  .svc-hero__actions .btn:hover::before { transform: translateX(130%); }
+
+  @keyframes serviceHeroZoom {
+    from { transform: scale(1) translateY(0); }
+    to { transform: scale(1.08) translateY(-2%); }
+  }
+  @keyframes driftUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  .float-soft { animation: driftUp 6s ease-in-out infinite; }
+  .float-soft.drift-2 { animation-delay: .9s; }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-hero__bg img, .float-soft { animation: none; }
+    .pillar img, .commodity__media img { transition: none; }
+  }
+  @media (max-width: 980px) {
+    .svc-hero__inner,
+    .section-intro,
+    .flow-wrap { grid-template-columns: 1fr; }
+    .strip-grid,
+    .commodity-grid,
+    .assurance-grid { grid-template-columns: repeat(2, 1fr); }
+    .pillar-grid { grid-template-columns: 1fr 1fr; }
+    .pillar:first-child { grid-row: auto; grid-column: span 2; min-height: 430px; }
+  }
+  @media (max-width: 640px) {
+    .svc-hero { min-height: auto; }
+    .svc-hero__inner { padding-top: 72px; }
+    .strip-grid,
+    .pillar-grid,
+    .commodity-grid,
+    .assurance-grid { grid-template-columns: 1fr; }
+    .pillar:first-child { grid-column: auto; }
+    .service-strip { margin-top: 0; }
+    .strip-grid { border-radius: 0; margin-inline: calc(var(--gut) * -1); }
+    .strip-item { border-left: 0; border-top: 1px solid var(--line-soft); }
+    .strip-item:first-child { border-top: 0; }
+    .flow-gallery { min-height: 0; grid-template-columns: 1fr; }
+    .flow-gallery img,
+    .flow-gallery img:nth-child(2),
+    .flow-gallery img:nth-child(3) { margin: 0; min-height: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="contact.html" class="btn btn-primary">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="services-page">
+
+<!-- ============ SERVICES HERO ============ -->
+<section class="svc-hero">
+  <div class="svc-hero__bg" aria-hidden="true">
+    <img src="public/servicesimage/2152020382.jpg" alt="" />
+  </div>
+  <div class="svc-hero__shade" aria-hidden="true"></div>
+  <div class="svc-hero__grain" aria-hidden="true"></div>
+  <div class="wrap svc-hero__inner">
+    <div class="reveal">
+      <span class="eyebrow light">Services</span>
+      <h1>Trade built from source to shelf</h1>
+      <p class="lede">DB Group FZCO connects essential food and agri-commodities with disciplined sourcing, documentation, logistics, financing support and distribution across demanding markets.</p>
+      <div class="svc-hero__actions">
+        <a href="#service-builder" class="btn btn-gold">Explore Services <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="contact.html" class="btn btn-light">Request Quote</a>
+      </div>
+    </div>
+    <aside class="svc-hero__panel reveal d2 float-soft">
+      <b>End-to-end</b>
+      <span>Commercial support for bulk commodity movement, from supplier qualification through shipment coordination and buyer delivery.</span>
+      <hr />
+      <div class="svc-hero__mini">
+        <div><small>Core</small><strong>Sourcing</strong></div>
+        <div><small>Control</small><strong>Quality</strong></div>
+        <div><small>Movement</small><strong>Logistics</strong></div>
+        <div><small>Markets</small><strong>Global</strong></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ VALUE STRIP ============ -->
+<section class="service-strip">
+  <div class="wrap">
+    <div class="strip-grid reveal">
+      <article class="strip-item">
+        <span>01</span>
+        <h3>Procurement</h3>
+        <p>Verified origin, pricing intelligence and supplier coordination.</p>
+      </article>
+      <article class="strip-item">
+        <span>02</span>
+        <h3>Handling</h3>
+        <p>Documents, inspection windows and shipment readiness.</p>
+      </article>
+      <article class="strip-item">
+        <span>03</span>
+        <h3>Logistics</h3>
+        <p>Freight alignment, cargo movement and delivery visibility.</p>
+      </article>
+      <article class="strip-item">
+        <span>04</span>
+        <h3>Distribution</h3>
+        <p>Reliable supply lanes for buyers across regional markets.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE BUILDER PILLARS ============ -->
+<section class="builder-section" id="service-builder">
+  <div class="wrap">
+    <div class="section-intro">
+      <div class="reveal">
+        <span class="eyebrow">Operating Model</span>
+        <h2>Service modules that move with the cargo</h2>
+      </div>
+      <p class="reveal d1">Every shipment needs more than a purchase order. We combine market access, commodity knowledge and execution discipline so buyers and suppliers can move with confidence.</p>
+    </div>
+    <div class="pillar-grid">
+      <article class="pillar reveal">
+        <img src="public/servicesimage/2151251991.jpg" alt="Agricultural sourcing at farm level" />
+        <div class="pillar__body">
+          <span>Source</span>
+          <h3>Commodity sourcing</h3>
+          <p>Supplier discovery, origin comparison and commercial negotiation across food staples and agri inputs.</p>
+        </div>
+      </article>
+      <article class="pillar reveal d1">
+        <img src="public/servicesimage/35744.jpg" alt="Rice and grain quality handling" />
+        <div class="pillar__body">
+          <span>Assure</span>
+          <h3>Quality alignment</h3>
+          <p>Specification matching, sampling coordination and inspection planning before cargo moves.</p>
+        </div>
+      </article>
+      <article class="pillar reveal d2">
+        <img src="public/servicesimage/oil1.jpg" alt="Edible oil sourcing in sunflower field" />
+        <div class="pillar__body">
+          <span>Trade</span>
+          <h3>Contract support</h3>
+          <p>Terms, documents and banking coordination shaped for cross-border commodity trade.</p>
+        </div>
+      </article>
+      <article class="pillar reveal d1">
+        <img src="public/servicesimage/30681.jpg" alt="Rice fields and supply landscape" />
+        <div class="pillar__body">
+          <span>Move</span>
+          <h3>Shipment control</h3>
+          <p>Freight planning, cargo milestones and handover visibility from origin to destination.</p>
+        </div>
+      </article>
+      <article class="pillar reveal d2">
+        <img src="public/servicesimage/64441.jpg" alt="Bagged rice and bulk commodity stock" />
+        <div class="pillar__body">
+          <span>Supply</span>
+          <h3>Stock programs</h3>
+          <p>Flexible procurement for recurring buyer demand, seasonal cycles and planned replenishment.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMMODITY LANES ============ -->
+<section class="builder-section commodity-band">
+  <div class="wrap">
+    <div class="section-intro">
+      <div class="reveal">
+        <span class="eyebrow">Commodity Lanes</span>
+        <h2>Focused categories, sharper execution</h2>
+      </div>
+      <p class="reveal d1">The page now uses the new imagery as functional signals: each product lane gets its own visual language, crop behavior and motion.</p>
+    </div>
+    <div class="commodity-grid">
+      <article class="commodity reveal">
+        <div class="commodity__media"><img src="public/servicesimage/sugar2.jpg" alt="Sugar varieties arranged for trade" /></div>
+        <div class="commodity__body">
+          <h3>Sugar</h3>
+          <p>White, raw and specialty sugar sourcing with attention to grade, packing and destination requirements.</p>
+          <div class="commodity__tags"><span>Bulk</span><span>Bagged</span><span>Industrial</span></div>
+        </div>
+      </article>
+      <article class="commodity reveal d1">
+        <div class="commodity__media"><img src="public/servicesimage/oil2.jpg" alt="Bottled edible oil in sunflower field" /></div>
+        <div class="commodity__body">
+          <h3>Edible Oil</h3>
+          <p>Sunflower and vegetable oil programs for retail, food service and industrial customers.</p>
+          <div class="commodity__tags"><span>Refined</span><span>Packed</span><span>Bulk</span></div>
+        </div>
+      </article>
+      <article class="commodity reveal d2">
+        <div class="commodity__media"><img src="public/servicesimage/2149359449.jpg" alt="Rice bowl and wheat for food commodity trade" /></div>
+        <div class="commodity__body">
+          <h3>Rice &amp; Grains</h3>
+          <p>Staple grain sourcing with supplier checks, specification alignment and delivery planning.</p>
+          <div class="commodity__tags"><span>Rice</span><span>Wheat</span><span>Pulses</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLOW ============ -->
+<section class="builder-section">
+  <div class="wrap flow-wrap">
+    <div class="flow-gallery reveal">
+      <img class="float-soft" src="public/servicesimage/13758.jpg" alt="Sunflower oil product quality" />
+      <img class="float-soft drift-2" src="public/servicesimage/sugar1.jpg" alt="Sugar quality testing" />
+      <img class="float-soft" src="public/servicesimage/oil3.jpg" alt="Edible oil pouring and handling" />
+    </div>
+    <div>
+      <div class="reveal">
+        <span class="eyebrow">Execution Flow</span>
+        <h2>Clear handoffs from inquiry to delivery</h2>
+        <p class="lede" style="margin-top:18px;">The service experience is structured as a live operating flow, not a static brochure list.</p>
+      </div>
+      <div class="flow-steps">
+        <article class="flow-step reveal d1">
+          <span>01</span>
+          <div><h3>Requirement mapping</h3><p>Commodity, grade, volume, packing, incoterms and destination are defined before quoting.</p></div>
+        </article>
+        <article class="flow-step reveal d2">
+          <span>02</span>
+          <div><h3>Supplier and price route</h3><p>Suitable origins and supply partners are evaluated against availability, timing and terms.</p></div>
+        </article>
+        <article class="flow-step reveal d3">
+          <span>03</span>
+          <div><h3>Documentation and shipment</h3><p>Commercial documents, inspections and logistics milestones are coordinated through delivery.</p></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASSURANCE ============ -->
+<section class="builder-section assurance">
+  <div class="wrap">
+    <div class="section-intro">
+      <div class="reveal">
+        <span class="eyebrow light">Assurance</span>
+        <h2>Built for serious commodity movement</h2>
+      </div>
+      <p class="reveal d1">Animated, image-led sections now support the credibility story: visibility, quality control, reliable partners and adaptable execution.</p>
+    </div>
+    <div class="assurance-grid">
+      <article class="assurance-card reveal"><span>01</span><h3>Verified partners</h3><p>Supplier and buyer networks are evaluated around reliability, capacity and commercial fit.</p></article>
+      <article class="assurance-card reveal d1"><span>02</span><h3>Specification control</h3><p>Product grade, packing, inspection and shipment conditions are aligned early.</p></article>
+      <article class="assurance-card reveal d2"><span>03</span><h3>Banking support</h3><p>Trade documentation and payment flows are handled with practical cross-border awareness.</p></article>
+      <article class="assurance-card reveal d3"><span>04</span><h3>Responsive delivery</h3><p>Execution remains adaptable when routes, dates or buyer priorities shift.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMAGE CTA ============ -->
+<section class="image-cta">
+  <img src="public/servicesimage/sugar3.jpg" alt="Refined sugar ready for supply" />
+  <div class="wrap reveal image-cta__content">
+    <span class="eyebrow light">Start a Trade Conversation</span>
+    <h2>Ready to source smarter?</h2>
+    <p>Share your required commodity, grade, quantity and destination. DB Group FZCO will help shape a practical route from market availability to shipment execution.</p>
+    <div class="svc-hero__actions">
+      <a href="contact.html" class="btn btn-gold">Talk to DB Group <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

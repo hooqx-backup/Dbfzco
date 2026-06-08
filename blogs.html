@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blogs | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .blog-hero {
+    position: relative;
+    min-height: 560px;
+    display: grid;
+    align-items: end;
+    color: #fff;
+    isolation: isolate;
+    overflow: hidden;
+    background: #081222;
+  }
+  .blog-hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 110%;
+    object-fit: cover;
+    z-index: -3;
+    animation: blogZoom 18s ease-out forwards;
+  }
+  .blog-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      linear-gradient(90deg, rgba(8,18,34,.9), rgba(8,18,34,.46)),
+      linear-gradient(0deg, rgba(8,18,34,.82), transparent 60%);
+  }
+  .blog-hero__inner { padding-block: clamp(88px, 12vw, 150px) clamp(58px, 8vw, 92px); }
+  .blog-hero h1 {
+    color: #fff;
+    font-size: clamp(42px, 7vw, 82px);
+    max-width: 10ch;
+    font-weight: 900;
+  }
+  .blog-hero p { color: #d3deec; max-width: 56ch; margin-top: 22px; font-size: 19px; }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    gap: 20px;
+  }
+  .blog-card {
+    background: #fff;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .38s cubic-bezier(.16,1,.3,1), box-shadow .38s ease;
+  }
+  .blog-card:first-child { grid-row: span 2; }
+  .blog-card:hover { transform: translateY(-9px); box-shadow: var(--shadow-lg); }
+  .blog-card__media { height: 240px; overflow: hidden; }
+  .blog-card:first-child .blog-card__media { height: 420px; }
+  .blog-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16,1,.3,1); }
+  .blog-card:hover img { transform: scale(1.08); }
+  .blog-card__body { padding: 24px; }
+  .blog-card__body span {
+    font-family: var(--font-mono);
+    color: var(--gold-d);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .blog-card__body h2,
+  .blog-card__body h3 { margin-top: 12px; }
+  .blog-card__body h2 { font-size: clamp(28px, 3vw, 40px); }
+  .blog-card__body h3 { font-size: 24px; }
+  .blog-card__body p { color: var(--muted); margin-top: 10px; }
+  @keyframes blogZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  @media (max-width: 920px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-card:first-child { grid-row: auto; }
+    .blog-card:first-child .blog-card__media,
+    .blog-card__media { height: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">Office 605, Building 5, Dubai Airport Free Zone, UAE</span>
+      <a class="tb-item" href="tel:+97142555144">+971 4 255 5144</a>
+    </div>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blogs.html" class="active">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="blog-hero">
+    <img src="public/servicesimage/2152020382.jpg" alt="Agricultural trade insights" />
+    <div class="wrap blog-hero__inner reveal">
+      <span class="eyebrow light">Blogs</span>
+      <h1>Trade insights that move markets</h1>
+      <p>Notes on food commodities, sourcing discipline, logistics, quality control and the commercial signals shaping essential supply lanes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="services-head reveal">
+        <div>
+          <span class="eyebrow">Latest Thinking</span>
+          <h2>From the DB Group desk</h2>
+        </div>
+        <p>Practical updates for buyers, suppliers and partners navigating commodity trade across fast-moving regional markets.</p>
+      </div>
+      <div class="blog-grid" style="margin-top:46px;">
+        <article class="blog-card reveal">
+          <div class="blog-card__media"><img src="public/servicesimage/sugar2.jpg" alt="Sugar market planning" /></div>
+          <div class="blog-card__body">
+            <span>Commodity Strategy</span>
+            <h2>Planning sugar procurement before seasonal pressure hits</h2>
+            <p>How buyers can prepare specifications, delivery windows and commercial routes before pricing volatility narrows their options.</p>
+          </div>
+        </article>
+        <article class="blog-card reveal d1">
+          <div class="blog-card__media"><img src="public/servicesimage/oil2.jpg" alt="Edible oil supply" /></div>
+          <div class="blog-card__body">
+            <span>Edible Oil</span>
+            <h3>Reading supply signals in edible oil trade</h3>
+            <p>Availability, packing, origin and freight timing all shape landed cost.</p>
+          </div>
+        </article>
+        <article class="blog-card reveal d2">
+          <div class="blog-card__media"><img src="public/servicesimage/35744.jpg" alt="Rice and grain quality" /></div>
+          <div class="blog-card__body">
+            <span>Quality</span>
+            <h3>Why specifications should lead the quote</h3>
+            <p>Clear grade and packing expectations reduce friction from inquiry to shipment.</p>
+          </div>
+        </article>
+        <article class="blog-card reveal d1">
+          <div class="blog-card__media"><img src="public/2151663056.jpg" alt="Global logistics" /></div>
+          <div class="blog-card__body">
+            <span>Logistics</span>
+            <h3>Shipment visibility in commodity movement</h3>
+            <p>Good execution depends on clean handoffs between documents, freight and destination needs.</p>
+          </div>
+        </article>
+        <article class="blog-card reveal d2">
+          <div class="blog-card__media"><img src="public/servicesimage/30681.jpg" alt="Agricultural supply lane" /></div>
+          <div class="blog-card__body">
+            <span>Markets</span>
+            <h3>Building reliable supply lanes</h3>
+            <p>Supplier fit, buyer timing and route flexibility matter as much as price.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in sourcing, logistics and distribution of essential food and agri-commodities.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li>+971 4 255 5144</li>
+          <li>info@dbgroupfzco.com</li>
+          <li>Office 605, Building 5, Dubai Airport Free Zone, Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

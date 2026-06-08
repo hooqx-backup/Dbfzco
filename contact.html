@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Libre+Franklin:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { background: #f8f5ee; }
+  .contact-page { overflow: hidden; }
+  .contact-hero {
+    position: relative;
+    min-height: min(780px, calc(100vh - 118px));
+    display: grid;
+    align-items: center;
+    color: #fff;
+    background: #081222;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .contact-hero__bg,
+  .contact-hero__bg img,
+  .contact-hero::before { position: absolute; inset: 0; }
+  .contact-hero__bg { z-index: -3; overflow: hidden; }
+  .contact-hero__bg img {
+    width: 100%;
+    height: 112%;
+    object-fit: cover;
+    object-position: center;
+    animation: contactHeroZoom 20s ease-out forwards;
+  }
+  .contact-hero::before {
+    content: "";
+    z-index: -2;
+    background:
+      linear-gradient(90deg, rgba(8,18,34,.94), rgba(8,18,34,.68) 48%, rgba(8,18,34,.22)),
+      linear-gradient(0deg, rgba(8,18,34,.72), transparent 58%);
+  }
+  .contact-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(330px, .7fr);
+    gap: clamp(34px, 7vw, 92px);
+    align-items: center;
+    padding-block: clamp(72px, 10vw, 128px);
+  }
+  .contact-hero h1 {
+    color: #fff;
+    font-size: clamp(42px, 7vw, 86px);
+    line-height: .94;
+    max-width: 10ch;
+    font-weight: 900;
+  }
+  .contact-hero p {
+    color: #d3deec;
+    max-width: 58ch;
+    margin-top: 24px;
+    font-size: clamp(16px, 1.5vw, 20px);
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+  .hero-contact-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.09);
+    backdrop-filter: blur(18px) saturate(1.25);
+    padding: clamp(24px, 3.2vw, 36px);
+    box-shadow: 0 32px 86px rgba(0,0,0,.32);
+  }
+  .hero-contact-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.2), transparent);
+    transform: translateX(-120%);
+    transition: transform .9s cubic-bezier(.16,1,.3,1);
+  }
+  .hero-contact-card:hover::before { transform: translateX(120%); }
+  .hero-contact-card > * { position: relative; }
+  .hero-contact-card h2 { color: #fff; font-size: clamp(26px, 3vw, 38px); }
+  .hero-contact-card p { margin-top: 12px; color: #cbd8e8; }
+  .hero-card-links { display: grid; gap: 12px; margin-top: 26px; }
+  .hero-card-links a,
+  .hero-card-links div {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    transition: transform .25s ease, background .25s ease;
+  }
+  .hero-card-links a:hover,
+  .hero-card-links div:hover { transform: translateX(6px); background: rgba(255,255,255,.14); }
+  .hero-card-links svg { width: 20px; height: 20px; color: var(--gold-soft); flex: none; margin-top: 3px; }
+
+  .quick-contact,
+  .contact-info { margin-top: -54px; position: relative; z-index: 4; }
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #fff;
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .contact-card {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    min-height: 172px;
+    border-left: 1px solid var(--line-soft);
+    transition: transform .36s cubic-bezier(.16,1,.3,1), background .36s ease, box-shadow .36s ease;
+  }
+  .contact-card:first-child { border-left: 0; }
+  .contact-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(210,154,53,.16), rgba(26,95,168,.08) 52%, transparent);
+    opacity: 0;
+    transition: opacity .36s ease;
+  }
+  .contact-card::after {
+    content: "";
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  .contact-card:hover {
+    transform: translateY(-8px);
+    background: #fbfaf6;
+    box-shadow: 0 26px 54px rgba(12,30,56,.14);
+  }
+  .contact-card:hover::before { opacity: 1; }
+  .contact-card:hover::after { transform: scaleX(1); }
+  .contact-card > * { position: relative; }
+  .cc-ico {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: var(--gold-soft);
+    margin-bottom: 18px;
+    transition: transform .35s ease, background .35s ease, color .35s ease;
+  }
+  .contact-card:hover .cc-ico { transform: rotate(-5deg) scale(1.08); background: var(--gold); color: #20180a; }
+  .cc-ico svg { width: 24px; height: 24px; }
+  .contact-card h3 {
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    margin: 0 0 8px;
+  }
+  .contact-card p,
+  .contact-card a {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .contact-main { padding-block: clamp(82px, 10vw, 132px); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+    gap: clamp(28px, 6vw, 72px);
+    align-items: start;
+  }
+  .contact-form-wrap,
+  .contact-office {
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    background: rgba(255,255,255,.78);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+  }
+  .contact-form-wrap { padding: clamp(28px, 4vw, 46px); }
+  .contact-form-wrap h2,
+  .contact-office h2 { font-size: clamp(30px, 4vw, 48px); margin-top: 14px; }
+  .contact-form-wrap > p,
+  .contact-office > p { color: var(--muted); margin-top: 16px; }
+  .cform { display: grid; gap: 18px; margin-top: 32px; }
+  .cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .field label,
+  .cform label {
+    display: block;
+    margin-bottom: 7px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+  .cform input,
+  .cform select,
+  .cform textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    outline: none;
+    padding: 15px 16px;
+    transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+  }
+  .cform input:hover,
+  .cform select:hover,
+  .cform textarea:hover { border-color: #d5c7a7; }
+  .cform input:focus,
+  .cform select:focus,
+  .cform textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(210,154,53,.16);
+    transform: translateY(-1px);
+  }
+  .cform textarea { min-height: 154px; resize: vertical; }
+  .cform select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236A7585' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+    padding-right: 44px;
+  }
+  .cform-submit .btn {
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cform-submit .btn::before,
+  .contact-final .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,.38), transparent);
+    transform: translateX(-130%);
+    transition: transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .cform-submit .btn:hover::before,
+  .contact-final .btn:hover::before { transform: translateX(130%); }
+
+  .contact-office { overflow: hidden; padding: clamp(28px, 4vw, 42px); }
+  .office-top { padding: clamp(28px, 4vw, 42px); }
+  .office-details { display: grid; gap: 16px; margin-top: 28px; }
+  .office-detail {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 15px;
+    align-items: start;
+    padding: 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 15px;
+    background: #fff;
+    transition: transform .28s ease, box-shadow .28s ease;
+  }
+  .office-detail:hover { transform: translateX(6px); box-shadow: var(--shadow-sm); }
+  .od-ico {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: #eef3f8;
+    color: var(--primary);
+  }
+  .od-ico svg { width: 21px; height: 21px; }
+  .office-detail h4 {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    margin-bottom: 4px;
+  }
+  .office-detail p,
+  .office-detail a { color: var(--ink); font-weight: 600; line-height: 1.5; }
+  .office-hours {
+    margin-top: 22px;
+    border-radius: 16px;
+    background: var(--navy);
+    color: #fff;
+    padding: 24px;
+  }
+  .office-hours h4 {
+    color: var(--gold-soft);
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .office-hours ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .office-hours li { display: flex; justify-content: space-between; gap: 18px; color: #cbd8e8; }
+  .office-hours li span:last-child { color: #fff; font-weight: 700; white-space: nowrap; }
+  .map-placeholder {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--line-soft);
+    background: #e8ecf1;
+  }
+  .map-placeholder iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.88) contrast(1.02); }
+
+  .contact-final {
+    position: relative;
+    min-height: 440px;
+    display: grid;
+    align-items: center;
+    isolation: isolate;
+    overflow: hidden;
+    color: #fff;
+  }
+  .contact-final img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -3;
+    transition: transform 1s cubic-bezier(.16,1,.3,1);
+  }
+  .contact-final:hover img { transform: scale(1.045); }
+  .contact-final::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(90deg, rgba(8,18,34,.94), rgba(8,18,34,.46));
+  }
+  .contact-final h2 {
+    color: #fff;
+    font-size: clamp(34px, 5vw, 64px);
+    max-width: 12ch;
+  }
+  .contact-final p { margin-top: 18px; color: #d4deeb; max-width: 54ch; }
+  @keyframes contactHeroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  @media (max-width: 980px) {
+    .contact-hero__grid,
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .quick-contact { margin-top: 0; }
+    .contact-cards { grid-template-columns: 1fr; border-radius: 0; margin-inline: calc(var(--gut) * -1); }
+    .contact-card { border-left: 0; border-top: 1px solid var(--line-soft); }
+    .contact-card:first-child { border-top: 0; }
+    .cform-row { grid-template-columns: 1fr; }
+    .office-hours li { display: grid; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .contact-hero__bg img,
+    .contact-final img { animation: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="contact.html" class="btn btn-primary">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="contact-page">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="contact-hero">
+  <div class="contact-hero__bg" aria-hidden="true">
+    <img src="public/2151663056.jpg" alt="" />
+  </div>
+  <div class="wrap contact-hero__grid">
+    <div class="reveal">
+    <span class="eyebrow light">Contact DB Group</span>
+    <h1>Let us move your next trade</h1>
+    <p>Share the commodity, grade, volume and destination. Our Dubai team will help shape a practical route from sourcing to shipment execution.</p>
+    <div class="hero-actions">
+      <a href="#contact-form" class="btn btn-gold">Start Enquiry <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="tel:+97142555144" class="btn btn-light">Call Office</a>
+    </div>
+  </div>
+  <aside class="hero-contact-card reveal d2">
+    <span class="eyebrow light">Dubai Office</span>
+    <h2>Fast commercial response</h2>
+    <p>For quote requests, supply discussions and partnership conversations, reach the team directly.</p>
+    <div class="hero-card-links">
+      <a href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        <span>+971 4 255 5144</span>
+      </a>
+      <a href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        <span>info@dbgroupfzco.com</span>
+      </a>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Office 605, Building 5, Dubai Airport Free Zone, UAE</span>
+      </div>
+    </div>
+  </aside>
+  </div>
+</section>
+
+<!-- ============ CONTACT CARDS ============ -->
+<section class="contact-info">
+  <div class="wrap">
+    <div class="contact-cards">
+      <div class="contact-card reveal">
+        <div class="cc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        </div>
+        <h3>Phone</h3>
+        <a href="tel:+97142555144">+971 4 255 5144</a>
+      </div>
+      <div class="contact-card reveal d1">
+        <div class="cc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        </div>
+        <h3>Email</h3>
+        <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
+      </div>
+      <div class="contact-card reveal d2">
+        <div class="cc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Office</h3>
+        <p>Office 605, Building 5,<br>DAFZA, Dubai, UAE</p>
+      </div>
+      <div class="contact-card reveal d3">
+        <div class="cc-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Working Hours</h3>
+        <p>Mon – Fri: 9:00 – 18:00<br>Sat: 9:00 – 13:00</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT FORM + OFFICE ============ -->
+<section class="contact-main" id="contact-form">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <!-- Form -->
+      <div class="contact-form-wrap reveal">
+        <span class="eyebrow">Send a Message</span>
+        <h2>Request a Quote or Partnership</h2>
+        <p>Fill in the form and one of our trade specialists will get back to you within one business day.</p>
+
+        <form class="cform" action="#" method="post">
+          <div class="cform-row">
+            <div>
+              <label for="cf-name">Full Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="John Smith" required />
+            </div>
+            <div>
+              <label for="cf-company">Company</label>
+              <input type="text" id="cf-company" name="company" placeholder="Your Company Ltd." />
+            </div>
+          </div>
+          <div class="cform-row">
+            <div>
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" name="email" placeholder="john@company.com" required />
+            </div>
+            <div>
+              <label for="cf-phone">Phone Number</label>
+              <input type="tel" id="cf-phone" name="phone" placeholder="+971 XX XXX XXXX" />
+            </div>
+          </div>
+          <div>
+            <label for="cf-subject">Subject</label>
+            <select id="cf-subject" name="subject">
+              <option value="" disabled selected>Select a topic</option>
+              <option value="quote">Request a Quote</option>
+              <option value="sourcing">Procurement &amp; Sourcing</option>
+              <option value="logistics">Logistics &amp; Shipping</option>
+              <option value="partnership">Trade Partnership</option>
+              <option value="other">General Enquiry</option>
+            </select>
+          </div>
+          <div>
+            <label for="cf-commodity">Commodity of Interest</label>
+            <input type="text" id="cf-commodity" name="commodity" placeholder="e.g. Raw Sugar, Basmati Rice, Sunflower Oil…" />
+          </div>
+          <div>
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell us about your requirements — volume, origin preference, delivery timeline, etc."></textarea>
+          </div>
+          <div class="cform-submit">
+            <button type="submit" class="btn btn-primary">Send Message <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </form>
+        
+        <!-- Success Message -->
+        <div id="contact-success-msg" class="contact-success-msg" style="display: none; margin-top: 24px; padding: 20px; border-radius: 12px; background: #e8f5e9; border-left: 4px solid #4caf50;">
+          <div style="color: #2e7d32; font-weight: 600; display: flex; gap: 10px; align-items: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Thank you! Your message has been sent successfully. Our team will get back to you within one business day.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office info -->
+      <div class="contact-office reveal d1">
+        <span class="eyebrow">Our Location</span>
+        <h2>Visit Our Dubai Office</h2>
+        <p>We are headquartered in the Dubai Airport Free Zone — a world-class trade hub providing direct access to global shipping routes and financial services.</p>
+
+        <div class="office-detail">
+          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <h4>Address</h4>
+            <p>Office 605, Building 5,<br>Dubai Airport Free Zone (DAFZA),<br>Dubai, United Arab Emirates</p>
+          </div>
+        </div>
+
+        <div class="office-detail">
+          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+          <div>
+            <h4>Telephone</h4>
+            <a href="tel:+97142555144">+971 4 255 5144</a>
+          </div>
+        </div>
+
+        <div class="office-detail">
+          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
+          </div>
+        </div>
+
+        <div class="office-hours">
+          <h4>Business Hours (Gulf Standard Time)</h4>
+          <ul>
+            <li><span>Monday – Thursday</span><span>9:00 – 18:00</span></li>
+            <li><span>Friday</span><span>9:00 – 17:00</span></li>
+            <li><span>Saturday</span><span>9:00 – 13:00</span></li>
+            <li><span>Sunday</span><span>Closed</span></li>
+          </ul>
+        </div>
+
+        <div class="map-placeholder">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.0647936986354!2d55.36248!3d25.25387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d4c7c4e2d93%3A0x0!2sDubai+Airport+Free+Zone!5e0!3m2!1sen!2sae!4v1234567890"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="DB Group FZCO Office Location">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="contact-final">
+  <img src="public/servicesimage/30681.jpg" alt="Agricultural supply route" />
+  <div class="wrap reveal">
+    <span class="eyebrow light">Ready to Trade?</span>
+    <h2>Build a reliable supply chain</h2>
+    <p>Speak with DB Group FZCO about sourcing, documentation, logistics and delivery planning for essential food and agri-commodities.</p>
+    <div class="hero-actions">
+      <a href="tel:+97142555144" class="btn btn-gold">Call Us Now <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
