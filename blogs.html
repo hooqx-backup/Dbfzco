@@ -3,103 +3,1128 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Blogs | DB Group FZCO</title>
+<title>Insights & News | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <style>
-  .blog-hero {
-    position: relative;
-    min-height: 560px;
-    display: grid;
-    align-items: end;
-    color: #fff;
-    isolation: isolate;
-    overflow: hidden;
-    background: #081222;
-  }
-  .blog-hero img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 110%;
-    object-fit: cover;
-    z-index: -3;
-    animation: blogZoom 18s ease-out forwards;
-  }
-  .blog-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background:
-      linear-gradient(90deg, rgba(8,18,34,.9), rgba(8,18,34,.46)),
-      linear-gradient(0deg, rgba(8,18,34,.82), transparent 60%);
-  }
-  .blog-hero__inner { padding-block: clamp(88px, 12vw, 150px) clamp(58px, 8vw, 92px); }
-  .blog-hero h1 {
-    color: #fff;
-    font-size: clamp(42px, 7vw, 82px);
-    max-width: 10ch;
-    font-weight: 900;
-  }
-  .blog-hero p { color: #d3deec; max-width: 56ch; margin-top: 22px; font-size: 19px; }
-  .blog-grid {
-    display: grid;
-    grid-template-columns: 1.25fr 1fr 1fr;
-    gap: 20px;
-  }
-  .blog-card {
-    background: #fff;
-    border: 1px solid var(--line-soft);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform .38s cubic-bezier(.16,1,.3,1), box-shadow .38s ease;
-  }
-  .blog-card:first-child { grid-row: span 2; }
-  .blog-card:hover { transform: translateY(-9px); box-shadow: var(--shadow-lg); }
-  .blog-card__media { height: 240px; overflow: hidden; }
-  .blog-card:first-child .blog-card__media { height: 420px; }
-  .blog-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16,1,.3,1); }
-  .blog-card:hover img { transform: scale(1.08); }
-  .blog-card__body { padding: 24px; }
-  .blog-card__body span {
-    font-family: var(--font-mono);
-    color: var(--gold-d);
-    font-size: 11px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-  }
-  .blog-card__body h2,
-  .blog-card__body h3 { margin-top: 12px; }
-  .blog-card__body h2 { font-size: clamp(28px, 3vw, 40px); }
-  .blog-card__body h3 { font-size: 24px; }
-  .blog-card__body p { color: var(--muted); margin-top: 10px; }
-  @keyframes blogZoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
-  }
-  @media (max-width: 920px) {
-    .blog-grid { grid-template-columns: 1fr; }
-    .blog-card:first-child { grid-row: auto; }
-    .blog-card:first-child .blog-card__media,
-    .blog-card__media { height: 260px; }
-  }
+
+/* ============================================================
+   BLOGS PAGE — page-specific styles
+   ============================================================ */
+
+/* ---- Hero ---- */
+.blogs-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+}
+
+/* Outer wrapper: Ken Burns zoom (CSS only, not touched by JS) */
+.blogs-hero-bg {
+  position: absolute;
+  inset: 0;
+  animation: kbZoom 24s ease-out forwards;
+  z-index: 0;
+}
+/* Inner: parallax scroll target (JS moves this) */
+.blogs-hero-img {
+  position: absolute;
+  left: 0; right: 0;
+  top: -30%; height: 160%;
+  background: url('public/HeroBanner.jpg') center / cover no-repeat;
+  will-change: transform;
+}
+
+/* Layered shade: dark-left for legibility, opens up on right */
+.blogs-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(100deg, rgba(8,18,34,.96) 0%, rgba(8,18,34,.78) 44%, rgba(8,18,34,.30) 72%, rgba(8,18,34,.10) 100%),
+    linear-gradient(0deg, rgba(8,18,34,.82) 0%, rgba(8,18,34,0) 40%);
+}
+
+/* Dot grid texture over the image */
+.blogs-hero-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+
+/* Animated bottom accent bar */
+.blogs-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+  background-size: 300%;
+  animation: ctaGrad 7s ease infinite;
+  z-index: 3;
+}
+
+/* Two-column hero layout */
+.blogs-hero-layout {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+  padding-top: clamp(90px, 13vw, 150px);
+  padding-bottom: clamp(90px, 12vw, 140px);
+}
+
+/* ---- Left: text ---- */
+.blogs-hero-text {}
+.blogs-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 14px;
+}
+.blogs-hero-kicker::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.blogs-hero h1 {
+  color: #fff;
+  font-size: clamp(26px, 3.6vw, 48px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  margin: 0;
+}
+.blogs-hero h1 .gold { color: var(--gold); }
+.blogs-hero h1 .stroke {
+  -webkit-text-stroke: 2px rgba(255,255,255,.55);
+  color: transparent;
+}
+.blogs-hero .lede {
+  color: #98aec4;
+  font-size: clamp(15px, 1.5vw, 17px);
+  margin-top: 22px;
+  max-width: 50ch;
+  line-height: 1.72;
+}
+
+/* Stats row */
+.blogs-hero-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 36px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  overflow: hidden;
+  width: fit-content;
+  backdrop-filter: blur(6px);
+}
+.hs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 28px;
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+.hs:last-child { border-right: none; }
+.hs-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+.hs-lab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.38);
+  white-space: nowrap;
+}
+
+/* Chip bar */
+.blogs-hero-chips {
+  display: flex;
+  gap: 9px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+/* ---- Right: floating preview card ---- */
+.blogs-hero-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+  animation: floatY 5s ease-in-out infinite 0.5s;
+  box-shadow: 0 32px 80px -24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+}
+.bhc-img {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  position: relative;
+}
+.bhc-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.blogs-hero-card:hover .bhc-img img { transform: scale(1.05); }
+.bhc-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8,18,34,.6) 0%, rgba(8,18,34,0) 50%);
+}
+.bhc-img-badge {
+  position: absolute;
+  top: 13px; left: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #1d1402;
+  background: var(--gold);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.bhc-body {
+  padding: 20px 22px 22px;
+}
+.bhc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.bhc-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+.bhc-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.3); flex: none; }
+.bhc-date { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .05em; }
+.bhc-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.25;
+}
+.bhc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.bhc-author {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.bhc-av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), #2A74C0);
+  flex: none;
+}
+.bhc-author span {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.6);
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+.bhc-read {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,.4);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: .05em;
+}
+.bhc-read svg { width: 13px; height: 13px; color: var(--gold); }
+
+/* Mini cards below the main card */
+.bhc-mini-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.bhc-mini {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background .22s, border-color .22s, transform .22s;
+}
+.bhc-mini:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.22); transform: translateY(-2px); }
+.bhc-mini-thumb {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex: none;
+}
+.bhc-mini-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bhc-mini-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  color: rgba(255,255,255,.82);
+  line-height: 1.3;
+}
+.bhc-mini-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 3px;
+}
+
+@media (max-width: 1060px) {
+  .blogs-hero-layout { grid-template-columns: 1fr; }
+  .blogs-hero-card { display: none; }
+}
+@media (max-width: 600px) {
+  .blogs-hero-stats { width: 100%; }
+  .hs { padding: 14px 18px; }
+}
+
+/* ---- Breadcrumb ---- */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.44);
+  margin-bottom: 18px;
+}
+.breadcrumb a { color: rgba(255,255,255,.44); transition: color .2s; }
+.breadcrumb a:hover { color: var(--gold-soft); }
+.breadcrumb svg { width: 12px; height: 12px; opacity: .44; }
+
+/* ---- Category Filter ---- */
+.filter-section {
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.93);
+  position: sticky;
+  top: 76px;
+  z-index: 30;
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+.filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+  flex: none;
+}
+.filter-pill {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background .22s, border-color .22s, color .22s, transform .22s, box-shadow .22s;
+  white-space: nowrap;
+}
+.filter-pill:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.filter-pill.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 18px -6px rgba(26,95,168,.5);
+}
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding-inline: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.22);
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+.filter-pill:not(.active) .filter-count {
+  background: var(--paper-2);
+  color: var(--muted);
+}
+@media (max-width: 768px) {
+  .filter-section { display: none; }
+}
+
+/* ---- Featured Post ---- */
+.featured-section { padding-top: clamp(48px, 7vw, 80px); }
+.featured-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.featured-label .fl-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.featured-card {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line-soft);
+  background: #fff;
+  transition: box-shadow .45s cubic-bezier(.2,.7,.2,1), transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.featured-card:hover {
+  box-shadow: 0 44px 88px -22px rgba(8,18,34,.22);
+  transform: translateY(-6px);
+}
+.featured-img {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;
+}
+.featured-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .85s cubic-bezier(.2,.7,.2,1);
+}
+.featured-card:hover .featured-img img { transform: scale(1.07); }
+.featured-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(50deg, rgba(8,18,34,.55) 0%, rgba(8,18,34,0) 60%);
+  pointer-events: none;
+}
+.featured-cat-badge {
+  position: absolute;
+  top: 22px; left: 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #1d1402;
+  background: var(--gold);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.featured-read-time {
+  position: absolute;
+  bottom: 22px; right: 22px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.92);
+  background: rgba(8,18,34,.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 6px 13px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.featured-read-time svg { width: 14px; height: 14px; }
+.featured-body {
+  padding: clamp(28px, 5vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.featured-body .post-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.featured-body h2 {
+  font-size: clamp(22px, 2.6vw, 34px);
+  line-height: 1.1;
+  margin-top: 0;
+  transition: color .22s;
+}
+.featured-card:hover .featured-body h2 { color: var(--primary); }
+.featured-body .excerpt {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.76;
+  margin-top: 16px;
+}
+.featured-body .read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 28px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+  transition: gap .22s;
+}
+.featured-card:hover .read-more { gap: 15px; }
+.featured-body .tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-soft);
+}
+@media (max-width: 920px) {
+  .featured-card { grid-template-columns: 1fr; }
+  .featured-img { min-height: 300px; aspect-ratio: 16/9; }
+}
+
+/* ---- Post Meta shared ---- */
+.post-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pm-cat {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+}
+.pm-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--line); flex: none; }
+.pm-date {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  color: var(--muted);
+}
+.pm-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.pm-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: #fff;
+  flex: none;
+}
+.av-blue  { background: linear-gradient(135deg, var(--primary), #2A74C0); }
+.av-gold  { background: linear-gradient(135deg, var(--gold-d), var(--gold)); color: #1d1402; }
+.av-navy  { background: linear-gradient(135deg, var(--navy), var(--ink-soft)); }
+.av-green { background: linear-gradient(135deg, #1a8a5b, #4ecf96); }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.tag:hover { background: var(--gold-soft); color: var(--gold-d); border-color: var(--gold-soft); }
+
+/* ---- Blog Grid Layout ---- */
+.blog-section { padding-top: clamp(40px, 6vw, 72px); }
+.blog-layout {
+  display: grid;
+  grid-template-columns: 1fr 338px;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+@media (max-width: 660px) { .posts-grid { grid-template-columns: 1fr; } }
+
+/* ---- Post Card ---- */
+.post-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform .38s cubic-bezier(.2,.7,.2,1), box-shadow .38s cubic-bezier(.2,.7,.2,1);
+  cursor: pointer;
+  position: relative;
+}
+.post-card:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 30px 60px -14px rgba(8,18,34,.18);
+}
+.post-card-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+}
+.post-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.post-card:hover .post-card-img img { transform: scale(1.09); }
+.post-card-img .pc-cat {
+  position: absolute;
+  top: 13px; left: 13px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+.c-blue  { background: rgba(26,95,168,.86);  color: #fff; }
+.c-gold  { background: rgba(210,154,53,.93);  color: #1d1402; }
+.c-navy  { background: rgba(12,30,56,.82);    color: #fff; }
+.c-green { background: rgba(26,138,91,.87);   color: #fff; }
+.c-red   { background: rgba(188,48,48,.84);   color: #fff; }
+
+.post-card-body {
+  padding: 22px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.post-card-body .post-meta { margin-bottom: 12px; }
+.post-card-body h3 {
+  font-size: 18px;
+  line-height: 1.18;
+  transition: color .22s;
+}
+.post-card:hover h3 { color: var(--primary); }
+.post-card-body .excerpt {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.72;
+  margin-top: 10px;
+  flex: 1;
+}
+.post-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+.pc-read {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pc-read svg { width: 13px; height: 13px; }
+.pc-arrow {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: grid; place-items: center;
+  color: var(--muted);
+  transition: background .22s, border-color .22s, color .22s, transform .28s;
+  flex: none;
+}
+.pc-arrow svg { width: 14px; height: 14px; }
+.post-card:hover .pc-arrow {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  transform: rotate(-45deg);
+}
+
+/* Wide variant */
+.post-card.card-wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.post-card.card-wide .post-card-img {
+  aspect-ratio: auto;
+  min-height: 280px;
+}
+@media (max-width: 660px) {
+  .post-card.card-wide { grid-template-columns: 1fr; }
+  .post-card.card-wide .post-card-img { aspect-ratio: 16/9; min-height: unset; }
+}
+
+/* ---- Load More + Pagination ---- */
+.load-more-wrap {
+  text-align: center;
+  margin-top: 48px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+.load-more-wrap p { color: var(--muted); font-size: 14px; margin-top: 12px; }
+.btn-outline-blue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background .22s, color .22s, transform .2s, box-shadow .22s;
+}
+.btn-outline-blue:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 12px 28px -8px rgba(26,95,168,.5);
+  transform: translateY(-2px);
+}
+.btn-outline-blue svg { transition: transform .2s; }
+.btn-outline-blue:hover svg { transform: translateY(3px); }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 44px;
+}
+.pg-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  display: grid; place-items: center;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-soft);
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.pg-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+.pg-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 16px -6px rgba(26,95,168,.5);
+}
+.pg-btn svg { width: 15px; height: 15px; }
+
+/* ---- Sidebar ---- */
+.sidebar { position: sticky; top: calc(76px + 61px + 24px); }
+.sidebar-widget {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.sw-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--paper-2);
+}
+.sw-head h4 {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+}
+.sw-head h4 svg { width: 16px; height: 16px; color: var(--gold-d); }
+.sw-body { padding: 16px 20px; }
+
+/* Popular posts */
+.pop-post {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding-block: 13px;
+  border-bottom: 1px solid var(--line-soft);
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.pop-post:last-child { border-bottom: none; padding-bottom: 0; }
+.pop-post:first-child { padding-top: 0; }
+.pop-post:hover { opacity: .72; }
+.pp-img { width: 62px; height: 54px; border-radius: 10px; overflow: hidden; flex: none; }
+.pp-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pp-body h5 {
+  font-size: 13.5px;
+  line-height: 1.3;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+}
+.pp-body span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .05em;
+  color: var(--muted);
+  margin-top: 4px;
+  display: block;
+}
+
+/* Market pulse */
+.pulse-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 11px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.pulse-item:last-child { border-bottom: none; }
+.pi-name { font-family: var(--font-display); font-weight: 600; font-size: 14px; }
+.pi-sub  { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.pi-right { text-align: right; }
+.pi-val { font-family: var(--font-mono); font-weight: 700; font-size: 14px; }
+.pi-chg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-top: 3px;
+  display: inline-block;
+}
+.pi-up   { background: rgba(26,138,91,.1);  color: #1a7a52; }
+.pi-down { background: rgba(188,48,48,.09); color: #bc3030; }
+
+/* Newsletter widget */
+.nl-widget {
+  background: linear-gradient(145deg, var(--primary-d), var(--primary));
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.nl-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1.5px);
+  background-size: 18px 18px;
+  opacity: .5;
+}
+.nl-widget > * { position: relative; }
+.nl-head { padding: 22px 20px 0; }
+.nl-head h4 { color: #fff; font-size: 17px; }
+.nl-head p { color: rgba(255,255,255,.74); font-size: 13.5px; margin-top: 8px; line-height: 1.55; }
+.nl-form { padding: 14px 20px 22px; display: grid; gap: 10px; }
+.nl-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  box-sizing: border-box;
+}
+.nl-input::placeholder { color: rgba(255,255,255,.48); }
+.nl-input:focus { border-color: var(--gold); background: rgba(255,255,255,.18); }
+.nl-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: var(--gold);
+  color: #1d1402;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.nl-btn:hover { background: var(--gold-d); color: #fff; transform: translateY(-1px); box-shadow: 0 6px 18px -4px rgba(0,0,0,.3); }
+.nl-note { font-size: 11px; color: rgba(255,255,255,.46); text-align: center; }
+
+/* Topics */
+.topic-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, transform .2s;
+}
+.topic-tag:hover { background: var(--navy); color: var(--gold-soft); border-color: var(--navy); transform: translateY(-2px); }
+
+@media (max-width: 1100px) {
+  .blog-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+}
+
+/* ---- Trending strip ---- */
+.trending-strip {
+  background: var(--navy);
+  padding-block: 18px;
+  overflow: hidden;
+  position: relative;
+}
+.trending-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(210,154,53,.1) 1px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+.ts-inner { display: flex; align-items: center; gap: 22px; position: relative; }
+.ts-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+  flex: none;
+  padding-right: 22px;
+  border-right: 1px solid rgba(255,255,255,.15);
+}
+.ts-marquee {
+  overflow: hidden;
+  flex: 1;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  mask: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+}
+@keyframes tsScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ts-track {
+  display: flex;
+  width: max-content;
+  animation: tsScroll 38s linear infinite;
+}
+.ts-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 26px;
+  border-right: 1px solid rgba(255,255,255,.1);
+  white-space: nowrap;
+  color: #b0c0d4;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .05em;
+}
+.ts-item a { color: #d0dbe8; font-family: var(--font-display); font-weight: 600; font-size: 13px; transition: color .2s; }
+.ts-item a:hover { color: var(--gold-soft); }
+.ts-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex: none; }
+@media (prefers-reduced-motion: reduce) { .ts-track { animation: none; } }
+
+/* ---- Newsletter banner section ---- */
+.nl-banner {
+  background:
+    linear-gradient(rgba(8,18,34,.87), rgba(8,18,34,.87)),
+    url('public/10871.jpg') center / cover no-repeat;
+  background-attachment: fixed;
+  padding-block: clamp(56px, 8vw, 100px);
+}
+.nl-banner-inner { max-width: 660px; margin-inline: auto; text-align: center; }
+.nl-banner h2 { color: #fff; font-size: clamp(28px, 4vw, 46px); margin-top: 14px; }
+.nl-banner p { color: #9fb0c4; margin-top: 16px; font-size: 17px; }
+.nl-banner-form {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  max-width: 500px;
+  margin-inline: auto;
+}
+.nl-banner-input {
+  flex: 1;
+  padding: 15px 20px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.nl-banner-input::placeholder { color: rgba(255,255,255,.44); }
+.nl-banner-input:focus { border-color: var(--gold); background: rgba(255,255,255,.16); }
+@media (max-width: 560px) { .nl-banner-form { flex-direction: column; } }
+
+/* ---- Visual Stories ---- */
+.vs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.vs-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  position: relative;
+  cursor: pointer;
+}
+.vs-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.vs-card:hover img { transform: scale(1.08); }
+.vs-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8,18,34,.82) 0%, rgba(8,18,34,0) 55%);
+  pointer-events: none;
+}
+.vs-card-label {
+  position: absolute;
+  bottom: 18px; left: 18px; right: 18px;
+}
+.vs-card-label .vs-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 6px;
+}
+.vs-card-label strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  line-height: 1.2;
+  display: block;
+}
+@media (max-width: 860px) { .vs-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .vs-grid { grid-template-columns: 1fr; } }
+
+/* ---- Reveal helpers ---- */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  filter: blur(4px);
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), filter .9s cubic-bezier(.16,1,.3,1);
+}
+.reveal-left.in { opacity: 1; transform: none; filter: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-left { opacity: 1; transform: none; filter: none; transition: none; } }
+
 </style>
 </head>
 <body>
 
+<!-- ============ TOP BAR ============ -->
 <div class="topbar">
   <div class="wrap">
     <div class="tb-left">
-      <span class="tb-item tb-hide">Office 605, Building 5, Dubai Airport Free Zone, UAE</span>
-      <a class="tb-item" href="tel:+97142555144">+971 4 255 5144</a>
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
     </div>
   </div>
 </div>
 
+<!-- ============ HEADER / NAV ============ -->
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
@@ -113,7 +1138,10 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-right">
-      <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -122,103 +1150,937 @@
 </header>
 
 <main>
-  <section class="blog-hero">
-    <img src="public/servicesimage/2152020382.jpg" alt="Agricultural trade insights" />
-    <div class="wrap blog-hero__inner reveal">
-      <span class="eyebrow light">Blogs</span>
-      <h1>Trade insights that move markets</h1>
-      <p>Notes on food commodities, sourcing discipline, logistics, quality control and the commercial signals shaping essential supply lanes.</p>
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="services-head reveal">
-        <div>
-          <span class="eyebrow">Latest Thinking</span>
-          <h2>From the DB Group desk</h2>
+<!-- ============ HERO ============ -->
+<section class="blogs-hero">
+  <!-- Outer wrapper gets kbZoom animation; JS parallax targets the inner .blogs-hero-img only -->
+  <div class="blogs-hero-bg">
+    <div class="blogs-hero-img" id="heroParallax"></div>
+  </div>
+  <div class="blogs-hero-shade"></div>
+  <div class="blogs-hero-dots"></div>
+
+  <div class="wrap">
+    <div class="blogs-hero-layout">
+
+      <!-- Left: text content -->
+      <div class="blogs-hero-text">
+        <div class="breadcrumb reveal" style="color:rgba(255,255,255,.42);">
+          <a href="index.html" style="color:rgba(255,255,255,.42);">Home</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+          <span>Insights</span>
         </div>
-        <p>Practical updates for buyers, suppliers and partners navigating commodity trade across fast-moving regional markets.</p>
+
+        <div class="blogs-hero-kicker reveal">DB Group · Commodity Intelligence</div>
+
+        <h1 class="reveal d1">
+          Market <span class="gold">Insights</span><br>
+          &amp; Trade <span class="stroke">Intelligence</span>
+        </h1>
+
+        <p class="lede reveal d2">Deep-dive analysis, supply chain strategy, and on-the-ground perspectives from Dubai's leading commodity trading house — delivering the intelligence your business needs to trade smarter.</p>
+
+        <div class="blogs-hero-stats reveal d3">
+          <div class="hs">
+            <span class="hs-num" data-count="48">0</span>
+            <span class="hs-lab">Articles</span>
+          </div>
+          <div class="hs">
+            <span class="hs-num" data-count="12">0</span>
+            <span class="hs-lab">Topics</span>
+          </div>
+          <div class="hs">
+            <span class="hs-num" data-count="30">0</span>
+            <span class="hs-lab">Markets</span>
+          </div>
+          <div class="hs">
+            <span class="hs-num" data-count="2400">0</span>
+            <span class="hs-lab">Subscribers</span>
+          </div>
+        </div>
+
+        <div class="blogs-hero-chips reveal d3">
+          <span class="chip"><i></i> Sugar Markets</span>
+          <span class="chip"><i></i> Edible Oils</span>
+          <span class="chip"><i></i> Logistics</span>
+          <span class="chip"><i></i> MENA &amp; Africa</span>
+        </div>
       </div>
-      <div class="blog-grid" style="margin-top:46px;">
-        <article class="blog-card reveal">
-          <div class="blog-card__media"><img src="public/servicesimage/sugar2.jpg" alt="Sugar market planning" /></div>
-          <div class="blog-card__body">
-            <span>Commodity Strategy</span>
-            <h2>Planning sugar procurement before seasonal pressure hits</h2>
-            <p>How buyers can prepare specifications, delivery windows and commercial routes before pricing volatility narrows their options.</p>
+
+      <!-- Right: floating preview cards -->
+      <div class="reveal d2">
+        <!-- Main preview card -->
+        <div class="blogs-hero-card">
+          <div class="bhc-img">
+            <img src="public/30770.jpg" alt="Sugar Market Outlook" loading="eager" />
+            <div class="bhc-img-overlay"></div>
+            <span class="bhc-img-badge">Featured</span>
           </div>
-        </article>
-        <article class="blog-card reveal d1">
-          <div class="blog-card__media"><img src="public/servicesimage/oil2.jpg" alt="Edible oil supply" /></div>
-          <div class="blog-card__body">
-            <span>Edible Oil</span>
-            <h3>Reading supply signals in edible oil trade</h3>
-            <p>Availability, packing, origin and freight timing all shape landed cost.</p>
+          <div class="bhc-body">
+            <div class="bhc-meta">
+              <span class="bhc-cat">Market Analysis</span>
+              <span class="bhc-dot"></span>
+              <span class="bhc-date">14 May 2025</span>
+            </div>
+            <div class="bhc-title">Global Sugar Market Outlook 2025: Origins, Volatility &amp; What Buyers Need to Know</div>
+            <div class="bhc-footer">
+              <div class="bhc-author">
+                <div class="bhc-av">AK</div>
+                <span>Ahmed Al-Karimi</span>
+              </div>
+              <div class="bhc-read">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                8 min
+              </div>
+            </div>
           </div>
-        </article>
-        <article class="blog-card reveal d2">
-          <div class="blog-card__media"><img src="public/servicesimage/35744.jpg" alt="Rice and grain quality" /></div>
-          <div class="blog-card__body">
-            <span>Quality</span>
-            <h3>Why specifications should lead the quote</h3>
-            <p>Clear grade and packing expectations reduce friction from inquiry to shipment.</p>
+        </div>
+
+        <!-- Two mini cards below -->
+        <div class="bhc-mini-row">
+          <div class="bhc-mini">
+            <div class="bhc-mini-thumb"><img src="public/servicesimage/oil1.jpg" alt="Edible Oils" loading="eager" /></div>
+            <div>
+              <div class="bhc-mini-title">Palm Oil 2025 Outlook</div>
+              <div class="bhc-mini-cat">Edible Oils</div>
+            </div>
           </div>
-        </article>
-        <article class="blog-card reveal d1">
-          <div class="blog-card__media"><img src="public/2151663056.jpg" alt="Global logistics" /></div>
-          <div class="blog-card__body">
-            <span>Logistics</span>
-            <h3>Shipment visibility in commodity movement</h3>
-            <p>Good execution depends on clean handoffs between documents, freight and destination needs.</p>
+          <div class="bhc-mini">
+            <div class="bhc-mini-thumb"><img src="public/servicesimage/sugar1.jpg" alt="Sugar grades" loading="eager" /></div>
+            <div>
+              <div class="bhc-mini-title">ICUMSA 45 vs 100</div>
+              <div class="bhc-mini-cat">Sugar &amp; Sweeteners</div>
+            </div>
           </div>
-        </article>
-        <article class="blog-card reveal d2">
-          <div class="blog-card__media"><img src="public/servicesimage/30681.jpg" alt="Agricultural supply lane" /></div>
-          <div class="blog-card__body">
-            <span>Markets</span>
-            <h3>Building reliable supply lanes</h3>
-            <p>Supplier fit, buyer timing and route flexibility matter as much as price.</p>
-          </div>
-        </article>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDING STRIP ============ -->
+<div class="trending-strip">
+  <div class="wrap">
+    <div class="ts-inner">
+      <span class="ts-label">Trending</span>
+      <div class="ts-marquee">
+        <div class="ts-track" id="tsTrack">
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Global Sugar Prices Surge 18% on Brazil Weather Risks</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">India Extends Rice Export Restrictions Into Q3 2025</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Palm Oil Markets Stabilise After Malaysian Supply Rebound</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">DAFZA Reaffirms Position as MENA's Top Commodity Hub</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Wheat Futures Rally on Black Sea Corridor Uncertainty</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">African Demand Drives Record Sugar Shipments From Brazil</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Global Sugar Prices Surge 18% on Brazil Weather Risks</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">India Extends Rice Export Restrictions Into Q3 2025</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Palm Oil Markets Stabilise After Malaysian Supply Rebound</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">DAFZA Reaffirms Position as MENA's Top Commodity Hub</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">Wheat Futures Rally on Black Sea Corridor Uncertainty</a></div>
+          <div class="ts-item"><span class="ts-dot"></span><a href="#">African Demand Drives Record Sugar Shipments From Brazil</a></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
+
+<!-- ============ CATEGORY FILTER ============ -->
+<div class="filter-section">
+  <div class="wrap">
+    <div class="filter-wrap">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-pill active" onclick="setFilter(this)">All <span class="filter-count">12</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">Market Analysis <span class="filter-count">4</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">Sugar &amp; Sweeteners <span class="filter-count">3</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">Edible Oils <span class="filter-count">3</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">Logistics &amp; Trade <span class="filter-count">3</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">Compliance <span class="filter-count">2</span></button>
+      <button class="filter-pill" onclick="setFilter(this)">MENA &amp; Africa <span class="filter-count">2</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FEATURED POST ============ -->
+<section class="featured-section section" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="featured-label reveal">
+      <span class="eyebrow">Featured Article</span>
+      <span class="fl-line"></span>
+    </div>
+    <div class="featured-card reveal d1">
+      <div class="featured-img">
+        <img src="public/30770.jpg" alt="Global Sugar Market Outlook 2025" loading="lazy" />
+        <div class="featured-img-overlay"></div>
+        <span class="featured-cat-badge">Market Analysis</span>
+        <span class="featured-read-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          8 min read
+        </span>
+      </div>
+      <div class="featured-body">
+        <div class="post-meta">
+          <span class="pm-cat">Market Analysis</span>
+          <span class="pm-dot"></span>
+          <span class="pm-date">14 May 2025</span>
+          <span class="pm-dot"></span>
+          <div class="pm-author">
+            <div class="pm-avatar av-blue">AK</div>
+            <span>Ahmed Al-Karimi</span>
+          </div>
+        </div>
+        <h2>Global Sugar Market Outlook 2025: Origins, Volatility &amp; What Buyers Need to Know</h2>
+        <p class="excerpt">Brazil's back-to-back crop concerns, India's policy unpredictability, and rising African demand are reshaping the global sugar trade. We break down the signals that matter, the corridors that are tightening, and the hedging strategies that sophisticated buyers are deploying right now.</p>
+        <a href="#" class="read-more">
+          Read Full Analysis
+          <svg class="arw" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="tags">
+          <span class="tag">Sugar Markets</span>
+          <span class="tag">Brazil Origin</span>
+          <span class="tag">Price Outlook</span>
+          <span class="tag">MENA Buyers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOG GRID + SIDEBAR ============ -->
+<section class="blog-section section">
+  <div class="wrap">
+    <div class="blog-layout">
+
+      <!-- Posts -->
+      <div class="posts-area">
+        <div class="posts-grid">
+
+          <!-- Wide card 1 -->
+          <div class="post-card card-wide reveal">
+            <div class="post-card-img">
+              <img src="public/servicesimage/2152020382.jpg" alt="DB Group logistics model" loading="lazy" />
+              <span class="pc-cat c-navy">Logistics &amp; Trade</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Logistics &amp; Trade</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">2 Apr 2025</span>
+              </div>
+              <h3>How We Move 1 Million Metric Tonnes: Inside DB Group's End-to-End Supply Chain</h3>
+              <p class="excerpt">From origin loading at Brazilian port terminals to final delivery in Mombasa or Lagos — an inside look at how DB Group coordinates sea freight, customs, inland logistics and documentation across three continents without missing a beat.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-navy">SR</div>
+                  <span>Sana Rasheed · 6 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="post-card reveal d1">
+            <div class="post-card-img">
+              <img src="public/servicesimage/sugar1.jpg" alt="Sugar grades procurement" loading="lazy" />
+              <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Sugar &amp; Sweeteners</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">18 Mar 2025</span>
+              </div>
+              <h3>ICUMSA 45 vs. ICUMSA 100: Which Sugar Grade Is Right for Your Market?</h3>
+              <p class="excerpt">Understanding sugar specifications, pricing differentials, and which buyer markets prefer which grades — a practical guide for procurement managers and food manufacturers.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-gold">MF</div>
+                  <span>Mohammed Farouq · 5 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="post-card reveal d2">
+            <div class="post-card-img">
+              <img src="public/servicesimage/oil1.jpg" alt="Edible oil trade 2025" loading="lazy" />
+              <span class="pc-cat c-green">Edible Oils</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Edible Oils</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">5 Mar 2025</span>
+              </div>
+              <h3>Palm, Sunflower or Soybean? Navigating the Edible Oil Substitution Game in 2025</h3>
+              <p class="excerpt">When one oil becomes expensive or scarce, buyers pivot — but not all substitutions are straightforward. Here's how to think about origin, specification and price-spread when the market shifts.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-blue">AK</div>
+                  <span>Ahmed Al-Karimi · 7 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wide card 2 -->
+          <div class="post-card card-wide reveal d1">
+            <div class="post-card-img">
+              <img src="public/5.jpg" alt="Dubai DAFZA commodity hub" loading="lazy" />
+              <span class="pc-cat c-blue">MENA &amp; Africa</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">MENA &amp; Africa</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">22 Feb 2025</span>
+              </div>
+              <h3>Why Dubai Remains the Undisputed Hub of Global Commodity Trade in 2025</h3>
+              <p class="excerpt">DAFZA's regulatory framework, strategic geography, world-class port infrastructure, and a deep pool of trade-finance banks make Dubai the natural gateway between East and West. We explore what makes the model work — and why it continues to attract serious trading houses from every corner of the globe.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-navy">DB</div>
+                  <span>DB Group Research · 9 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="post-card reveal">
+            <div class="post-card-img">
+              <img src="public/servicesimage/sugar2.jpg" alt="Brazil sugar origin" loading="lazy" />
+              <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Sugar &amp; Sweeteners</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">10 Feb 2025</span>
+              </div>
+              <h3>Brazil's Centre-South Region: The World's Sugar Powerhouse Explained</h3>
+              <p class="excerpt">Brazil's Centre-South accounts for over 90% of the country's sugar production. We profile the key mills, harvest windows, port logistics and how local factors ripple into global prices.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-green">PT</div>
+                  <span>Priya Thakar · 6 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="post-card reveal d1">
+            <div class="post-card-img">
+              <img src="public/servicesimage/13758.jpg" alt="Food safety compliance" loading="lazy" />
+              <span class="pc-cat c-blue">Compliance</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Compliance</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">28 Jan 2025</span>
+              </div>
+              <h3>HACCP &amp; ISO 22000: What Certification Actually Means for Commodity Buyers</h3>
+              <p class="excerpt">A quality certificate is only as good as the process behind it. We walk through what HACCP and ISO 22000 mean in practice — inspection protocols, third-party verification, and chain-of-custody documentation.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-blue">AK</div>
+                  <span>Ahmed Al-Karimi · 8 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="post-card reveal d2">
+            <div class="post-card-img">
+              <img src="public/servicesimage/oil2.jpg" alt="Palm oil Indonesia" loading="lazy" />
+              <span class="pc-cat c-green">Edible Oils</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Edible Oils</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">15 Jan 2025</span>
+              </div>
+              <h3>Malaysian &amp; Indonesian Palm Oil: Origins, Grades &amp; Procurement Strategy</h3>
+              <p class="excerpt">RBD Palm Oil, PFAD, Palm Olein — understanding the product breakdown and which origins offer the best combination of price, quality and lead time for MENA and African importers.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-gold">MF</div>
+                  <span>Mohammed Farouq · 5 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="post-card reveal d3">
+            <div class="post-card-img">
+              <img src="public/aboutimages/2151711706.jpg" alt="Africa commodity demand" loading="lazy" />
+              <span class="pc-cat c-navy">MENA &amp; Africa</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">MENA &amp; Africa</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">4 Jan 2025</span>
+              </div>
+              <h3>Sub-Saharan Africa's Rising Commodity Demand: Opportunities for Global Traders</h3>
+              <p class="excerpt">Nigeria, Kenya, Tanzania, Ethiopia — fast-growing economies driving a step change in commodity import volumes. We profile the key markets and logistics corridors linking them to global supply.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-green">PT</div>
+                  <span>Priya Thakar · 7 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wide card 3 -->
+          <div class="post-card card-wide reveal">
+            <div class="post-card-img">
+              <img src="public/16191.jpg" alt="Trade finance LC documentation" loading="lazy" />
+              <span class="pc-cat c-blue">Logistics &amp; Trade</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Logistics &amp; Trade</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">19 Dec 2024</span>
+              </div>
+              <h3>LC, CAD &amp; Open Account: Choosing the Right Trade Finance Structure for Your Next Shipment</h3>
+              <p class="excerpt">Letters of Credit protect both parties but carry cost and complexity. Cash Against Documents is faster but leaves the buyer exposed. Open account requires trust. We explain when to use each — and how DB Group facilitates all three with leading trade-finance banks globally.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-blue">SR</div>
+                  <span>Sana Rasheed · 10 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 10 -->
+          <div class="post-card reveal d1">
+            <div class="post-card-img">
+              <img src="public/servicesimage/30681.jpg" alt="Rice 2025 outlook" loading="lazy" />
+              <span class="pc-cat c-navy">Market Analysis</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Market Analysis</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">3 Dec 2024</span>
+              </div>
+              <h3>The 2025 Rice Outlook: India's Ban, Thailand's Gain, and What Buyers Should Do Now</h3>
+              <p class="excerpt">India's non-basmati rice export ban has reshuffled global trade flows. Thailand, Vietnam and Pakistan are the immediate beneficiaries — but pricing dynamics are evolving fast heading into 2025.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-navy">DB</div>
+                  <span>DB Group Research · 9 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 11 -->
+          <div class="post-card reveal d2">
+            <div class="post-card-img">
+              <img src="public/servicesimage/sugar3.jpg" alt="Raw vs refined sugar" loading="lazy" />
+              <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Sugar &amp; Sweeteners</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">14 Nov 2024</span>
+              </div>
+              <h3>Refinery vs. Raw Sugar: When Does It Make Sense to Buy Raws?</h3>
+              <p class="excerpt">Raw sugar offers a pricing edge — but only if you have access to a refinery. We examine the economics, logistics, and risk profile of raw sugar vs. refined, and what's driving each corridor today.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-green">PT</div>
+                  <span>Priya Thakar · 5 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 12 -->
+          <div class="post-card reveal d3">
+            <div class="post-card-img">
+              <img src="public/servicesimage/64441.jpg" alt="Wheat supply chain volatile" loading="lazy" />
+              <span class="pc-cat c-red">Market Analysis</span>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="pm-cat">Market Analysis</span>
+                <span class="pm-dot"></span>
+                <span class="pm-date">28 Oct 2024</span>
+              </div>
+              <h3>Wheat in a Fragmented World: Supply Chain Strategies for a Volatile Market</h3>
+              <p class="excerpt">Black Sea uncertainty, Australian crop swings, and divergent import demand from Egypt, Turkey and the Gulf — building resilient wheat procurement means thinking about corridor diversification before the crisis hits.</p>
+              <div class="post-card-footer">
+                <div class="pm-author">
+                  <div class="pm-avatar av-blue">AK</div>
+                  <span>Ahmed Al-Karimi · 8 min</span>
+                </div>
+                <div class="pc-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /posts-grid -->
+
+        <!-- Load More -->
+        <div class="load-more-wrap reveal">
+          <button class="btn-outline-blue" id="loadMoreBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            Load More Articles
+          </button>
+          <p>Showing 12 of 48 articles</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination reveal">
+          <button class="pg-btn active">1</button>
+          <button class="pg-btn">2</button>
+          <button class="pg-btn">3</button>
+          <button class="pg-btn">4</button>
+          <button class="pg-btn" style="width:auto;padding-inline:12px;">…</button>
+          <button class="pg-btn">8</button>
+          <button class="pg-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+      </div><!-- /posts-area -->
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+
+        <!-- Market Pulse -->
+        <div class="sidebar-widget reveal">
+          <div class="sw-head">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Market Pulse
+            </h4>
+          </div>
+          <div class="sw-body">
+            <div class="pulse-item">
+              <div><div class="pi-name">Raw Sugar #11</div><div class="pi-sub">ICE Futures</div></div>
+              <div class="pi-right"><div class="pi-val">22.34¢/lb</div><span class="pi-chg pi-up">▲ +1.8%</span></div>
+            </div>
+            <div class="pulse-item">
+              <div><div class="pi-name">White Sugar #5</div><div class="pi-sub">Liffe London</div></div>
+              <div class="pi-right"><div class="pi-val">$608/MT</div><span class="pi-chg pi-up">▲ +0.9%</span></div>
+            </div>
+            <div class="pulse-item">
+              <div><div class="pi-name">Palm Oil (CPO)</div><div class="pi-sub">Bursa Malaysia</div></div>
+              <div class="pi-right"><div class="pi-val">4,210 MYR</div><span class="pi-chg pi-down">▼ −0.6%</span></div>
+            </div>
+            <div class="pulse-item">
+              <div><div class="pi-name">Sunflower Oil</div><div class="pi-sub">Black Sea FOB</div></div>
+              <div class="pi-right"><div class="pi-val">$930/MT</div><span class="pi-chg pi-up">▲ +2.3%</span></div>
+            </div>
+            <div class="pulse-item">
+              <div><div class="pi-name">Rice (Broken 5%)</div><div class="pi-sub">Thai Origin FOB</div></div>
+              <div class="pi-right"><div class="pi-val">$465/MT</div><span class="pi-chg pi-down">▼ −1.1%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Most Read -->
+        <div class="sidebar-widget reveal d1">
+          <div class="sw-head">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 3 6.3 6.9 1-5 4.9 1.2 6.8-6.1-3.2L5.9 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+              Most Read
+            </h4>
+          </div>
+          <div class="sw-body" style="padding-block:14px;">
+            <div class="pop-post">
+              <div class="pp-img"><img src="public/servicesimage/oil3.jpg" alt="" /></div>
+              <div class="pp-body"><h5>Palm vs. Soybean: The 2025 Price Spread Playbook</h5><span>Edible Oils · 7 min · 4.2k reads</span></div>
+            </div>
+            <div class="pop-post">
+              <div class="pp-img"><img src="public/aboutimages/83377.jpg" alt="" /></div>
+              <div class="pp-body"><h5>Understanding Demurrage: How to Avoid Costly Port Delays</h5><span>Logistics &amp; Trade · 5 min · 3.8k reads</span></div>
+            </div>
+            <div class="pop-post">
+              <div class="pp-img"><img src="public/servicesimage/2151251991.jpg" alt="" /></div>
+              <div class="pp-body"><h5>India's Rice Ban: 6 Months Later — Where Are Prices?</h5><span>Market Analysis · 8 min · 3.1k reads</span></div>
+            </div>
+            <div class="pop-post">
+              <div class="pp-img"><img src="public/aboutimages/74772.jpg" alt="" /></div>
+              <div class="pp-body"><h5>Building a Commodity Procurement Calendar for 2025</h5><span>Compliance · 6 min · 2.7k reads</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="sidebar-widget nl-widget reveal d2">
+          <div class="nl-head">
+            <h4>Weekly Market Brief</h4>
+            <p>DB Group's commodity intelligence digest delivered every Monday morning. No noise — just the signals that matter.</p>
+          </div>
+          <div class="nl-form">
+            <input class="nl-input" type="email" placeholder="your@email.com" />
+            <button class="nl-btn">Subscribe Free →</button>
+            <span class="nl-note">No spam. Unsubscribe anytime.</span>
+          </div>
+        </div>
+
+        <!-- Topics -->
+        <div class="sidebar-widget reveal d3">
+          <div class="sw-head">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              Browse Topics
+            </h4>
+          </div>
+          <div class="sw-body">
+            <div class="topic-cloud">
+              <span class="topic-tag">Sugar</span>
+              <span class="topic-tag">Palm Oil</span>
+              <span class="topic-tag">Rice</span>
+              <span class="topic-tag">Wheat</span>
+              <span class="topic-tag">Sunflower Oil</span>
+              <span class="topic-tag">MENA</span>
+              <span class="topic-tag">Africa</span>
+              <span class="topic-tag">Brazil</span>
+              <span class="topic-tag">India</span>
+              <span class="topic-tag">DAFZA</span>
+              <span class="topic-tag">Trade Finance</span>
+              <span class="topic-tag">ISO 22000</span>
+              <span class="topic-tag">Logistics</span>
+              <span class="topic-tag">Hedging</span>
+              <span class="topic-tag">LC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow -->
+        <div class="sidebar-widget reveal" style="background:var(--navy); position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(210,154,53,.1) 1px,transparent 1.5px);background-size:20px 20px;pointer-events:none;"></div>
+          <div style="padding:26px 22px; position:relative; text-align:center;">
+            <img src="public/logo.png" alt="DB Group FZCO" style="height:40px; filter:brightness(0) invert(1); margin:0 auto 16px; display:block;" />
+            <p style="color:#9fb0c4; font-size:14px; line-height:1.6; margin-bottom:18px;">Follow DB Group for real-time market updates, trade insights and industry news.</p>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+              <a href="#" class="soc-follow-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg>
+                LinkedIn
+              </a>
+              <a href="#" class="soc-follow-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg>
+                X / Twitter
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISUAL STORIES ============ -->
+<section class="section" style="background:var(--paper-2); padding-block:clamp(48px,7vw,80px);">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center; margin-bottom:44px;">
+      <span class="eyebrow">Visual Stories</span>
+      <h2 style="font-size:clamp(26px,3.6vw,42px); margin-top:14px;">Behind the Trade: In Pictures</h2>
+      <p style="color:var(--muted); margin-top:12px; max-width:50ch; margin-inline:auto; font-size:17px;">A visual journey through the commodities, origins and operations that define what DB Group does every day.</p>
+    </div>
+    <div class="vs-grid reveal d1">
+      <div class="vs-card">
+        <img src="public/servicesimage/2149359449.jpg" alt="Origin operations" loading="lazy" />
+        <div class="vs-card-overlay"></div>
+        <div class="vs-card-label">
+          <span class="vs-cat">Origin Operations</span>
+          <strong>Field to Port: How It Begins</strong>
+        </div>
+      </div>
+      <div class="vs-card">
+        <img src="public/servicesimage/35744.jpg" alt="Shipping logistics" loading="lazy" />
+        <div class="vs-card-overlay"></div>
+        <div class="vs-card-label">
+          <span class="vs-cat">Sea Freight</span>
+          <strong>Bulk Vessels &amp; Container Lines</strong>
+        </div>
+      </div>
+      <div class="vs-card">
+        <img src="public/aboutimages/158302.jpg" alt="Warehouse and storage" loading="lazy" />
+        <div class="vs-card-overlay"></div>
+        <div class="vs-card-label">
+          <span class="vs-cat">Warehousing</span>
+          <strong>Storage, Quality &amp; Compliance</strong>
+        </div>
+      </div>
+      <div class="vs-card">
+        <img src="public/aboutimages/2151252086.jpg" alt="Global trade network" loading="lazy" />
+        <div class="vs-card-overlay"></div>
+        <div class="vs-card-label">
+          <span class="vs-cat">Global Reach</span>
+          <strong>30+ Markets, One Trading House</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER BANNER ============ -->
+<section class="nl-banner">
+  <div class="wrap">
+    <div class="nl-banner-inner">
+      <span class="eyebrow light reveal">Stay Ahead of the Market</span>
+      <h2 class="reveal d1">Get the Weekly DB Group Intelligence Brief</h2>
+      <p class="reveal d2">Market-moving signals, supply chain intelligence, and trade opportunities — curated weekly by our team of commodity specialists and delivered straight to your inbox.</p>
+      <div class="nl-banner-form reveal d3">
+        <input class="nl-banner-input" type="email" placeholder="Enter your work email" />
+        <a href="#" class="btn btn-gold">Subscribe <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <p class="reveal d3" style="color:rgba(255,255,255,.32); font-size:12px; margin-top:14px; font-family:var(--font-mono); letter-spacing:.08em;">Trusted by 2,400+ commodity professionals across 30 countries</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="cta-band">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div>
+        <span class="eyebrow">Ready to Trade Smarter?</span>
+        <h2>Start a Conversation With Our Team</h2>
+      </div>
+      <a href="contact.html" class="btn btn-gold">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<footer class="footer">
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="contact">
   <div class="wrap">
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
           <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
-        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in sourcing, logistics and distribution of essential food and agri-commodities.</p>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+        </div>
       </div>
       <div class="foot-col">
         <h4>Explore</h4>
         <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="blogs.html">Blogs</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h4>Contact</h4>
         <ul class="foot-contact">
-          <li>+971 4 255 5144</li>
-          <li>info@dbgroupfzco.com</li>
-          <li>Office 605, Building 5, Dubai Airport Free Zone, Dubai, UAE</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
         </ul>
       </div>
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
 
-<script src="app.js"></script>
+<style>
+/* Social follow buttons in sidebar (inline to avoid class collision) */
+.soc-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  color: #b0c0d4;
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  transition: background .22s, color .22s, border-color .22s;
+}
+.soc-follow-btn:hover {
+  background: var(--gold);
+  color: #1d1402;
+  border-color: var(--gold);
+}
+</style>
+
+<script>
+/* ---- Scroll progress bar ---- */
+const prog = document.createElement('div');
+prog.id = 'scroll-prog';
+document.body.prepend(prog);
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
+
+/* ---- Sticky header shadow ---- */
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  hdr.classList.toggle('scrolled', scrollY > 40);
+}, { passive: true });
+
+/* ---- Reveal observer ---- */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-left').forEach(el => obs.observe(el));
+
+/* ---- Counter animation ---- */
+function animateCount(el) {
+  const target = +el.dataset.count;
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
+}
+const cntObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cntObs.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+/* ---- Category filter ---- */
+function setFilter(btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.post-card, .featured-card');
+  cards.forEach(c => { c.style.transition = 'opacity .28s'; c.style.opacity = '0'; });
+  setTimeout(() => cards.forEach(c => c.style.opacity = '1'), 300);
+}
+
+/* ---- Progress bar fill on scroll (quality section) ---- */
+const fillEls = document.querySelectorAll('.bar .fill');
+if (fillEls.length) {
+  const fillObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.width = e.target.dataset.w || '92%'; fillObs.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  fillEls.forEach(el => fillObs.observe(el));
+}
+
+/* ---- Load more button ---- */
+const lmBtn = document.getElementById('loadMoreBtn');
+if (lmBtn) {
+  lmBtn.addEventListener('click', function() {
+    this.disabled = true;
+    this.style.opacity = '.6';
+    const origHTML = this.innerHTML;
+    this.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/></svg> Loading…';
+    setTimeout(() => {
+      this.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> All Articles Loaded';
+      this.style.opacity = '1';
+      this.style.background = 'var(--primary)';
+      this.style.color = '#fff';
+      this.style.borderColor = 'var(--primary)';
+    }, 1200);
+  });
+}
+
+/* ---- Pagination click ---- */
+document.querySelectorAll('.pg-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pg-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+/* ---- Post card ripple ---- */
+document.querySelectorAll('.post-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    r.style.cssText = `position:absolute;border-radius:50%;background:rgba(26,95,168,.12);width:1px;height:1px;left:${e.offsetX}px;top:${e.offsetY}px;transform:scale(0);transition:transform .6s ease,opacity .6s ease;opacity:1;pointer-events:none;z-index:10;`;
+    this.appendChild(r);
+    requestAnimationFrame(() => { r.style.transform = 'scale(600)'; r.style.opacity = '0'; });
+    setTimeout(() => r.remove(), 700);
+  });
+});
+
+/* ---- Hero parallax (targets only the image div, not the animated wrapper) ---- */
+const heroParallax = document.getElementById('heroParallax');
+if (heroParallax) {
+  window.addEventListener('scroll', () => {
+    if (scrollY < innerHeight * 1.5) {
+      heroParallax.style.transform = `translateY(${scrollY * 0.22}px)`;
+    }
+  }, { passive: true });
+}
+/* ---- Mobile hamburger menu ---- */
+(function() {
+  var burger = document.querySelector('.burger');
+  var menu = document.querySelector('.menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('menu--open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
 </body>
 </html>

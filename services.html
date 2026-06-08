@@ -6,464 +6,802 @@
 <title>Services | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Libre+Franklin:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <style>
-  body { background: #f7f4ed; }
-  .services-page { overflow: hidden; }
-  .svc-hero {
-    min-height: min(820px, calc(100vh - 118px));
-    position: relative;
-    display: grid;
-    align-items: end;
-    isolation: isolate;
-    background: #081222;
-  }
-  .svc-hero__bg,
-  .svc-hero__bg img,
-  .svc-hero__shade { position: absolute; inset: 0; }
-  .svc-hero__bg { z-index: -3; overflow: hidden; }
-  .svc-hero__bg img {
-    width: 100%; height: 112%; object-fit: cover; object-position: center;
-    transform-origin: center;
-    animation: serviceHeroZoom 18s ease-out forwards;
-  }
-  .svc-hero__shade {
-    z-index: -2;
-    background:
-      linear-gradient(90deg, rgba(8,18,34,.92) 0%, rgba(8,18,34,.64) 46%, rgba(8,18,34,.16) 100%),
-      linear-gradient(0deg, rgba(8,18,34,.92), rgba(8,18,34,0) 56%);
-  }
-  .svc-hero__grain {
-    position: absolute; inset: 0; z-index: -1; opacity: .22;
-    background-image: radial-gradient(rgba(255,255,255,.42) 1px, transparent 1.4px);
-    background-size: 20px 20px;
-    mask-image: linear-gradient(90deg, #000, transparent 72%);
-  }
-  .svc-hero__inner {
-    padding-block: clamp(80px, 12vw, 142px) clamp(54px, 8vw, 88px);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-    gap: clamp(32px, 6vw, 88px);
-    align-items: end;
-  }
-  .svc-hero h1 {
-    color: #fff;
-    font-size: clamp(38px, 7vw, 86px);
-    line-height: .93;
-    max-width: 11ch;
-    font-weight: 900;
-  }
-  .svc-hero .lede {
-    color: #d5deea;
-    margin-top: 26px;
-    font-size: clamp(16px, 1.6vw, 20px);
-  }
-  .svc-hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
-  .svc-hero__panel {
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.18);
-    background: rgba(255,255,255,.08);
-    backdrop-filter: blur(18px) saturate(1.3);
-    border-radius: 18px;
-    padding: clamp(20px, 3vw, 30px);
-    box-shadow: 0 28px 70px rgba(0,0,0,.24);
-    position: relative;
-    overflow: hidden;
-    transition: transform .45s cubic-bezier(.16,1,.3,1), border-color .45s ease, box-shadow .45s ease, background .45s ease;
-  }
-  .svc-hero__panel::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.2) 34%, transparent 58%);
-    transform: translateX(-120%);
-    transition: transform .9s cubic-bezier(.16,1,.3,1);
-    pointer-events: none;
-  }
-  .svc-hero__panel:hover {
-    transform: translateY(-10px) scale(1.015);
-    border-color: rgba(243,222,172,.46);
-    background: rgba(255,255,255,.11);
-    box-shadow: 0 38px 88px rgba(0,0,0,.34);
-  }
-  .svc-hero__panel:hover::before { transform: translateX(120%); }
-  .svc-hero__panel b {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1;
-    color: var(--gold-soft);
-  }
-  .svc-hero__panel span { display: block; color: #d3deec; margin-top: 8px; }
-  .svc-hero__panel hr { border: 0; height: 1px; background: rgba(255,255,255,.16); margin: 22px 0; }
-  .svc-hero__mini { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .svc-hero__mini small {
-    display: block;
-    font-family: var(--font-mono);
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: #9fb0c4;
-    font-size: 10px;
-  }
-  .svc-hero__mini strong { display: block; margin-top: 4px; font-family: var(--font-display); color: #fff; }
 
-  .service-strip {
-    margin-top: -38px;
-    position: relative;
-    z-index: 3;
-  }
-  .strip-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: #fff;
-    border: 1px solid var(--line-soft);
-    box-shadow: var(--shadow-lg);
-    border-radius: 18px;
-    overflow: hidden;
-  }
-  .strip-item {
-    padding: 24px;
-    min-height: 132px;
-    border-left: 1px solid var(--line-soft);
-    position: relative;
-    overflow: hidden;
-    transition: background .35s ease, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
-  }
-  .strip-item::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(210,154,53,.14), rgba(26,95,168,.08) 48%, transparent 70%);
-    opacity: 0;
-    transition: opacity .35s ease;
-  }
-  .strip-item::after {
-    content: "";
-    position: absolute;
-    left: 24px;
-    right: 24px;
-    bottom: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--gold));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform .45s cubic-bezier(.16,1,.3,1);
-  }
-  .strip-item:hover { background: #fbfaf6; transform: translateY(-6px); box-shadow: 0 24px 46px rgba(12,30,56,.12); }
-  .strip-item:hover::before { opacity: 1; }
-  .strip-item:hover::after { transform: scaleX(1); }
-  .strip-item > * { position: relative; }
-  .strip-item:first-child { border-left: 0; }
-  .strip-item span { font-family: var(--font-mono); color: var(--gold-d); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
-  .strip-item h3 { margin-top: 10px; font-size: 20px; }
-  .strip-item p { margin-top: 8px; color: var(--muted); font-size: 14.5px; }
+/* ============================================================
+   SERVICES PAGE — pro-level redesign
+   ============================================================ */
 
-  .builder-section { padding-block: clamp(74px, 10vw, 128px); }
-  .section-intro { display: grid; grid-template-columns: minmax(0, .88fr) minmax(280px, .62fr); gap: clamp(28px, 6vw, 76px); align-items: end; margin-bottom: 46px; }
-  .section-intro h2 { margin-top: 16px; font-size: clamp(34px, 5vw, 62px); }
-  .section-intro p { color: var(--muted); font-size: 18px; }
+/* ---- Breadcrumb ---- */
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.44); margin-bottom: 18px;
+}
+.breadcrumb a { color: rgba(255,255,255,.44); transition: color .2s; }
+.breadcrumb a:hover { color: var(--gold-soft); }
+.breadcrumb svg { width: 12px; height: 12px; opacity: .44; }
 
-  .pillar-grid {
-    display: grid;
-    grid-template-columns: 1.25fr .9fr .9fr;
-    grid-auto-rows: minmax(255px, auto);
-    gap: 18px;
-  }
-  .pillar {
-    position: relative;
-    min-height: 330px;
-    overflow: hidden;
-    border-radius: 18px;
-    display: flex;
-    align-items: flex-end;
-    color: #fff;
-    box-shadow: var(--shadow);
-    isolation: isolate;
-    transform-style: preserve-3d;
-    transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease;
-  }
-  .pillar:first-child { grid-row: span 2; min-height: 560px; }
-  .pillar img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform .9s cubic-bezier(.16,1,.3,1), filter .5s ease;
-    z-index: -3;
-  }
-  .pillar::before {
-    content: "";
-    position: absolute; inset: 0; z-index: -2;
-    background: linear-gradient(0deg, rgba(8,18,34,.88), rgba(8,18,34,.18) 72%);
-  }
-  .pillar::after {
-    content: "";
-    position: absolute; inset: auto 20px 20px 20px; height: 1px;
-    background: rgba(255,255,255,.25);
-    transform: scaleX(.2);
-    transform-origin: left;
-    transition: transform .55s cubic-bezier(.16,1,.3,1);
-  }
-  .pillar:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 34px 74px rgba(8,18,34,.26);
-  }
-  .pillar:hover img { transform: scale(1.1); filter: saturate(1.13) contrast(1.04); }
-  .pillar:hover::after { transform: scaleX(1); }
-  .pillar__body {
-    padding: clamp(22px, 3vw, 34px);
-    transform: translateY(8px);
-    transition: transform .45s cubic-bezier(.16,1,.3,1);
-  }
-  .pillar:hover .pillar__body { transform: translateY(0); }
-  .pillar__body span { font-family: var(--font-mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-soft); }
-  .pillar__body h3 { color: #fff; font-size: clamp(24px, 3vw, 38px); margin-top: 12px; }
-  .pillar__body p { color: #d7e1ee; margin-top: 12px; max-width: 42ch; }
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.svc-hero {
+  position: relative;
+  min-height: min(860px, 96vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: #081222;
+  isolation: isolate;
+}
 
-  .commodity-band {
-    background: #fff;
-    border-block: 1px solid var(--line-soft);
-  }
-  .commodity-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-  .commodity {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1);
-  }
-  .commodity::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.62) 42%, transparent 62%);
-    transform: translateX(-120%);
-    transition: transform .85s cubic-bezier(.16,1,.3,1);
-    pointer-events: none;
-  }
-  .commodity:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-  .commodity:hover::after { transform: translateX(120%); }
-  .commodity__media { height: 250px; overflow: hidden; position: relative; }
-  .commodity__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.16,1,.3,1); }
-  .commodity:hover img { transform: scale(1.08); }
-  .commodity__body { padding: 24px; }
-  .commodity__body h3 { font-size: 25px; }
-  .commodity__body p { color: var(--muted); margin-top: 10px; }
-  .commodity__tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
-  .commodity__tags span {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    border: 1px solid var(--line);
-    color: var(--ink-soft);
-    padding: 7px 10px;
-    border-radius: 999px;
-    background: #fff;
-    transition: transform .28s ease, background .28s ease, color .28s ease, border-color .28s ease;
-  }
-  .commodity:hover .commodity__tags span {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-  }
-  .commodity:hover .commodity__tags span:nth-child(2) { transition-delay: .04s; }
-  .commodity:hover .commodity__tags span:nth-child(3) { transition-delay: .08s; }
-  .commodity__tags span:hover { transform: translateY(-3px); background: var(--gold); border-color: var(--gold); color: #1d1402; }
+.svc-hero__bg {
+  position: absolute; inset: 0; z-index: -3; overflow: hidden;
+  animation: svcZoom 20s ease-out forwards;
+  transform-origin: center center;
+}
+.svc-hero__bg img {
+  width: 100%; height: 115%; object-fit: cover; object-position: center 30%;
+  will-change: transform;
+}
+.svc-hero__shade {
+  position: absolute; inset: 0; z-index: -2;
+  background:
+    linear-gradient(105deg, rgba(8,18,34,.97) 0%, rgba(8,18,34,.78) 42%, rgba(8,18,34,.28) 78%, rgba(8,18,34,.12) 100%),
+    linear-gradient(0deg, rgba(8,18,34,.94) 0%, rgba(8,18,34,0) 48%);
+}
+.svc-hero__grain {
+  position: absolute; inset: 0; z-index: -1; opacity: .18;
+  background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+/* Animated gold line at bottom */
+.svc-hero::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; z-index: 5;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+  background-size: 300%;
+  animation: ctaGrad 7s ease infinite;
+}
 
-  .flow-wrap {
-    display: grid;
-    grid-template-columns: .9fr 1.1fr;
-    gap: clamp(34px, 7vw, 86px);
-    align-items: center;
-  }
-  .flow-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    min-height: 560px;
-  }
-  .flow-gallery img {
-    width: 100%; height: 100%; object-fit: cover;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-  }
-  .flow-gallery img:nth-child(1) { grid-row: span 2; }
-  .flow-gallery img:nth-child(2) { margin-top: 48px; }
-  .flow-gallery img:nth-child(3) { margin-bottom: 48px; }
-  .flow-steps { display: grid; gap: 14px; margin-top: 34px; }
-  .flow-step {
-    display: grid;
-    grid-template-columns: 58px 1fr;
-    gap: 18px;
-    align-items: start;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.66);
-    transition: transform .28s ease, background .28s ease, box-shadow .28s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .flow-step::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 4px;
-    background: linear-gradient(180deg, var(--primary), var(--gold));
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform .42s cubic-bezier(.16,1,.3,1);
-  }
-  .flow-step:hover { transform: translateX(10px); background: #fff; box-shadow: var(--shadow); }
-  .flow-step:hover::before { transform: scaleY(1); }
-  .flow-step span {
-    width: 58px; height: 58px; display: grid; place-items: center;
-    border-radius: 15px;
-    background: var(--navy);
-    color: var(--gold-soft);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    transition: transform .35s cubic-bezier(.16,1,.3,1), background .35s ease, color .35s ease;
-  }
-  .flow-step:hover span {
-    transform: rotate(-4deg) scale(1.08);
-    background: var(--gold);
-    color: #20180a;
-  }
-  .flow-step h3 { font-size: 22px; }
-  .flow-step p { color: var(--muted); margin-top: 6px; }
+.svc-hero__inner {
+  position: relative; z-index: 2;
+  padding-block: clamp(100px,13vw,160px) clamp(50px,7vw,80px);
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: end;
+}
 
-  .assurance {
-    background:
-      linear-gradient(90deg, rgba(8,18,34,.92), rgba(8,18,34,.58)),
-      url('public/servicesimage/30681.jpg') center/cover no-repeat;
-    color: #fff;
-  }
-  .assurance .section-intro h2,
-  .assurance h3 { color: #fff; }
-  .assurance .section-intro p { color: #cfdaea; }
-  .assurance-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.16); }
-  .assurance-card {
-    background: rgba(8,18,34,.64);
-    padding: clamp(22px, 3vw, 32px);
-    min-height: 210px;
-    backdrop-filter: blur(8px);
-    position: relative;
-    overflow: hidden;
-    transition: transform .4s cubic-bezier(.16,1,.3,1), background .4s ease, box-shadow .4s ease;
-  }
-  .assurance-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 18% 18%, rgba(210,154,53,.28), transparent 34%),
-      linear-gradient(135deg, rgba(255,255,255,.08), transparent 55%);
-    opacity: 0;
-    transition: opacity .4s ease;
-  }
-  .assurance-card:hover {
-    transform: translateY(-10px);
-    background: rgba(8,18,34,.78);
-    box-shadow: 0 32px 70px rgba(0,0,0,.28);
-  }
-  .assurance-card:hover::before { opacity: 1; }
-  .assurance-card > * { position: relative; }
-  .assurance-card span { font-family: var(--font-mono); color: var(--gold-soft); letter-spacing: .18em; text-transform: uppercase; font-size: 11px; }
-  .assurance-card h3 { margin-top: 18px; font-size: 23px; }
-  .assurance-card p { color: #c5d2e2; margin-top: 10px; font-size: 15px; }
+/* Left text */
+.svc-hero h1 {
+  color: #fff;
+  font-size: clamp(26px, 3.6vw, 48px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  max-width: 16ch;
+  margin-top: 16px;
+}
+.svc-hero h1 em { font-style: normal; color: var(--gold); }
+.svc-hero h1 .outline {
+  -webkit-text-stroke: 2px rgba(255,255,255,.5);
+  color: transparent;
+}
+.svc-hero .lede {
+  color: #a8bdd5;
+  margin-top: 24px;
+  font-size: clamp(15px, 1.5vw, 18px);
+  max-width: 50ch;
+  line-height: 1.72;
+}
+.svc-hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
 
-  .image-cta {
-    position: relative;
-    min-height: 520px;
-    display: grid;
-    align-items: center;
-    isolation: isolate;
-    color: #fff;
-    overflow: hidden;
-  }
-  .image-cta img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3;
-    transition: transform 1.1s cubic-bezier(.16,1,.3,1), filter .5s ease;
-  }
-  .image-cta:hover img { transform: scale(1.045); filter: saturate(1.08) contrast(1.03); }
-  .image-cta::before {
-    content: "";
-    position: absolute; inset: 0; z-index: -2;
-    background: linear-gradient(90deg, rgba(8,18,34,.92), rgba(8,18,34,.42));
-  }
-  .image-cta__content {
-    margin-left: 0;
-    padding-left: clamp(46px, 7vw, 108px);
-    padding-right: var(--gut);
-  }
-  .image-cta h2 { color: #fff; font-size: clamp(34px, 5.6vw, 70px); max-width: 12ch; }
-  .image-cta p { color: #d4deeb; max-width: 52ch; margin-top: 20px; }
-  .image-cta .btn,
-  .svc-hero__actions .btn {
-    position: relative;
-    overflow: hidden;
-  }
-  .image-cta .btn::before,
-  .svc-hero__actions .btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.38) 42%, transparent 64%);
-    transform: translateX(-130%);
-    transition: transform .7s cubic-bezier(.16,1,.3,1);
-  }
-  .image-cta .btn:hover,
-  .svc-hero__actions .btn:hover { transform: translateY(-4px); }
-  .image-cta .btn:hover::before,
-  .svc-hero__actions .btn:hover::before { transform: translateX(130%); }
+/* Scroll cue */
+.scroll-cue {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.36);
+  margin-top: 38px;
+}
+.scroll-cue-line {
+  width: 32px; height: 1px; background: rgba(255,255,255,.24);
+}
+.scroll-cue svg { width: 14px; height: 14px; animation: scrollBounce 2s ease-in-out infinite; }
+@keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
-  @keyframes serviceHeroZoom {
-    from { transform: scale(1) translateY(0); }
-    to { transform: scale(1.08) translateY(-2%); }
-  }
-  @keyframes driftUp {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
-  }
-  .float-soft { animation: driftUp 6s ease-in-out infinite; }
-  .float-soft.drift-2 { animation-delay: .9s; }
-  @media (prefers-reduced-motion: reduce) {
-    .svc-hero__bg img, .float-soft { animation: none; }
-    .pillar img, .commodity__media img { transition: none; }
-  }
-  @media (max-width: 980px) {
-    .svc-hero__inner,
-    .section-intro,
-    .flow-wrap { grid-template-columns: 1fr; }
-    .strip-grid,
-    .commodity-grid,
-    .assurance-grid { grid-template-columns: repeat(2, 1fr); }
-    .pillar-grid { grid-template-columns: 1fr 1fr; }
-    .pillar:first-child { grid-row: auto; grid-column: span 2; min-height: 430px; }
-  }
-  @media (max-width: 640px) {
-    .svc-hero { min-height: auto; }
-    .svc-hero__inner { padding-top: 72px; }
-    .strip-grid,
-    .pillar-grid,
-    .commodity-grid,
-    .assurance-grid { grid-template-columns: 1fr; }
-    .pillar:first-child { grid-column: auto; }
-    .service-strip { margin-top: 0; }
-    .strip-grid { border-radius: 0; margin-inline: calc(var(--gut) * -1); }
-    .strip-item { border-left: 0; border-top: 1px solid var(--line-soft); }
-    .strip-item:first-child { border-top: 0; }
-    .flow-gallery { min-height: 0; grid-template-columns: 1fr; }
-    .flow-gallery img,
-    .flow-gallery img:nth-child(2),
-    .flow-gallery img:nth-child(3) { margin: 0; min-height: 240px; }
-  }
+/* Right panel */
+.svc-hero__panel {
+  color: #fff;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-radius: 22px;
+  padding: clamp(22px,3vw,34px);
+  box-shadow: 0 32px 80px rgba(0,0,0,.3);
+  position: relative; overflow: hidden;
+  transition: transform .45s cubic-bezier(.16,1,.3,1), border-color .4s, background .4s;
+  animation: floatY 5.5s ease-in-out infinite 0.8s;
+}
+.svc-hero__panel::before {
+  content: ""; position: absolute; inset: -1px;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.18) 34%, transparent 58%);
+  transform: translateX(-130%);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.svc-hero__panel:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(210,154,53,.4); background: rgba(255,255,255,.1); }
+.svc-hero__panel:hover::before { transform: translateX(130%); }
+
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.panel-head .ph-label {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--gold);
+}
+.panel-live {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.38);
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4ecf96;
+  box-shadow: 0 0 0 3px rgba(78,207,150,.25);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot { 0%,100%{box-shadow:0 0 0 3px rgba(78,207,150,.25)} 50%{box-shadow:0 0 0 6px rgba(78,207,150,.08)} }
+
+.panel-stat-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(255,255,255,.1);
+  border-radius: 14px; overflow: hidden; margin-bottom: 18px;
+}
+.ps {
+  background: rgba(8,18,34,.55); padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ps-val { font-family: var(--font-display); font-weight: 800; font-size: 26px; color: var(--gold-soft); line-height: 1; letter-spacing: -.02em; }
+.ps-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.38); }
+
+.panel-divider { height: 1px; background: rgba(255,255,255,.1); margin-block: 16px; }
+
+.panel-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.panel-tag {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  padding: 6px 13px; border-radius: 999px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.6);
+  transition: background .2s, border-color .2s, color .2s;
+}
+.panel-tag:hover { background: var(--gold); border-color: var(--gold); color: #1d1402; }
+
+/* Hero bottom stats bar */
+.svc-hero-statsbar {
+  position: relative; z-index: 3;
+  background: rgba(8,18,34,.72);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.statsbar-inner {
+  display: flex; align-items: stretch;
+  padding-block: 0;
+  min-height: 72px;
+}
+.sb-item {
+  flex: 1; display: flex; align-items: center; gap: 13px;
+  padding: 14px clamp(14px,3vw,36px);
+  border-right: 1px solid rgba(255,255,255,.1);
+  transition: background .25s;
+}
+.sb-item:last-child { border-right: none; }
+.sb-item:hover { background: rgba(255,255,255,.06); }
+.sb-ico {
+  width: 36px; height: 36px; flex: none;
+  border-radius: 10px; background: rgba(210,154,53,.15);
+  border: 1px solid rgba(210,154,53,.22);
+  display: grid; place-items: center; color: var(--gold);
+}
+.sb-ico svg { width: 17px; height: 17px; }
+.sb-val { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: #fff; line-height: 1; }
+.sb-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: 3px; }
+
+@media (max-width: 1000px) { .svc-hero__inner { grid-template-columns: 1fr; } .svc-hero__panel { display: none; } }
+@media (max-width: 640px) {
+  .statsbar-inner { flex-wrap: wrap; }
+  .sb-item { min-width: 50%; border-top: 1px solid rgba(255,255,255,.08); }
+  .sb-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
+  .sb-item:nth-child(1), .sb-item:nth-child(2) { border-top: none; }
+}
+
+/* ============================================================
+   2. VALUE STRIP
+   ============================================================ */
+.value-strip {
+  margin-top: 0; position: relative; z-index: 3;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line-soft);
+}
+.value-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.vs-item {
+  padding: clamp(24px,3vw,36px) clamp(20px,2.5vw,32px);
+  border-right: 1px solid var(--line-soft);
+  position: relative; overflow: hidden;
+  transition: background .3s, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+  cursor: default;
+}
+.vs-item:last-child { border-right: none; }
+.vs-item::after {
+  content: ""; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+}
+.vs-item:hover { background: var(--paper-2); transform: translateY(-5px); box-shadow: 0 18px 36px rgba(12,30,56,.1); }
+.vs-item:hover::after { transform: scaleX(1); }
+.vs-item > * { position: relative; }
+
+.vs-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  margin-bottom: 16px;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.vs-item:hover .vs-icon { transform: rotate(-6deg) scale(1.1); }
+.vs-icon.blue { background: #eaf1fa; color: var(--primary); }
+.vs-icon.gold { background: #fdf3e0; color: var(--gold-d); }
+.vs-icon.navy { background: #e5eaf2; color: var(--navy); }
+.vs-icon.green { background: #e4f5ec; color: #1a8a5b; }
+.vs-icon svg { width: 24px; height: 24px; }
+.vs-num { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.vs-item h3 { font-size: 20px; }
+.vs-item p { color: var(--muted); font-size: 14.5px; margin-top: 8px; line-height: 1.62; }
+
+@media (max-width: 860px) { .value-strip-grid { grid-template-columns: repeat(2,1fr); } .vs-item:nth-child(2) { border-right: none; } }
+@media (max-width: 520px) { .value-strip-grid { grid-template-columns: 1fr; } .vs-item { border-right: none; border-bottom: 1px solid var(--line-soft); } }
+
+/* ============================================================
+   3. BENTO SERVICE GRID
+   ============================================================ */
+.bento-section { background: var(--paper); }
+.bento-head { margin-bottom: 52px; }
+.bento-head-grid { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px; }
+.bento-head h2 { font-size: clamp(32px,4.8vw,60px); margin-top: 14px; }
+.bento-head p { color: var(--muted); font-size: 17px; max-width: 44ch; }
+.bento-head-right { text-align: right; }
+.bento-head-right .mini-stat { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.bento-head-right .mini-stat b { font-family: var(--font-display); font-size: 36px; color: var(--gold-d); display: block; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-bottom: 4px; }
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 18px;
+}
+.bento-card {
+  border-radius: 20px; overflow: hidden;
+  position: relative; color: #fff;
+  display: flex; align-items: flex-end;
+  box-shadow: var(--shadow);
+  transition: transform .42s cubic-bezier(.16,1,.3,1), box-shadow .42s;
+  cursor: pointer;
+  isolation: isolate;
+}
+.bento-card:hover { transform: translateY(-8px); box-shadow: 0 36px 72px rgba(8,18,34,.22); }
+.bento-card.tall { grid-row: span 2; }
+.bento-card img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .85s cubic-bezier(.16,1,.3,1), filter .5s;
+  z-index: -2;
+}
+.bento-card:hover img { transform: scale(1.08); filter: saturate(1.1); }
+.bento-card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(0deg, rgba(8,18,34,.9) 0%, rgba(8,18,34,.3) 52%, rgba(8,18,34,.0) 100%);
+  transition: opacity .4s;
+}
+.bento-card:hover::before { opacity: .88; }
+/* Expanding bottom line */
+.bento-card::after {
+  content: ""; position: absolute;
+  bottom: 0; left: 24px; right: 24px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--primary));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+  z-index: 2;
+}
+.bento-card:hover::after { transform: scaleX(1); }
+
+.bento-body {
+  padding: clamp(20px,3vw,32px);
+  position: relative; z-index: 1;
+  transform: translateY(6px);
+  transition: transform .42s cubic-bezier(.16,1,.3,1);
+  width: 100%;
+}
+.bento-card:hover .bento-body { transform: translateY(0); }
+.bento-tag {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold-soft); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 7px;
+}
+.bento-tag::before { content:""; width:18px; height:1px; background:var(--gold); }
+.bento-body h3 { font-size: clamp(18px,2.2vw,28px); color: #fff; line-height: 1.1; }
+.bento-body p { color: #c8d6e6; font-size: 14.5px; margin-top: 9px; max-width: 36ch; line-height: 1.65; }
+.bento-arrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 14px;
+  font-family: var(--font-display); font-weight: 600; font-size: 13px;
+  color: var(--gold-soft); opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .35s .1s, transform .35s .1s;
+}
+.bento-card:hover .bento-arrow { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 980px) {
+  .bento-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .bento-card.tall { grid-row: auto; }
+  .bento-card { min-height: 260px; }
+  .bento-head-grid { grid-template-columns: 1fr; }
+  .bento-head-right { text-align: left; }
+}
+@media (max-width: 560px) { .bento-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   4. COMMODITY LANES
+   ============================================================ */
+.commodities-section { background: var(--paper-2); }
+.commodity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.commodity-card {
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column;
+  transition: transform .38s cubic-bezier(.16,1,.3,1), box-shadow .38s;
+}
+.commodity-card:hover { transform: translateY(-10px); box-shadow: 0 32px 64px rgba(8,18,34,.16); }
+
+.commodity-img {
+  height: 240px; position: relative; overflow: hidden;
+}
+.commodity-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .75s cubic-bezier(.16,1,.3,1); }
+.commodity-card:hover .commodity-img img { transform: scale(1.08); }
+.commodity-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(8,18,34,.55) 0%, rgba(8,18,34,0) 55%);
+}
+.commodity-badge {
+  position: absolute; bottom: 16px; left: 16px;
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(8,18,34,.72); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px; padding: 7px 13px;
+}
+.commodity-badge-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.commodity-badge span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.8); }
+
+.commodity-body { padding: 24px 24px 28px; flex: 1; display: flex; flex-direction: column; }
+.commodity-body h3 { font-size: 24px; }
+.commodity-body p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.7; flex: 1; }
+
+.commodity-specs {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-top: 18px;
+}
+.spec-item {
+  background: var(--paper-2); border-radius: 10px; padding: 10px 12px;
+  border: 1px solid var(--line);
+  transition: background .2s, border-color .2s;
+}
+.commodity-card:hover .spec-item { background: #fff; border-color: var(--line-soft); }
+.spec-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.spec-val { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--ink); margin-top: 3px; }
+
+.commodity-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 18px; padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+.commodity-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.commodity-tag {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px;
+  background: var(--paper-2); border: 1px solid var(--line);
+  color: var(--muted);
+  transition: background .22s, color .22s, border-color .22s;
+}
+.commodity-card:hover .commodity-tag { background: var(--navy); border-color: var(--navy); color: var(--gold-soft); }
+.commodity-card:hover .commodity-tag:nth-child(2) { transition-delay: .04s; }
+.commodity-card:hover .commodity-tag:nth-child(3) { transition-delay: .08s; }
+
+.commodity-arrow {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid var(--line); background: #fff;
+  display: grid; place-items: center; color: var(--muted);
+  transition: background .22s, border-color .22s, color .22s, transform .28s;
+  flex: none;
+}
+.commodity-arrow svg { width: 15px; height: 15px; }
+.commodity-card:hover .commodity-arrow { background: var(--primary); border-color: var(--primary); color: #fff; transform: rotate(-45deg); }
+
+@media (max-width: 900px) { .commodity-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   5. PROCESS TIMELINE (horizontal)
+   ============================================================ */
+.process-section { background: var(--navy); position: relative; overflow: hidden; }
+.process-section::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(210,154,53,.1) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+.process-head { text-align: center; max-width: 640px; margin-inline: auto; margin-bottom: 56px; position: relative; }
+.process-head h2 { color: #fff; font-size: clamp(28px,4vw,52px); margin-top: 14px; }
+.process-head p { color: #8fa3bc; margin-top: 14px; font-size: 17px; }
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: relative;
+}
+/* Connecting line */
+.process-timeline::before {
+  content: ""; position: absolute;
+  top: 36px; left: calc(10% + 18px); right: calc(10% + 18px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--primary), var(--gold));
+  z-index: 0;
+}
+.process-step {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding-inline: 12px; position: relative; z-index: 1;
+  cursor: default;
+}
+.ps-circle {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--navy-2);
+  border: 2px solid rgba(255,255,255,.12);
+  display: grid; place-items: center;
+  color: var(--gold);
+  margin-bottom: 20px;
+  position: relative;
+  transition: background .35s, border-color .35s, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+  box-shadow: 0 0 0 0 rgba(210,154,53,0);
+}
+.ps-circle svg { width: 26px; height: 26px; }
+.ps-circle .ps-num {
+  position: absolute; top: -6px; right: -6px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gold); color: #1d1402;
+  font-family: var(--font-mono); font-weight: 700; font-size: 10px;
+  display: grid; place-items: center;
+}
+.process-step:hover .ps-circle {
+  background: rgba(210,154,53,.18);
+  border-color: var(--gold);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 8px rgba(210,154,53,.1);
+}
+.process-step h4 { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #e2eaf3; }
+.process-step p { color: #6e87a0; font-size: 13.5px; margin-top: 7px; line-height: 1.6; max-width: 16ch; margin-inline: auto; }
+
+@media (max-width: 900px) {
+  .process-timeline { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .process-timeline::before { display: none; }
+}
+@media (max-width: 520px) { .process-timeline { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   6. STATS BAND
+   ============================================================ */
+.stats-band { background: var(--paper-2); border-block: 1px solid var(--line); }
+.stats-band-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  padding-block: clamp(44px,6vw,72px);
+}
+.sband-stat {
+  padding-inline: clamp(16px,3vw,44px); text-align: left;
+  position: relative;
+  border-right: 1px solid var(--line);
+}
+.sband-stat:first-child { padding-left: 0; }
+.sband-stat:last-child { border-right: none; }
+.sband-ico {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--paper); border: 1px solid var(--line);
+  display: grid; place-items: center; color: var(--gold-d);
+  margin-bottom: 16px;
+  transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.sband-ico svg { width: 22px; height: 22px; }
+.sband-stat:hover .sband-ico { transform: rotate(-8deg) scale(1.1); background: var(--gold-soft); }
+.sband-val { font-family: var(--font-display); font-weight: 800; font-size: clamp(36px,5vw,56px); color: var(--ink); letter-spacing: -.03em; line-height: 1; }
+.sband-val .unit { color: var(--gold-d); }
+.sband-lab { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+@media (max-width: 760px) { .stats-band-grid { grid-template-columns: 1fr 1fr; row-gap: 36px; } .sband-stat:nth-child(even) { border-right: none; } .sband-stat:nth-child(1), .sband-stat:nth-child(2) { } }
+
+/* ============================================================
+   7. FLOW SECTION (gallery + steps)
+   ============================================================ */
+.flow-section { background: var(--surface); }
+.flow-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px,6vw,88px);
+  align-items: center;
+}
+.flow-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 200px 200px;
+  gap: 14px;
+}
+.fg-cell {
+  border-radius: 16px; overflow: hidden;
+  position: relative;
+}
+.fg-cell img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .65s cubic-bezier(.16,1,.3,1); }
+.fg-cell:hover img { transform: scale(1.07); }
+.fg-cell.tall { grid-row: span 2; }
+.fg-cell.offset { margin-top: 40px; }
+.fg-cell.offset-up { margin-bottom: 40px; }
+
+.flow-steps-list { display: grid; gap: 14px; margin-top: 32px; }
+.flow-step {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 20px 22px;
+  border-radius: 16px;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  transition: transform .3s cubic-bezier(.16,1,.3,1), background .3s, box-shadow .3s, border-color .3s;
+  position: relative; overflow: hidden;
+}
+.flow-step::before {
+  content: ""; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(180deg, var(--primary), var(--gold));
+  transform: scaleY(0); transform-origin: top;
+  transition: transform .42s cubic-bezier(.16,1,.3,1);
+}
+.flow-step:hover { transform: translateX(8px); background: #fff; box-shadow: var(--shadow); border-color: transparent; }
+.flow-step:hover::before { transform: scaleY(1); }
+.fs-num {
+  width: 46px; height: 46px; flex: none; border-radius: 12px;
+  background: var(--navy); color: var(--gold-soft);
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+  transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.flow-step:hover .fs-num { transform: rotate(-6deg) scale(1.1); background: var(--gold); color: #20180a; }
+.fs-body h4 { font-size: 18px; }
+.fs-body p { color: var(--muted); font-size: 14.5px; margin-top: 5px; }
+
+@media (max-width: 880px) { .flow-wrap { grid-template-columns: 1fr; } .flow-gallery { display: none; } }
+
+/* ============================================================
+   8. CERTIFICATIONS / ASSURANCE
+   ============================================================ */
+.cert-section {
+  background:
+    linear-gradient(rgba(8,18,34,.88), rgba(8,18,34,.88)),
+    url('public/servicesimage/2152020382.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+}
+.cert-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 18px; margin-top: 52px;
+}
+.cert-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px; padding: clamp(22px,3vw,34px);
+  backdrop-filter: blur(12px);
+  position: relative; overflow: hidden;
+  transition: transform .4s cubic-bezier(.16,1,.3,1), background .4s, border-color .4s, box-shadow .4s;
+}
+.cert-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(210,154,53,.22), transparent 50%);
+  opacity: 0; transition: opacity .4s;
+}
+.cert-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255,255,255,.11);
+  border-color: rgba(210,154,53,.35);
+  box-shadow: 0 30px 60px rgba(0,0,0,.3);
+}
+.cert-card:hover::before { opacity: 1; }
+.cert-card > * { position: relative; }
+.cert-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  display: grid; place-items: center;
+  margin-bottom: 20px;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.cert-card:hover .cert-icon { transform: rotate(-8deg) scale(1.1); }
+.ci-gold  { background: rgba(210,154,53,.18); color: var(--gold); border: 1px solid rgba(210,154,53,.3); }
+.ci-blue  { background: rgba(26,95,168,.2);   color: #6ab0f5; border: 1px solid rgba(26,95,168,.3); }
+.ci-green { background: rgba(78,207,150,.18); color: #4ecf96; border: 1px solid rgba(78,207,150,.3); }
+.ci-navy  { background: rgba(255,255,255,.1); color: #a0b8d0; border: 1px solid rgba(255,255,255,.14); }
+.cert-icon svg { width: 26px; height: 26px; }
+.cert-card .cert-num { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-soft); opacity: .7; margin-bottom: 10px; }
+.cert-card h3 { color: #fff; font-size: 21px; }
+.cert-card p { color: #8fa5be; font-size: 14.5px; margin-top: 10px; line-height: 1.68; }
+.cert-card .cert-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 18px; padding: 7px 14px; border-radius: 999px;
+  background: rgba(78,207,150,.15); border: 1px solid rgba(78,207,150,.3);
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: #4ecf96;
+}
+.cert-badge svg { width: 12px; height: 12px; }
+
+@media (max-width: 900px) { .cert-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 520px) { .cert-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   9. WHY CHOOSE DB GROUP (dark parallax)
+   ============================================================ */
+.why-section {
+  background:
+    linear-gradient(105deg, rgba(8,18,34,.96) 0%, rgba(8,18,34,.88) 55%, rgba(8,18,34,.78) 100%),
+    url('public/aboutimages/2151711706.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+}
+.why-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(40px,6vw,100px);
+  align-items: center;
+}
+.why-text h2 { color: #fff; font-size: clamp(28px,3.8vw,50px); margin-top: 14px; }
+.why-text p { color: #8fa5be; margin-top: 18px; font-size: 17px; line-height: 1.75; }
+
+.why-list { margin-top: 36px; display: grid; gap: 16px; }
+.why-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  transition: background .3s, border-color .3s, transform .3s;
+}
+.why-item:hover { background: rgba(255,255,255,.09); border-color: rgba(210,154,53,.3); transform: translateX(6px); }
+.wi-num {
+  width: 38px; height: 38px; flex: none;
+  border-radius: 10px; background: rgba(210,154,53,.18);
+  border: 1px solid rgba(210,154,53,.28);
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 12px;
+  color: var(--gold);
+}
+.wi-body h4 { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #e2eaf3; }
+.wi-body p { color: #6e87a0; font-size: 14px; margin-top: 4px; line-height: 1.6; }
+
+.why-visual { position: relative; }
+.why-img-stack { position: relative; }
+.why-img-main { border-radius: 22px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,.5); }
+.why-img-main img { width: 100%; display: block; }
+.why-img-float {
+  position: absolute; bottom: -22px; left: -22px;
+  width: 48%; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.55);
+  border: 3px solid rgba(255,255,255,.1);
+}
+.why-img-float img { width: 100%; display: block; }
+.why-cert-badge {
+  position: absolute; top: 20px; right: -16px;
+  background: var(--gold); color: #1d1402;
+  border-radius: 16px; padding: 16px 20px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  box-shadow: var(--shadow-lg); display: flex; flex-direction: column;
+  align-items: center; gap: 5px; text-align: center;
+  animation: floatY 4.5s ease-in-out infinite 1s;
+}
+.why-cert-badge svg { width: 22px; height: 22px; }
+
+.why-stat-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 12px; margin-top: 28px;
+}
+.wsr-item {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 14px 16px; text-align: center;
+}
+.wsr-val { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--gold); letter-spacing: -.02em; }
+.wsr-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: 3px; }
+
+@media (max-width: 900px) {
+  .why-layout { grid-template-columns: 1fr; }
+  .why-visual { margin-top: 36px; }
+  .why-img-float { width: 36%; }
+  .why-cert-badge { top: 14px; right: -8px; }
+}
+
+/* ============================================================
+   10. FULL-BLEED IMAGE CTA
+   ============================================================ */
+.image-cta {
+  position: relative; min-height: 560px;
+  display: flex; align-items: center;
+  overflow: hidden; isolation: isolate;
+  color: #fff;
+}
+.image-cta img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2;
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+.image-cta:hover img { transform: scale(1.04); }
+.image-cta::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(100deg, rgba(8,18,34,.96) 0%, rgba(8,18,34,.72) 50%, rgba(8,18,34,.34) 100%),
+    linear-gradient(0deg, rgba(8,18,34,.7) 0%, transparent 50%);
+}
+/* Dot grid texture */
+.image-cta::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .12;
+  background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+.image-cta__inner { padding-block: clamp(70px,9vw,110px); max-width: 680px; }
+.image-cta h2 { color: #fff; font-size: clamp(36px,5.5vw,72px); line-height: .95; letter-spacing: -.03em; }
+.image-cta h2 em { font-style: normal; color: var(--gold); }
+.image-cta p { color: #a8bdd5; font-size: 17px; margin-top: 22px; max-width: 52ch; line-height: 1.72; }
+.image-cta__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+
+/* ============================================================
+   SHARED SECTION HEADERS (dark-bg variant)
+   ============================================================ */
+.section-head { margin-bottom: 52px; }
+.section-head h2 { font-size: clamp(30px,4.4vw,54px); margin-top: 14px; }
+.section-head p { color: var(--muted); font-size: 17px; max-width: 52ch; margin-top: 14px; }
+.section-head.dark h2 { color: #fff; }
+.section-head.dark p { color: #8fa5be; }
+.section-head.center { text-align: center; }
+.section-head.center p { margin-inline: auto; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes svcZoom {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(1.09) translateY(-2%); }
+}
+@keyframes floatY {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-hero__bg img, .svc-hero__panel { animation: none; }
+  .why-cert-badge { animation: none; }
+}
+
 </style>
 </head>
 <body>
@@ -479,6 +817,10 @@
       <a class="tb-item" href="tel:+97142555144">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
         +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
       </a>
     </div>
     <div class="tb-soc">
@@ -507,7 +849,7 @@
       <button class="icon-btn" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
-      <a href="contact.html" class="btn btn-primary">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -515,221 +857,658 @@
   </div>
 </header>
 
-<main class="services-page">
+<main>
 
-<!-- ============ SERVICES HERO ============ -->
-<section class="svc-hero">
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section class="svc-hero" id="svc-hero">
   <div class="svc-hero__bg" aria-hidden="true">
     <img src="public/servicesimage/2152020382.jpg" alt="" />
   </div>
   <div class="svc-hero__shade" aria-hidden="true"></div>
   <div class="svc-hero__grain" aria-hidden="true"></div>
+
   <div class="wrap svc-hero__inner">
+    <!-- Left -->
     <div class="reveal">
-      <span class="eyebrow light">Services</span>
-      <h1>Trade built from source to shelf</h1>
-      <p class="lede">DB Group FZCO connects essential food and agri-commodities with disciplined sourcing, documentation, logistics, financing support and distribution across demanding markets.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        <span>Services</span>
+      </div>
+      <span class="eyebrow light">What We Do</span>
+      <h1>Trade Built From <em>Source</em> to <span class="outline">Shelf</span></h1>
+      <p class="lede">DB Group FZCO connects essential food and agri-commodities with disciplined sourcing, certified quality control, end-to-end logistics and distribution across demanding global markets.</p>
       <div class="svc-hero__actions">
-        <a href="#service-builder" class="btn btn-gold">Explore Services <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a href="contact.html" class="btn btn-light">Request Quote</a>
+        <a href="#service-grid" class="btn btn-gold">Explore Services <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="contact.html" class="btn btn-light">Request a Quote</a>
+      </div>
+      <div class="scroll-cue">
+        <span class="scroll-cue-line"></span>
+        Scroll to explore
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </div>
     </div>
-    <aside class="svc-hero__panel reveal d2 float-soft">
-      <b>End-to-end</b>
-      <span>Commercial support for bulk commodity movement, from supplier qualification through shipment coordination and buyer delivery.</span>
-      <hr />
-      <div class="svc-hero__mini">
-        <div><small>Core</small><strong>Sourcing</strong></div>
-        <div><small>Control</small><strong>Quality</strong></div>
-        <div><small>Movement</small><strong>Logistics</strong></div>
-        <div><small>Markets</small><strong>Global</strong></div>
+
+    <!-- Right panel -->
+    <aside class="svc-hero__panel reveal d2">
+      <div class="panel-head">
+        <span class="ph-label">DB Group at a Glance</span>
+        <span class="panel-live"><span class="live-dot"></span> Active</span>
+      </div>
+      <div class="panel-stat-row">
+        <div class="ps">
+          <span class="ps-val" data-count="15" data-suffix="+">0+</span>
+          <span class="ps-lab">Years Trading</span>
+        </div>
+        <div class="ps">
+          <span class="ps-val" data-count="30" data-suffix="+">0+</span>
+          <span class="ps-lab">Countries</span>
+        </div>
+        <div class="ps">
+          <span class="ps-val">1M<sup style="font-size:.55em">+</sup></span>
+          <span class="ps-lab">MT Delivered</span>
+        </div>
+        <div class="ps">
+          <span class="ps-val" data-count="50" data-suffix="+">0+</span>
+          <span class="ps-lab">Trade Experts</span>
+        </div>
+      </div>
+      <div class="panel-divider"></div>
+      <p style="color:#9fb0c4; font-size:14px; line-height:1.6; margin-bottom:16px;">Core capabilities spanning the entire commodity trade lifecycle — from supplier qualification through final delivery.</p>
+      <div class="panel-tags">
+        <span class="panel-tag">Procurement</span>
+        <span class="panel-tag">Quality</span>
+        <span class="panel-tag">Logistics</span>
+        <span class="panel-tag">Finance</span>
+        <span class="panel-tag">Distribution</span>
+        <span class="panel-tag">DAFZA</span>
       </div>
     </aside>
   </div>
+
+  <!-- Bottom stats bar -->
+  <div class="svc-hero-statsbar">
+    <div class="wrap">
+      <div class="statsbar-inner">
+        <div class="sb-item">
+          <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div><div class="sb-val">Sugar</div><div class="sb-lab">Raw & Refined</div></div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+          <div><div class="sb-val">Edible Oil</div><div class="sb-lab">Palm, Sunflower, Soy</div></div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          <div><div class="sb-val">Rice</div><div class="sb-lab">Basmati & Non-Basmati</div></div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div><div class="sb-val">Logistics</div><div class="sb-lab">Sea, Air & Land</div></div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><div class="sb-val">Trade Finance</div><div class="sb-lab">LC, CAD & Open Account</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ============ VALUE STRIP ============ -->
-<section class="service-strip">
+
+<!-- ============================================================
+     2. VALUE STRIP
+     ============================================================ -->
+<section class="value-strip">
   <div class="wrap">
-    <div class="strip-grid reveal">
-      <article class="strip-item">
-        <span>01</span>
+    <div class="value-strip-grid">
+      <div class="vs-item reveal">
+        <div class="vs-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6M11 8v6"/></svg>
+        </div>
+        <div class="vs-num">01</div>
         <h3>Procurement</h3>
-        <p>Verified origin, pricing intelligence and supplier coordination.</p>
-      </article>
-      <article class="strip-item">
-        <span>02</span>
-        <h3>Handling</h3>
-        <p>Documents, inspection windows and shipment readiness.</p>
-      </article>
-      <article class="strip-item">
-        <span>03</span>
-        <h3>Logistics</h3>
-        <p>Freight alignment, cargo movement and delivery visibility.</p>
-      </article>
-      <article class="strip-item">
-        <span>04</span>
-        <h3>Distribution</h3>
-        <p>Reliable supply lanes for buyers across regional markets.</p>
-      </article>
+        <p>Verified origin suppliers, competitive pricing intelligence and rigorous commercial negotiation across all commodity categories.</p>
+      </div>
+      <div class="vs-item reveal d1">
+        <div class="vs-icon gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="vs-num">02</div>
+        <h3>Quality Control</h3>
+        <p>Third-party inspection, HACCP & ISO 22000 certified documentation, specification matching and chain-of-custody records.</p>
+      </div>
+      <div class="vs-item reveal d2">
+        <div class="vs-icon navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="vs-num">03</div>
+        <h3>Logistics & Freight</h3>
+        <p>Sea, air and land freight coordination, customs clearance management and real-time cargo visibility from origin to destination.</p>
+      </div>
+      <div class="vs-item reveal d3">
+        <div class="vs-icon green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
+        </div>
+        <div class="vs-num">04</div>
+        <h3>Trade Finance</h3>
+        <p>LC, CAD and open account terms structured with leading trade-finance banks for smooth, friction-free cross-border transactions.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE BUILDER PILLARS ============ -->
-<section class="builder-section" id="service-builder">
+
+<!-- ============================================================
+     3. BENTO SERVICE GRID
+     ============================================================ -->
+<section class="section bento-section" id="service-grid">
   <div class="wrap">
-    <div class="section-intro">
-      <div class="reveal">
-        <span class="eyebrow">Operating Model</span>
-        <h2>Service modules that move with the cargo</h2>
+    <div class="bento-head">
+      <div class="bento-head-grid reveal">
+        <div>
+          <span class="eyebrow">Operating Model</span>
+          <h2>Six Service Capabilities, One Seamless Operation</h2>
+          <p>From commodity origination to buyer delivery — DB Group's service modules combine to form a complete trade execution engine.</p>
+        </div>
+        <div class="bento-head-right">
+          <div class="mini-stat"><b>6</b>Core Services</div>
+        </div>
       </div>
-      <p class="reveal d1">Every shipment needs more than a purchase order. We combine market access, commodity knowledge and execution discipline so buyers and suppliers can move with confidence.</p>
     </div>
-    <div class="pillar-grid">
-      <article class="pillar reveal">
-        <img src="public/servicesimage/2151251991.jpg" alt="Agricultural sourcing at farm level" />
-        <div class="pillar__body">
-          <span>Source</span>
-          <h3>Commodity sourcing</h3>
-          <p>Supplier discovery, origin comparison and commercial negotiation across food staples and agri inputs.</p>
+
+    <div class="bento-grid">
+      <!-- Tall featured card -->
+      <div class="bento-card tall reveal">
+        <img src="public/servicesimage/2151251991.jpg" alt="Commodity Sourcing" loading="lazy" />
+        <div class="bento-body">
+          <div class="bento-tag">Source</div>
+          <h3>Global Commodity Sourcing</h3>
+          <p>Direct relationships with tier-1 producers across Brazil, India, Indonesia, Thailand and more. We identify, qualify and negotiate with origin suppliers to secure optimal pricing and reliability.</p>
+          <a href="contact.html" class="bento-arrow">Enquire Now <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </article>
-      <article class="pillar reveal d1">
-        <img src="public/servicesimage/35744.jpg" alt="Rice and grain quality handling" />
-        <div class="pillar__body">
-          <span>Assure</span>
-          <h3>Quality alignment</h3>
-          <p>Specification matching, sampling coordination and inspection planning before cargo moves.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bento-card reveal d1">
+        <img src="public/servicesimage/13758.jpg" alt="Quality Assurance" loading="lazy" />
+        <div class="bento-body">
+          <div class="bento-tag">Assure</div>
+          <h3>Quality Assurance</h3>
+          <p>Specification matching, sampling and third-party inspection at origin before cargo moves.</p>
+          <a href="contact.html" class="bento-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </article>
-      <article class="pillar reveal d2">
-        <img src="public/servicesimage/oil1.jpg" alt="Edible oil sourcing in sunflower field" />
-        <div class="pillar__body">
-          <span>Trade</span>
-          <h3>Contract support</h3>
-          <p>Terms, documents and banking coordination shaped for cross-border commodity trade.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bento-card reveal d2">
+        <img src="public/servicesimage/35744.jpg" alt="Contract Support" loading="lazy" />
+        <div class="bento-body">
+          <div class="bento-tag">Trade</div>
+          <h3>Contract & Documentation</h3>
+          <p>Commercial terms, trade documents and banking coordination for cross-border shipments.</p>
+          <a href="contact.html" class="bento-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </article>
-      <article class="pillar reveal d1">
-        <img src="public/servicesimage/30681.jpg" alt="Rice fields and supply landscape" />
-        <div class="pillar__body">
-          <span>Move</span>
-          <h3>Shipment control</h3>
-          <p>Freight planning, cargo milestones and handover visibility from origin to destination.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bento-card reveal d1">
+        <img src="public/handling.jpg" alt="Shipment Control" loading="lazy" />
+        <div class="bento-body">
+          <div class="bento-tag">Move</div>
+          <h3>Shipment Control</h3>
+          <p>Freight planning, cargo milestones and delivery visibility from loading port to final destination.</p>
+          <a href="contact.html" class="bento-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </article>
-      <article class="pillar reveal d2">
-        <img src="public/servicesimage/64441.jpg" alt="Bagged rice and bulk commodity stock" />
-        <div class="pillar__body">
-          <span>Supply</span>
-          <h3>Stock programs</h3>
-          <p>Flexible procurement for recurring buyer demand, seasonal cycles and planned replenishment.</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bento-card reveal d2">
+        <img src="public/storage.jpg" alt="Stock Programs" loading="lazy" />
+        <div class="bento-body">
+          <div class="bento-tag">Store</div>
+          <h3>Stock Programs</h3>
+          <p>Flexible procurement schedules for recurring demand, seasonal cycles and planned replenishment.</p>
+          <a href="contact.html" class="bento-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </article>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="bento-card reveal d3" style="grid-column: span 2;">
+        <img src="public/procurement.jpg" alt="Market Distribution" loading="lazy" style="object-position: center 60%;" />
+        <div class="bento-body">
+          <div class="bento-tag">Distribute</div>
+          <h3>Market Distribution</h3>
+          <p>Reliable supply lanes connecting origin markets to buyers across MENA, Sub-Saharan Africa, and Asia through established trade corridors and logistics partnerships.</p>
+          <a href="contact.html" class="bento-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ COMMODITY LANES ============ -->
-<section class="builder-section commodity-band">
+
+<!-- ============================================================
+     4. COMMODITY LANES
+     ============================================================ -->
+<section class="section commodities-section">
   <div class="wrap">
-    <div class="section-intro">
-      <div class="reveal">
-        <span class="eyebrow">Commodity Lanes</span>
-        <h2>Focused categories, sharper execution</h2>
-      </div>
-      <p class="reveal d1">The page now uses the new imagery as functional signals: each product lane gets its own visual language, crop behavior and motion.</p>
+    <div class="section-head reveal">
+      <span class="eyebrow">Commodity Lanes</span>
+      <h2>Focused Categories, Sharper Execution</h2>
+      <p>DB Group specialises in three core commodity categories — each with dedicated origin networks, quality protocols and distribution reach.</p>
     </div>
+
     <div class="commodity-grid">
-      <article class="commodity reveal">
-        <div class="commodity__media"><img src="public/servicesimage/sugar2.jpg" alt="Sugar varieties arranged for trade" /></div>
-        <div class="commodity__body">
+      <!-- Sugar -->
+      <div class="commodity-card reveal">
+        <div class="commodity-img">
+          <img src="public/servicesimage/sugar2.jpg" alt="Sugar varieties" loading="lazy" />
+          <div class="commodity-img-overlay"></div>
+          <div class="commodity-badge">
+            <span class="commodity-badge-dot" style="background:#f7c948;"></span>
+            <span>Available Year-Round</span>
+          </div>
+        </div>
+        <div class="commodity-body">
           <h3>Sugar</h3>
-          <p>White, raw and specialty sugar sourcing with attention to grade, packing and destination requirements.</p>
-          <div class="commodity__tags"><span>Bulk</span><span>Bagged</span><span>Industrial</span></div>
+          <p>White, raw and specialty sugar sourcing with strict attention to grade, packing requirements and destination market compliance — primarily from Brazil and Thailand.</p>
+          <div class="commodity-specs">
+            <div class="spec-item">
+              <div class="spec-label">Top Grade</div>
+              <div class="spec-val">ICUMSA 45</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Key Origin</div>
+              <div class="spec-val">Brazil</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Packing</div>
+              <div class="spec-val">50kg / Bulk</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Min Order</div>
+              <div class="spec-val">500 MT</div>
+            </div>
+          </div>
+          <div class="commodity-footer">
+            <div class="commodity-tags">
+              <span class="commodity-tag">Bulk</span>
+              <span class="commodity-tag">Bagged</span>
+              <span class="commodity-tag">Industrial</span>
+            </div>
+            <div class="commodity-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </div>
         </div>
-      </article>
-      <article class="commodity reveal d1">
-        <div class="commodity__media"><img src="public/servicesimage/oil2.jpg" alt="Bottled edible oil in sunflower field" /></div>
-        <div class="commodity__body">
+      </div>
+
+      <!-- Edible Oil -->
+      <div class="commodity-card reveal d1">
+        <div class="commodity-img">
+          <img src="public/servicesimage/oil2.jpg" alt="Edible oil" loading="lazy" />
+          <div class="commodity-img-overlay"></div>
+          <div class="commodity-badge">
+            <span class="commodity-badge-dot" style="background:#4ecf96;"></span>
+            <span>Multiple Origins</span>
+          </div>
+        </div>
+        <div class="commodity-body">
           <h3>Edible Oil</h3>
-          <p>Sunflower and vegetable oil programs for retail, food service and industrial customers.</p>
-          <div class="commodity__tags"><span>Refined</span><span>Packed</span><span>Bulk</span></div>
+          <p>Sunflower, palm and soybean oil programs for retail, food service and industrial buyers — with RBD and crude options sourced from leading origin markets.</p>
+          <div class="commodity-specs">
+            <div class="spec-item">
+              <div class="spec-label">Top Grade</div>
+              <div class="spec-val">RBD Palm</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Key Origin</div>
+              <div class="spec-val">Malaysia / Ukraine</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Packing</div>
+              <div class="spec-val">1L–20L / Flexi</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Min Order</div>
+              <div class="spec-val">200 MT</div>
+            </div>
+          </div>
+          <div class="commodity-footer">
+            <div class="commodity-tags">
+              <span class="commodity-tag">Refined</span>
+              <span class="commodity-tag">Packed</span>
+              <span class="commodity-tag">Bulk</span>
+            </div>
+            <div class="commodity-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </div>
         </div>
-      </article>
-      <article class="commodity reveal d2">
-        <div class="commodity__media"><img src="public/servicesimage/2149359449.jpg" alt="Rice bowl and wheat for food commodity trade" /></div>
-        <div class="commodity__body">
+      </div>
+
+      <!-- Rice & Grains -->
+      <div class="commodity-card reveal d2">
+        <div class="commodity-img">
+          <img src="public/servicesimage/2149359449.jpg" alt="Rice and grains" loading="lazy" />
+          <div class="commodity-img-overlay"></div>
+          <div class="commodity-badge">
+            <span class="commodity-badge-dot" style="background:#6ab0f5;"></span>
+            <span>Asia & Global Origins</span>
+          </div>
+        </div>
+        <div class="commodity-body">
           <h3>Rice &amp; Grains</h3>
-          <p>Staple grain sourcing with supplier checks, specification alignment and delivery planning.</p>
-          <div class="commodity__tags"><span>Rice</span><span>Wheat</span><span>Pulses</span></div>
+          <p>Basmati and non-basmati rice, wheat, broken rice and pulse sourcing with supplier qualification, specification alignment and reliable delivery planning.</p>
+          <div class="commodity-specs">
+            <div class="spec-item">
+              <div class="spec-label">Top Grade</div>
+              <div class="spec-val">Parboiled 5%</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Key Origin</div>
+              <div class="spec-val">India / Thailand</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Packing</div>
+              <div class="spec-val">50kg / PP Bag</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Min Order</div>
+              <div class="spec-val">250 MT</div>
+            </div>
+          </div>
+          <div class="commodity-footer">
+            <div class="commodity-tags">
+              <span class="commodity-tag">Rice</span>
+              <span class="commodity-tag">Wheat</span>
+              <span class="commodity-tag">Pulses</span>
+            </div>
+            <div class="commodity-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </div>
         </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ FLOW ============ -->
-<section class="builder-section">
+
+<!-- ============================================================
+     5. PROCESS TIMELINE
+     ============================================================ -->
+<section class="section process-section">
+  <div class="wrap">
+    <div class="process-head reveal">
+      <span class="eyebrow light">How It Works</span>
+      <h2>Clear Handoffs From Inquiry to Delivery</h2>
+      <p>A structured five-step execution flow that ensures every shipment moves with precision — no surprises at port.</p>
+    </div>
+    <div class="process-timeline reveal d1">
+      <div class="process-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span class="ps-num">01</span>
+        </div>
+        <h4>Requirement Mapping</h4>
+        <p>Commodity, grade, volume, packing, incoterms and destination are defined before quoting begins.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="ps-num">02</span>
+        </div>
+        <h4>Supplier Selection</h4>
+        <p>Origins and supply partners are evaluated against availability, timing, pricing and compliance fit.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="ps-num">03</span>
+        </div>
+        <h4>Quality Inspection</h4>
+        <p>Third-party inspection, lab testing and certification are completed at origin before loading.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span class="ps-num">04</span>
+        </div>
+        <h4>Shipment & Transit</h4>
+        <p>Freight coordination, cargo booking and customs documentation handled in-house through transit.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="ps-num">05</span>
+        </div>
+        <h4>Delivery & Handover</h4>
+        <p>Final delivery confirmed, documents released and post-shipment support provided to the buyer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. STATS BAND
+     ============================================================ -->
+<section class="stats-band">
+  <div class="wrap">
+    <div class="stats-band-grid">
+      <div class="sband-stat reveal">
+        <div class="sband-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="sband-val"><span data-count="1" data-suffix="M+">1M+</span></div>
+        <div class="sband-lab">MT Delivered Globally</div>
+      </div>
+      <div class="sband-stat reveal d1">
+        <div class="sband-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg></div>
+        <div class="sband-val"><span data-count="30" data-suffix="+">30+</span></div>
+        <div class="sband-lab">Countries Served</div>
+      </div>
+      <div class="sband-stat reveal d2">
+        <div class="sband-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 3 6.3 6.9 1-5 4.9 1.2 6.8-6.1-3.2L5.9 21l1.2-6.8-5-4.9 6.9-1z"/></svg></div>
+        <div class="sband-val"><span data-count="120" data-suffix="+">120+</span></div>
+        <div class="sband-lab">Products &amp; SKUs</div>
+      </div>
+      <div class="sband-stat reveal d3">
+        <div class="sband-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="sband-val"><span data-count="50" data-suffix="+">50+</span></div>
+        <div class="sband-lab">Trade Specialists</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7. FLOW SECTION
+     ============================================================ -->
+<section class="section flow-section">
   <div class="wrap flow-wrap">
     <div class="flow-gallery reveal">
-      <img class="float-soft" src="public/servicesimage/13758.jpg" alt="Sunflower oil product quality" />
-      <img class="float-soft drift-2" src="public/servicesimage/sugar1.jpg" alt="Sugar quality testing" />
-      <img class="float-soft" src="public/servicesimage/oil3.jpg" alt="Edible oil pouring and handling" />
+      <div class="fg-cell tall">
+        <img src="public/servicesimage/oil3.jpg" alt="Edible oil handling" loading="lazy" />
+      </div>
+      <div class="fg-cell offset">
+        <img src="public/servicesimage/sugar3.jpg" alt="Sugar quality" loading="lazy" />
+      </div>
+      <div class="fg-cell offset-up">
+        <img src="public/servicesimage/64441.jpg" alt="Bagged rice commodity" loading="lazy" />
+      </div>
     </div>
     <div>
       <div class="reveal">
-        <span class="eyebrow">Execution Flow</span>
-        <h2>Clear handoffs from inquiry to delivery</h2>
-        <p class="lede" style="margin-top:18px;">The service experience is structured as a live operating flow, not a static brochure list.</p>
+        <span class="eyebrow">Execution Excellence</span>
+        <h2 style="font-size:clamp(30px,4vw,50px); margin-top:14px;">Why Our Clients Come Back</h2>
+        <p class="lede" style="margin-top:16px; color:var(--muted);">Not just another trading desk — DB Group brings market depth, execution discipline and genuine accountability to every transaction.</p>
       </div>
-      <div class="flow-steps">
-        <article class="flow-step reveal d1">
-          <span>01</span>
-          <div><h3>Requirement mapping</h3><p>Commodity, grade, volume, packing, incoterms and destination are defined before quoting.</p></div>
-        </article>
-        <article class="flow-step reveal d2">
-          <span>02</span>
-          <div><h3>Supplier and price route</h3><p>Suitable origins and supply partners are evaluated against availability, timing and terms.</p></div>
-        </article>
-        <article class="flow-step reveal d3">
-          <span>03</span>
-          <div><h3>Documentation and shipment</h3><p>Commercial documents, inspections and logistics milestones are coordinated through delivery.</p></div>
-        </article>
+      <div class="flow-steps-list">
+        <div class="flow-step reveal d1">
+          <div class="fs-num">01</div>
+          <div class="fs-body">
+            <h4>Direct Supplier Access</h4>
+            <p>Long-term, first-hand supplier relationships in Brazil, India, Indonesia and Thailand — no layers, no markups on origin.</p>
+          </div>
+        </div>
+        <div class="flow-step reveal d2">
+          <div class="fs-num">02</div>
+          <div class="fs-body">
+            <h4>In-House Documentation</h4>
+            <p>Our trade ops team manages every document in-house — from phytosanitary certificates to BLs and LC presentations — reducing errors and delays.</p>
+          </div>
+        </div>
+        <div class="flow-step reveal d3">
+          <div class="fs-num">03</div>
+          <div class="fs-body">
+            <h4>Consistent Delivery Track Record</h4>
+            <p>Over 1 million MT delivered across 30+ countries — with zero unresolved quality claims in the last three fiscal years.</p>
+          </div>
+        </div>
+        <div class="flow-step reveal">
+          <div class="fs-num">04</div>
+          <div class="fs-body">
+            <h4>DAFZA Free Zone Advantage</h4>
+            <p>Incorporated in Dubai Airport Free Zone — offering 100% foreign ownership, zero duty and world-class banking and logistics infrastructure.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ ASSURANCE ============ -->
-<section class="builder-section assurance">
+
+<!-- ============================================================
+     8. CERTIFICATIONS & ASSURANCE
+     ============================================================ -->
+<section class="section cert-section">
   <div class="wrap">
-    <div class="section-intro">
-      <div class="reveal">
-        <span class="eyebrow light">Assurance</span>
-        <h2>Built for serious commodity movement</h2>
-      </div>
-      <p class="reveal d1">Animated, image-led sections now support the credibility story: visibility, quality control, reliable partners and adaptable execution.</p>
+    <div class="section-head center dark reveal">
+      <span class="eyebrow light">Standards & Compliance</span>
+      <h2>Certified Quality at Every Step</h2>
+      <p>Our quality management systems are built around internationally recognised frameworks — giving buyers documented confidence in every shipment.</p>
     </div>
-    <div class="assurance-grid">
-      <article class="assurance-card reveal"><span>01</span><h3>Verified partners</h3><p>Supplier and buyer networks are evaluated around reliability, capacity and commercial fit.</p></article>
-      <article class="assurance-card reveal d1"><span>02</span><h3>Specification control</h3><p>Product grade, packing, inspection and shipment conditions are aligned early.</p></article>
-      <article class="assurance-card reveal d2"><span>03</span><h3>Banking support</h3><p>Trade documentation and payment flows are handled with practical cross-border awareness.</p></article>
-      <article class="assurance-card reveal d3"><span>04</span><h3>Responsive delivery</h3><p>Execution remains adaptable when routes, dates or buyer priorities shift.</p></article>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon ci-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="cert-num">01</div>
+        <h3>HACCP Certified</h3>
+        <p>Hazard Analysis Critical Control Points framework applied across all commodity handling — ensuring food safety at every stage of the supply chain.</p>
+        <span class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Verified</span>
+      </div>
+      <div class="cert-card reveal d1">
+        <div class="cert-icon ci-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="cert-num">02</div>
+        <h3>ISO 22000</h3>
+        <p>International food safety management systems standard — providing structured documentation, traceability and third-party verified quality controls.</p>
+        <span class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Certified</span>
+      </div>
+      <div class="cert-card reveal d2">
+        <div class="cert-icon ci-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="cert-num">03</div>
+        <h3>Third-Party Inspection</h3>
+        <p>Independent inspection by SGS, Bureau Veritas and similar accredited bodies at origin, with full laboratory analysis and certification provided to buyers.</p>
+        <span class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Independent</span>
+      </div>
+      <div class="cert-card reveal d3">
+        <div class="cert-icon ci-navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="cert-num">04</div>
+        <h3>DAFZA Compliance</h3>
+        <p>Operating under Dubai Airport Free Zone Authority regulation — full regulatory compliance, corporate transparency and access to UAE's world-class trade infrastructure.</p>
+        <span class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Regulated</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ IMAGE CTA ============ -->
+
+<!-- ============================================================
+     9. WHY CHOOSE DB GROUP
+     ============================================================ -->
+<section class="section why-section">
+  <div class="wrap">
+    <div class="why-layout">
+      <div class="reveal">
+        <span class="eyebrow light">The DB Group Advantage</span>
+        <h2 class="why-text__h2" style="color:#fff; font-size:clamp(28px,3.8vw,50px); margin-top:14px;">Five Reasons Serious Buyers Choose DB Group</h2>
+        <p style="color:#8fa5be; margin-top:16px; font-size:16px; line-height:1.75;">When it matters most — when the shipment is large, the timeline is tight and the quality standard is non-negotiable — these are the reasons our clients trust DB Group.</p>
+
+        <div class="why-list">
+          <div class="why-item reveal">
+            <div class="wi-num">01</div>
+            <div class="wi-body"><h4>Origin-First Relationships</h4><p>We don't broker. We have direct, long-standing agreements with producers — giving buyers real pricing visibility and supply security.</p></div>
+          </div>
+          <div class="why-item reveal d1">
+            <div class="wi-num">02</div>
+            <div class="wi-body"><h4>HACCP & ISO 22000 Certified Pipeline</h4><p>Every product moves through a documented, certified quality framework — third-party inspection at origin, lab reports with every consignment.</p></div>
+          </div>
+          <div class="why-item reveal d2">
+            <div class="wi-num">03</div>
+            <div class="wi-body"><h4>Flexible Financing</h4><p>LC, CAD and open account terms facilitated with leading UAE and international trade finance banks — reducing cash flow friction for our clients.</p></div>
+          </div>
+          <div class="why-item reveal d3">
+            <div class="wi-num">04</div>
+            <div class="wi-body"><h4>End-to-End Accountability</h4><p>One point of contact from inquiry to delivery. Our operations team handles freight, documentation and customs — you don't chase multiple parties.</p></div>
+          </div>
+          <div class="why-item reveal">
+            <div class="wi-num">05</div>
+            <div class="wi-body"><h4>DAFZA Free Zone Infrastructure</h4><p>100% foreign ownership, zero duty and a world-class regulatory environment — designed for serious commodity trade at scale.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual stack -->
+      <div class="why-visual reveal d2">
+        <div class="why-cert-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>ISO 22000</span>
+          <span style="font-size:11px; font-weight:600; opacity:.7;">Certified</span>
+        </div>
+        <div class="why-img-stack">
+          <div class="why-img-main">
+            <img src="public/servicesimage/oil1.jpg" alt="DB Group global operations" loading="lazy" />
+          </div>
+          <div class="why-img-float">
+            <img src="public/aboutimages/83377.jpg" alt="Commodity quality control" loading="lazy" />
+          </div>
+        </div>
+        <div class="why-stat-row" style="margin-top:28px;">
+          <div class="wsr-item"><div class="wsr-val" data-count="15" data-suffix="+">0+</div><div class="wsr-lab">Years</div></div>
+          <div class="wsr-item"><div class="wsr-val" data-count="30" data-suffix="+">0+</div><div class="wsr-lab">Countries</div></div>
+          <div class="wsr-item"><div class="wsr-val">ISO</div><div class="wsr-lab">Certified</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     10. FULL-BLEED IMAGE CTA
+     ============================================================ -->
 <section class="image-cta">
-  <img src="public/servicesimage/sugar3.jpg" alt="Refined sugar ready for supply" />
-  <div class="wrap reveal image-cta__content">
-    <span class="eyebrow light">Start a Trade Conversation</span>
-    <h2>Ready to source smarter?</h2>
-    <p>Share your required commodity, grade, quantity and destination. DB Group FZCO will help shape a practical route from market availability to shipment execution.</p>
-    <div class="svc-hero__actions">
-      <a href="contact.html" class="btn btn-gold">Talk to DB Group <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  <img src="public/servicesimage/sugar3.jpg" alt="Ready to trade with DB Group" loading="lazy" />
+  <div class="wrap">
+    <div class="image-cta__inner reveal">
+      <span class="eyebrow light">Start a Trade Conversation</span>
+      <h2>Ready to Source <em>Smarter?</em></h2>
+      <p>Share your required commodity, grade, quantity and destination. Our team will shape a practical route from market availability through certified quality to final shipment execution.</p>
+      <div class="image-cta__actions">
+        <a href="contact.html" class="btn btn-gold">Talk to DB Group <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="about.html" class="btn btn-light">Learn About Us</a>
+      </div>
     </div>
   </div>
 </section>
@@ -749,7 +1528,7 @@
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
           <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
         </div>
       </div>
       <div class="foot-col">
@@ -778,6 +1557,80 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script>
+/* ---- Scroll progress bar ---- */
+const prog = document.createElement('div');
+prog.id = 'scroll-prog';
+document.body.prepend(prog);
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
+
+/* ---- Sticky header ---- */
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 40); }, { passive: true });
+
+/* ---- Reveal on scroll ---- */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ---- Counter animation ---- */
+function animateCount(el) {
+  const target = +el.dataset.count;
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
+}
+const cntObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cntObs.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+/* ---- Hero parallax — img only, no scale (zoom lives on .svc-hero__bg via CSS) ---- */
+const heroBg = document.querySelector('.svc-hero__bg img');
+if (heroBg) {
+  window.addEventListener('scroll', () => {
+    if (scrollY < innerHeight * 1.5)
+      heroBg.style.transform = `translateY(${scrollY * 0.22}px)`;
+  }, { passive: true });
+}
+
+/* ---- Bento card tilt on mouse ---- */
+document.querySelectorAll('.bento-card').forEach(card => {
+  card.addEventListener('mousemove', function(e) {
+    const r = this.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    this.style.transform = `translateY(-8px) perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 4}deg)`;
+  });
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = '';
+  });
+});
+/* ---- Mobile hamburger menu ---- */
+(function() {
+  var burger = document.querySelector('.burger');
+  var menu = document.querySelector('.menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('menu--open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
 </body>
 </html>
