@@ -1,375 +1,678 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
 <title>Contact | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Libre+Franklin:wght@500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 <style>
-  body { background: #f8f5ee; }
-  .contact-page { overflow: hidden; }
-  .contact-hero {
-    position: relative;
-    min-height: min(780px, calc(100vh - 118px));
-    display: grid;
-    align-items: center;
-    color: #fff;
-    background: #081222;
-    isolation: isolate;
-    overflow: hidden;
-  }
-  .contact-hero__bg,
-  .contact-hero__bg img,
-  .contact-hero::before { position: absolute; inset: 0; }
-  .contact-hero__bg { z-index: -3; overflow: hidden; }
-  .contact-hero__bg img {
-    width: 100%;
-    height: 112%;
-    object-fit: cover;
-    object-position: center;
-    animation: contactHeroZoom 20s ease-out forwards;
-  }
-  .contact-hero::before {
-    content: "";
-    z-index: -2;
-    background:
-      linear-gradient(90deg, rgba(8,18,34,.94), rgba(8,18,34,.68) 48%, rgba(8,18,34,.22)),
-      linear-gradient(0deg, rgba(8,18,34,.72), transparent 58%);
-  }
-  .contact-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, .95fr) minmax(330px, .7fr);
-    gap: clamp(34px, 7vw, 92px);
-    align-items: center;
-    padding-block: clamp(72px, 10vw, 128px);
-  }
-  .contact-hero h1 {
-    color: #fff;
-    font-size: clamp(42px, 7vw, 86px);
-    line-height: .94;
-    max-width: 10ch;
-    font-weight: 900;
-  }
-  .contact-hero p {
-    color: #d3deec;
-    max-width: 58ch;
-    margin-top: 24px;
-    font-size: clamp(16px, 1.5vw, 20px);
-  }
-  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
-  .hero-contact-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,.18);
-    background: rgba(255,255,255,.09);
-    backdrop-filter: blur(18px) saturate(1.25);
-    padding: clamp(24px, 3.2vw, 36px);
-    box-shadow: 0 32px 86px rgba(0,0,0,.32);
-  }
-  .hero-contact-card::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,.2), transparent);
-    transform: translateX(-120%);
-    transition: transform .9s cubic-bezier(.16,1,.3,1);
-  }
-  .hero-contact-card:hover::before { transform: translateX(120%); }
-  .hero-contact-card > * { position: relative; }
-  .hero-contact-card h2 { color: #fff; font-size: clamp(26px, 3vw, 38px); }
-  .hero-contact-card p { margin-top: 12px; color: #cbd8e8; }
-  .hero-card-links { display: grid; gap: 12px; margin-top: 26px; }
-  .hero-card-links a,
-  .hero-card-links div {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 14px;
-    border-radius: 14px;
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    transition: transform .25s ease, background .25s ease;
-  }
-  .hero-card-links a:hover,
-  .hero-card-links div:hover { transform: translateX(6px); background: rgba(255,255,255,.14); }
-  .hero-card-links svg { width: 20px; height: 20px; color: var(--gold-soft); flex: none; margin-top: 3px; }
 
-  .quick-contact,
-  .contact-info { margin-top: -54px; position: relative; z-index: 4; }
-  .contact-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: #fff;
-    border: 1px solid var(--line-soft);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-  }
-  .contact-card {
-    position: relative;
-    overflow: hidden;
-    padding: 28px;
-    min-height: 172px;
-    border-left: 1px solid var(--line-soft);
-    transition: transform .36s cubic-bezier(.16,1,.3,1), background .36s ease, box-shadow .36s ease;
-  }
-  .contact-card:first-child { border-left: 0; }
-  .contact-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(210,154,53,.16), rgba(26,95,168,.08) 52%, transparent);
-    opacity: 0;
-    transition: opacity .36s ease;
-  }
-  .contact-card::after {
-    content: "";
-    position: absolute;
-    left: 28px;
-    right: 28px;
-    bottom: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--gold));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform .45s cubic-bezier(.16,1,.3,1);
-  }
-  .contact-card:hover {
-    transform: translateY(-8px);
-    background: #fbfaf6;
-    box-shadow: 0 26px 54px rgba(12,30,56,.14);
-  }
-  .contact-card:hover::before { opacity: 1; }
-  .contact-card:hover::after { transform: scaleX(1); }
-  .contact-card > * { position: relative; }
-  .cc-ico {
-    width: 52px;
-    height: 52px;
-    border-radius: 15px;
-    display: grid;
-    place-items: center;
-    background: var(--navy);
-    color: var(--gold-soft);
-    margin-bottom: 18px;
-    transition: transform .35s ease, background .35s ease, color .35s ease;
-  }
-  .contact-card:hover .cc-ico { transform: rotate(-5deg) scale(1.08); background: var(--gold); color: #20180a; }
-  .cc-ico svg { width: 24px; height: 24px; }
-  .contact-card h3 {
-    font-size: 12px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--gold-d);
-    margin: 0 0 8px;
-  }
-  .contact-card p,
-  .contact-card a {
-    color: var(--ink);
-    font-family: var(--font-display);
-    font-weight: 650;
-    line-height: 1.35;
-  }
+/* ============================================================
+   CONTACT PAGE — pro-level redesign
+   ============================================================ */
 
-  .contact-main { padding-block: clamp(82px, 10vw, 132px); }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
-    gap: clamp(28px, 6vw, 72px);
-    align-items: start;
-  }
-  .contact-form-wrap,
-  .contact-office {
-    border: 1px solid var(--line-soft);
-    border-radius: 20px;
-    background: rgba(255,255,255,.78);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(12px);
-  }
-  .contact-form-wrap { padding: clamp(28px, 4vw, 46px); }
-  .contact-form-wrap h2,
-  .contact-office h2 { font-size: clamp(30px, 4vw, 48px); margin-top: 14px; }
-  .contact-form-wrap > p,
-  .contact-office > p { color: var(--muted); margin-top: 16px; }
-  .cform { display: grid; gap: 18px; margin-top: 32px; }
-  .cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .field label,
-  .cform label {
-    display: block;
-    margin-bottom: 7px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    font-weight: 700;
-  }
-  .cform input,
-  .cform select,
-  .cform textarea {
-    width: 100%;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: #fff;
-    color: var(--ink);
-    font: inherit;
-    outline: none;
-    padding: 15px 16px;
-    transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease;
-  }
-  .cform input:hover,
-  .cform select:hover,
-  .cform textarea:hover { border-color: #d5c7a7; }
-  .cform input:focus,
-  .cform select:focus,
-  .cform textarea:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 4px rgba(210,154,53,.16);
-    transform: translateY(-1px);
-  }
-  .cform textarea { min-height: 154px; resize: vertical; }
-  .cform select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236A7585' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 18px;
-    padding-right: 44px;
-  }
-  .cform-submit .btn {
-    width: 100%;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cform-submit .btn::before,
-  .contact-final .btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent, rgba(255,255,255,.38), transparent);
-    transform: translateX(-130%);
-    transition: transform .7s cubic-bezier(.16,1,.3,1);
-  }
-  .cform-submit .btn:hover::before,
-  .contact-final .btn:hover::before { transform: translateX(130%); }
+/* ---- Breadcrumb ---- */
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.44); margin-bottom: 18px;
+}
+.breadcrumb a { color: rgba(255,255,255,.44); transition: color .2s; }
+.breadcrumb a:hover { color: var(--gold-soft); }
+.breadcrumb svg { width: 12px; height: 12px; opacity: .44; }
 
-  .contact-office { overflow: hidden; padding: clamp(28px, 4vw, 42px); }
-  .office-top { padding: clamp(28px, 4vw, 42px); }
-  .office-details { display: grid; gap: 16px; margin-top: 28px; }
-  .office-detail {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 15px;
-    align-items: start;
-    padding: 16px;
-    border: 1px solid var(--line-soft);
-    border-radius: 15px;
-    background: #fff;
-    transition: transform .28s ease, box-shadow .28s ease;
-  }
-  .office-detail:hover { transform: translateX(6px); box-shadow: var(--shadow-sm); }
-  .od-ico {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    background: #eef3f8;
-    color: var(--primary);
-  }
-  .od-ico svg { width: 21px; height: 21px; }
-  .office-detail h4 {
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--gold-d);
-    margin-bottom: 4px;
-  }
-  .office-detail p,
-  .office-detail a { color: var(--ink); font-weight: 600; line-height: 1.5; }
-  .office-hours {
-    margin-top: 22px;
-    border-radius: 16px;
-    background: var(--navy);
-    color: #fff;
-    padding: 24px;
-  }
-  .office-hours h4 {
-    color: var(--gold-soft);
-    font-size: 12px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .office-hours ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .office-hours li { display: flex; justify-content: space-between; gap: 18px; color: #cbd8e8; }
-  .office-hours li span:last-child { color: #fff; font-weight: 700; white-space: nowrap; }
-  .map-placeholder {
-    height: 300px;
-    position: relative;
-    overflow: hidden;
-    border-top: 1px solid var(--line-soft);
-    background: #e8ecf1;
-  }
-  .map-placeholder iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.88) contrast(1.02); }
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.ct-hero {
+  position: relative;
+  min-height: min(860px, 96vh);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: #081222;
+  isolation: isolate;
+}
+.ct-hero-bg {
+  position: absolute; inset: 0; z-index: -3; overflow: hidden;
+  animation: kbZoom 22s ease-out forwards;
+  transform-origin: center center;
+}
+.ct-hero-bg img {
+  width: 100%; height: 115%; object-fit: cover;
+  object-position: center 40%;
+  will-change: transform;
+}
+.ct-hero-shade {
+  position: absolute; inset: 0; z-index: -2;
+  background:
+    linear-gradient(108deg, rgba(8,18,34,.97) 0%, rgba(8,18,34,.80) 42%, rgba(8,18,34,.28) 76%, rgba(8,18,34,.10) 100%),
+    linear-gradient(0deg, rgba(8,18,34,.92) 0%, rgba(8,18,34,0) 46%);
+}
+.ct-hero-dots {
+  position: absolute; inset: 0; z-index: -1; opacity: .14;
+  background-image: radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+.ct-hero::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; z-index: 5;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+  background-size: 300%;
+  animation: ctaGrad 7s ease infinite;
+}
 
-  .contact-final {
-    position: relative;
-    min-height: 440px;
-    display: grid;
-    align-items: center;
-    isolation: isolate;
-    overflow: hidden;
-    color: #fff;
-  }
-  .contact-final img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -3;
-    transition: transform 1s cubic-bezier(.16,1,.3,1);
-  }
-  .contact-final:hover img { transform: scale(1.045); }
-  .contact-final::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background: linear-gradient(90deg, rgba(8,18,34,.94), rgba(8,18,34,.46));
-  }
-  .contact-final h2 {
-    color: #fff;
-    font-size: clamp(34px, 5vw, 64px);
-    max-width: 12ch;
-  }
-  .contact-final p { margin-top: 18px; color: #d4deeb; max-width: 54ch; }
-  @keyframes contactHeroZoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
-  }
-  @media (max-width: 980px) {
-    .contact-hero__grid,
-    .contact-grid { grid-template-columns: 1fr; }
-    .contact-cards { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 640px) {
-    .quick-contact { margin-top: 0; }
-    .contact-cards { grid-template-columns: 1fr; border-radius: 0; margin-inline: calc(var(--gut) * -1); }
-    .contact-card { border-left: 0; border-top: 1px solid var(--line-soft); }
-    .contact-card:first-child { border-top: 0; }
-    .cform-row { grid-template-columns: 1fr; }
-    .office-hours li { display: grid; gap: 2px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .contact-hero__bg img,
-    .contact-final img { animation: none; transition: none; }
-  }
+.ct-hero__inner {
+  position: relative; z-index: 2;
+  padding-block: clamp(110px,14vw,170px) clamp(48px,6vw,72px);
+  display: grid;
+  grid-template-columns: 1fr 410px;
+  gap: clamp(40px,6vw,96px);
+  align-items: end;
+  margin-inline-start: 6vw;
+}
+
+.ct-hero h1 {
+  color: #fff;
+  font-size: clamp(26px, 3.6vw, 48px);
+  line-height: 1.08; font-weight: 900;
+  letter-spacing: -.03em; max-width: 16ch;
+  margin-top: 16px;
+}
+.ct-hero h1 em { font-style: normal; color: var(--gold); }
+.ct-hero .lede {
+  color: #a8bdd5; margin-top: 22px;
+  font-size: clamp(15px,1.5vw,18px);
+  max-width: 50ch; line-height: 1.72;
+}
+.ct-hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+
+/* Right glassmorphism card */
+.ct-hero-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-radius: 22px;
+  padding: clamp(22px,3vw,34px);
+  box-shadow: 0 32px 80px rgba(0,0,0,.3);
+  position: relative; overflow: hidden;
+  animation: floatY 5.5s ease-in-out infinite 0.8s;
+  color: #fff;
+  transition: transform .45s cubic-bezier(.16,1,.3,1), border-color .4s;
+}
+.ct-hero-card::before {
+  content: ""; position: absolute; inset: -1px;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.16) 38%, transparent 60%);
+  transform: translateX(-130%);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.ct-hero-card:hover { transform: translateY(-8px); border-color: rgba(210,154,53,.4); }
+.ct-hero-card:hover::before { transform: translateX(130%); }
+.ct-hero-card > * { position: relative; }
+
+.chc-label {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.chc-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 10px; letter-spacing: .1em; color: rgba(255,255,255,.38);
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4ecf96;
+  box-shadow: 0 0 0 3px rgba(78,207,150,.25);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot { 0%,100%{box-shadow:0 0 0 3px rgba(78,207,150,.25)} 50%{box-shadow:0 0 0 6px rgba(78,207,150,.08)} }
+
+.chc-links { display: grid; gap: 10px; }
+.chc-link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 14px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  transition: background .25s, border-color .25s, transform .25s;
+  text-decoration: none;
+}
+.chc-link:hover { background: rgba(255,255,255,.13); border-color: rgba(210,154,53,.3); transform: translateX(5px); }
+.chc-link-ico {
+  width: 40px; height: 40px; border-radius: 11px; flex: none;
+  background: rgba(210,154,53,.18); border: 1px solid rgba(210,154,53,.25);
+  display: grid; place-items: center; color: var(--gold);
+}
+.chc-link-ico svg { width: 18px; height: 18px; }
+.chc-link-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.38); }
+.chc-link-val { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: #fff; margin-top: 2px; }
+
+.chc-sep { height: 1px; background: rgba(255,255,255,.1); margin-block: 14px; }
+.chc-response {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 12px;
+  background: rgba(78,207,150,.12); border: 1px solid rgba(78,207,150,.22);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: #4ecf96;
+}
+.chc-response svg { width: 16px; height: 16px; flex: none; }
+
+/* Hero statsbar */
+.ct-hero-bar {
+  position: relative; z-index: 3;
+  background: rgba(8,18,34,.72);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.ct-bar-inner { display: flex; align-items: stretch; min-height: 70px; }
+.ct-bar-item {
+  flex: 1; display: flex; align-items: center; gap: 12px;
+  padding: 14px clamp(12px,2.5vw,32px);
+  border-right: 1px solid rgba(255,255,255,.1);
+  transition: background .25s;
+}
+.ct-bar-item:last-child { border-right: none; }
+.ct-bar-item:hover { background: rgba(255,255,255,.06); }
+.ct-bar-ico {
+  width: 34px; height: 34px; flex: none;
+  border-radius: 9px; background: rgba(210,154,53,.15);
+  border: 1px solid rgba(210,154,53,.22);
+  display: grid; place-items: center; color: var(--gold);
+}
+.ct-bar-ico svg { width: 16px; height: 16px; }
+.ct-bar-val { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #fff; line-height: 1; }
+.ct-bar-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: 3px; }
+
+@media (max-width: 1020px) { .ct-hero__inner { grid-template-columns: 1fr; } .ct-hero-card { display: none; } }
+@media (max-width: 600px) {
+  .ct-hero-bar .wrap { padding-inline: 0; }
+  .ct-bar-inner { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-bar-item { border-top: 1px solid rgba(255,255,255,.08); padding: 12px 14px; gap: 10px; }
+  .ct-bar-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
+  .ct-bar-item:nth-child(1), .ct-bar-item:nth-child(2) { border-top: none; }
+  .ct-bar-ico { width: 30px; height: 30px; flex: none; }
+  .ct-bar-ico svg { width: 14px; height: 14px; }
+  .ct-bar-val { font-size: 12.5px; word-break: break-word; }
+  .ct-bar-lab { font-size: 9px; }
+}
+
+/* ============================================================
+   2. QUICK-CONTACT CARDS
+   ============================================================ */
+.contact-cards-section {
+  margin-top: -54px;
+  position: relative; z-index: 10;
+}
+.contact-cards {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  background: #fff;
+  border-radius: 22px; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(8,18,34,.18);
+  border: 1px solid var(--line-soft);
+}
+.ccard {
+  position: relative; overflow: hidden;
+  padding: clamp(22px,3vw,32px);
+  border-left: 1px solid var(--line-soft);
+  transition: transform .36s cubic-bezier(.16,1,.3,1), background .3s, box-shadow .3s;
+  cursor: default;
+}
+.ccard:first-child { border-left: none; }
+.ccard::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(210,154,53,.12), rgba(26,95,168,.06) 55%, transparent);
+  opacity: 0; transition: opacity .35s;
+}
+.ccard::after {
+  content: ""; position: absolute;
+  left: 0; right: 0; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+}
+.ccard:hover { transform: translateY(-8px); background: #fdfbf5; box-shadow: 0 28px 56px rgba(8,18,34,.14); }
+.ccard:hover::before { opacity: 1; }
+.ccard:hover::after { transform: scaleX(1); }
+.ccard > * { position: relative; }
+.ccard-ico {
+  width: 54px; height: 54px; border-radius: 15px;
+  background: var(--navy); color: var(--gold-soft);
+  display: grid; place-items: center; margin-bottom: 18px;
+  transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.ccard-ico svg { width: 24px; height: 24px; }
+.ccard:hover .ccard-ico { transform: rotate(-6deg) scale(1.1); background: var(--gold); color: #20180a; }
+.ccard-label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--gold-d);
+  margin-bottom: 8px;
+}
+.ccard-val {
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  color: var(--ink); line-height: 1.35;
+  text-decoration: none; display: block;
+  transition: color .2s;
+}
+a.ccard-val:hover { color: var(--primary); }
+.ccard-sub { color: var(--muted); font-size: 13.5px; margin-top: 6px; line-height: 1.5; }
+
+@media (max-width: 980px) { .contact-cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) {
+  .contact-cards { grid-template-columns: 1fr; border-radius: 16px; }
+  .ccard { border-left: none; border-top: 1px solid var(--line-soft); }
+  .ccard:first-child { border-top: none; }
+  .contact-cards-section { margin-top: 0; }
+}
+
+/* ============================================================
+   3. WHAT HAPPENS NEXT (process strip)
+   ============================================================ */
+.process-strip { background: var(--navy); position: relative; overflow: hidden; }
+.process-strip::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(210,154,53,.09) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.process-strip .wrap { position: relative; padding-block: clamp(52px,7vw,80px); }
+.ps-head { text-align: center; margin-bottom: 52px; }
+.ps-head h2 { color: #fff; font-size: clamp(26px,3.8vw,46px); margin-top: 14px; }
+.ps-head p { color: #8fa5be; margin-top: 12px; font-size: 16px; max-width: 50ch; margin-inline: auto; }
+
+.ps-steps {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  position: relative;
+}
+.ps-steps::before {
+  content: ""; position: absolute;
+  top: 36px; left: calc(12.5% + 18px); right: calc(12.5% + 18px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--primary), var(--gold));
+}
+.ps-step {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding-inline: 16px; position: relative; z-index: 1;
+}
+.ps-circle {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  border: 2px solid rgba(255,255,255,.14);
+  display: grid; place-items: center; color: var(--gold);
+  margin-bottom: 20px; position: relative;
+  transition: background .35s, border-color .35s, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+}
+.ps-circle svg { width: 26px; height: 26px; }
+.ps-n {
+  position: absolute; top: -6px; right: -6px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gold); color: #1d1402;
+  font-family: var(--font-mono); font-weight: 700; font-size: 10px;
+  display: grid; place-items: center;
+}
+.ps-step:hover .ps-circle {
+  background: rgba(210,154,53,.18); border-color: var(--gold);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 8px rgba(210,154,53,.1);
+}
+.ps-step h4 { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #e2eaf3; }
+.ps-step p { color: #6e87a0; font-size: 13.5px; margin-top: 7px; max-width: 16ch; margin-inline: auto; line-height: 1.6; }
+
+@media (max-width: 860px) {
+  .ps-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .ps-steps::before { display: none; }
+}
+@media (max-width: 480px) { .ps-steps { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   4. FORM + OFFICE
+   ============================================================ */
+.contact-main { background: var(--paper-2); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px,5vw,64px);
+  align-items: start;
+}
+
+/* Form card */
+.ct-form-card {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.ct-form-top {
+  padding: clamp(28px,4vw,44px) clamp(28px,4vw,44px) 0;
+}
+.ct-form-top h2 { font-size: clamp(26px,3.2vw,40px); margin-top: 14px; }
+.ct-form-top p { color: var(--muted); margin-top: 14px; font-size: 16px; }
+
+/* Step tabs */
+.form-tabs {
+  display: flex; gap: 0;
+  border: 1px solid var(--line); border-radius: 14px;
+  overflow: hidden; margin-top: 26px; background: var(--paper-2);
+}
+.form-tab {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 14px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer;
+  transition: background .22s, color .22s;
+  border: none; background: transparent; position: relative;
+}
+.form-tab::after {
+  content: ""; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform .3s;
+}
+.form-tab.active { background: #fff; color: var(--ink); }
+.form-tab.active::after { transform: scaleX(1); }
+.form-tab .tab-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--line); color: var(--muted);
+  display: grid; place-items: center; font-size: 11px; flex: none;
+  transition: background .22s, color .22s;
+}
+.form-tab.active .tab-num { background: var(--gold); color: #1d1402; }
+.form-tab.done .tab-num { background: #4ecf96; color: #fff; }
+.form-tab.done { color: #4ecf96; }
+
+/* Form panels */
+.ct-form { padding: clamp(24px,3vw,36px) clamp(28px,4vw,44px) clamp(28px,4vw,44px); }
+.form-panel { display: none; }
+.form-panel.active { display: grid; gap: 18px; animation: panelIn .3s ease-out; }
+@keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.fgroup { display: flex; flex-direction: column; }
+.fgroup label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 700; margin-bottom: 7px;
+  display: flex; align-items: center; gap: 5px;
+}
+.fgroup label .req { color: var(--gold-d); }
+.fgroup input,
+.fgroup select,
+.fgroup textarea {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit; font-size: 15px;
+  outline: none;
+  padding: 13px 15px;
+  transition: border-color .22s, box-shadow .22s, transform .22s;
+}
+.fgroup input:hover,
+.fgroup select:hover,
+.fgroup textarea:hover { border-color: #d5c7a7; }
+.fgroup input:focus,
+.fgroup select:focus,
+.fgroup textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(210,154,53,.15);
+  transform: translateY(-1px);
+}
+.fgroup textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
+.fgroup select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236A7585' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+  padding-right: 44px; cursor: pointer;
+}
+
+/* Commodity pills */
+.commodity-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.com-pill {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--paper-2); color: var(--muted);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+  user-select: none;
+}
+.com-pill:hover { border-color: var(--gold-d); color: var(--gold-d); transform: translateY(-2px); }
+.com-pill.sel { background: var(--navy); border-color: var(--navy); color: var(--gold-soft); }
+.com-pill svg { width: 14px; height: 14px; }
+
+/* Form navigation buttons */
+.form-nav { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-top: 4px; }
+.form-back {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none; cursor: pointer; padding: 0;
+  transition: color .2s;
+}
+.form-back:hover { color: var(--ink); }
+.btn-next, .btn-submit {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 12px; font-size: 15px;
+  font-family: var(--font-display); font-weight: 700;
+  border: none; cursor: pointer; transition: all .3s;
+  position: relative; overflow: hidden;
+}
+.btn-next { background: var(--navy); color: #fff; }
+.btn-next:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(8,18,34,.24); }
+.btn-submit { background: var(--gold); color: #1d1402; }
+.btn-submit:hover { background: var(--gold-d); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210,154,53,.4); }
+.btn-next svg, .btn-submit svg { width: 15px; height: 15px; }
+
+/* Shimmer effect on submit */
+.btn-submit::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.38), transparent);
+  transform: translateX(-130%);
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+}
+.btn-submit:hover::before { transform: translateX(130%); }
+
+/* Success message */
+.form-success {
+  display: none; padding: 28px 32px;
+  text-align: center;
+  animation: panelIn .4s ease-out;
+}
+.form-success-ico {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(78,207,150,.15); border: 2px solid rgba(78,207,150,.3);
+  display: grid; place-items: center; color: #4ecf96; margin: 0 auto 20px;
+}
+.form-success-ico svg { width: 32px; height: 32px; }
+.form-success h3 { font-size: 24px; }
+.form-success p { color: var(--muted); margin-top: 10px; font-size: 16px; max-width: 38ch; margin-inline: auto; }
+.form-success .back-btn { margin-top: 22px; }
+
+/* ============================================================
+   OFFICE SIDEBAR
+   ============================================================ */
+.ct-office-card {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: sticky; top: 96px;
+}
+.co-top { padding: clamp(24px,3vw,36px); }
+.co-top h2 { font-size: clamp(24px,3vw,36px); margin-top: 14px; }
+.co-top p { color: var(--muted); margin-top: 12px; font-size: 15.5px; }
+
+.office-details { display: grid; gap: 10px; margin-top: 22px; }
+.od-item {
+  display: flex; gap: 13px; align-items: flex-start;
+  padding: 14px 16px; border-radius: 14px;
+  background: var(--paper-2); border: 1px solid var(--line-soft);
+  transition: transform .25s, background .25s, box-shadow .25s;
+  text-decoration: none; color: inherit;
+}
+.od-item:hover { transform: translateX(5px); background: #fff; box-shadow: var(--shadow-sm); }
+.od-ico {
+  width: 44px; height: 44px; flex: none;
+  border-radius: 12px; background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid; place-items: center; color: var(--primary);
+  transition: background .25s, color .25s;
+}
+.od-ico svg { width: 19px; height: 19px; }
+.od-item:hover .od-ico { background: var(--primary); color: #fff; }
+.od-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-d); margin-bottom: 4px; }
+.od-val { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); line-height: 1.45; }
+
+.office-hours {
+  margin: 16px 0 0;
+  background: var(--navy); border-radius: 16px;
+  padding: 20px 22px;
+}
+.office-hours-head {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.office-hours-head svg { width: 14px; height: 14px; }
+.oh-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-block: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: 14px;
+}
+.oh-row:last-child { border-bottom: none; padding-bottom: 0; }
+.oh-day { color: #8fa5be; }
+.oh-time { color: #fff; font-family: var(--font-display); font-weight: 600; }
+.oh-time.closed { color: rgba(255,255,255,.3); }
+
+/* Map */
+.ct-map {
+  height: 260px; position: relative; overflow: hidden;
+  border-top: 1px solid var(--line-soft);
+}
+.ct-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.85) contrast(1.04); }
+
+@media (max-width: 980px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .ct-office-card { position: static; }
+  .frow { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   5. SOCIAL & DIRECT CHANNELS
+   ============================================================ */
+.channels-section { background: var(--surface); border-top: 1px solid var(--line); }
+.channels-grid {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: clamp(40px,6vw,96px); align-items: center;
+}
+.ch-text h2 { font-size: clamp(26px,3.6vw,44px); margin-top: 14px; }
+.ch-text p { color: var(--muted); margin-top: 16px; font-size: 17px; line-height: 1.75; }
+.ch-methods { display: grid; gap: 12px; margin-top: 28px; }
+.ch-method {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; border-radius: 16px;
+  background: var(--paper); border: 1px solid var(--line-soft);
+  transition: transform .28s, background .28s, box-shadow .28s;
+  text-decoration: none; color: inherit;
+}
+.ch-method:hover { transform: translateX(6px); background: #fff; box-shadow: var(--shadow-sm); }
+.ch-m-ico {
+  width: 46px; height: 46px; border-radius: 13px; flex: none;
+  display: grid; place-items: center;
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+}
+.ch-method:hover .ch-m-ico { transform: rotate(-6deg) scale(1.1); }
+.ch-m-ico.navy { background: var(--navy); color: var(--gold-soft); }
+.ch-m-ico.blue { background: #e8f1fa; color: var(--primary); }
+.ch-m-ico.green { background: #e4f5ec; color: #1a8a5b; }
+.ch-m-ico svg { width: 21px; height: 21px; }
+.ch-m-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.ch-m-val { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--ink); margin-top: 2px; }
+
+.ch-socials {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 26px;
+}
+.ch-soc {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; border-radius: 14px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  transition: border-color .22s, background .22s, transform .22s;
+  text-decoration: none; color: var(--ink);
+}
+.ch-soc:hover { border-color: var(--primary); background: #fff; transform: translateY(-3px); }
+.ch-soc svg { width: 20px; height: 20px; color: var(--primary); flex: none; }
+.ch-soc span { font-family: var(--font-display); font-weight: 600; font-size: 14px; }
+
+.ch-right {
+  background: var(--navy); border-radius: 22px; overflow: hidden;
+  position: relative;
+}
+.ch-right-img { height: 240px; overflow: hidden; }
+.ch-right-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .7s; }
+.ch-right:hover .ch-right-img img { transform: scale(1.05); }
+.ch-right-body { padding: 28px; }
+.ch-right-body h3 { color: #fff; font-size: 22px; }
+.ch-right-body p { color: #8fa5be; font-size: 15px; margin-top: 10px; line-height: 1.65; }
+.ch-right-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 22px; }
+.chrs { text-align: center; padding: 14px; background: rgba(255,255,255,.07); border-radius: 12px; border: 1px solid rgba(255,255,255,.1); }
+.chrs-val { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--gold); letter-spacing: -.02em; }
+.chrs-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: 4px; }
+
+@media (max-width: 900px) { .channels-grid { grid-template-columns: 1fr; } .ch-socials { grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================
+   6. FULL-BLEED IMAGE CTA
+   ============================================================ */
+.ct-final {
+  position: relative; min-height: 560px;
+  display: flex; align-items: center;
+  overflow: hidden; isolation: isolate; color: #fff;
+}
+.ct-final img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2;
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+.ct-final:hover img { transform: scale(1.04); }
+.ct-final::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(102deg, rgba(8,18,34,.97) 0%, rgba(8,18,34,.72) 50%, rgba(8,18,34,.34) 100%),
+    linear-gradient(0deg, rgba(8,18,34,.65) 0%, transparent 50%);
+}
+.ct-final::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .12;
+  background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+.ct-final .wrap { padding-left: clamp(58px, 12vw, 150px); margin-left: 0; }
+.ct-final__inner { padding-block: clamp(72px,9vw,110px); max-width: 680px; }
+.ct-final h2 { color: #fff; font-size: clamp(36px,5.5vw,72px); line-height: .95; letter-spacing: -.03em; }
+.ct-final h2 em { font-style: normal; color: var(--gold); }
+.ct-final p { color: #a8bdd5; font-size: 17px; margin-top: 22px; max-width: 52ch; line-height: 1.72; }
+.ct-final__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+
+/* ---- Shared ---- */
+@keyframes floatY {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-12px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-hero-bg, .ct-hero-card { animation: none; }
+}
+
 </style>
 </head>
 <body>
@@ -404,7 +707,7 @@
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
-      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
     </a>
     <nav class="menu">
       <a href="index.html">Home</a>
@@ -414,10 +717,7 @@
       <a href="contact.html" class="active">Contact</a>
     </nav>
     <div class="nav-right">
-      <button class="icon-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
-      <a href="contact.html" class="btn btn-primary">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -425,191 +725,378 @@
   </div>
 </header>
 
-<main class="contact-page">
+<main>
 
-<!-- ============ PAGE HERO ============ -->
-<section class="contact-hero">
-  <div class="contact-hero__bg" aria-hidden="true">
-    <img src="public/2151663056.jpg" alt="" />
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section class="ct-hero">
+  <div class="ct-hero-bg">
+    <img src="assets/images/2151663056.webp" alt="" />
   </div>
-  <div class="wrap contact-hero__grid">
+  <div class="ct-hero-shade"></div>
+  <div class="ct-hero-dots"></div>
+
+  <div class="wrap ct-hero__inner">
+    <!-- Left -->
     <div class="reveal">
-    <span class="eyebrow light">Contact DB Group</span>
-    <h1>Let us move your next trade</h1>
-    <p>Share the commodity, grade, volume and destination. Our Dubai team will help shape a practical route from sourcing to shipment execution.</p>
-    <div class="hero-actions">
-      <a href="#contact-form" class="btn btn-gold">Start Enquiry <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a href="tel:+97142555144" class="btn btn-light">Call Office</a>
-    </div>
-  </div>
-  <aside class="hero-contact-card reveal d2">
-    <span class="eyebrow light">Dubai Office</span>
-    <h2>Fast commercial response</h2>
-    <p>For quote requests, supply discussions and partnership conversations, reach the team directly.</p>
-    <div class="hero-card-links">
-      <a href="tel:+97142555144">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
-        <span>+971 4 255 5144</span>
-      </a>
-      <a href="mailto:info@dbgroupfzco.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-        <span>info@dbgroupfzco.com</span>
-      </a>
-      <div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>Office 605, Building 5, Dubai Airport Free Zone, UAE</span>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        <span>Contact</span>
+      </div>
+      <span class="eyebrow light">Get in Touch</span>
+      <h1>Let's Move Your Next <em>Trade</em></h1>
+      <p class="lede">Share the commodity, grade, volume and destination. Our Dubai trade team will shape a practical route — from origin sourcing through certified quality to final delivery execution.</p>
+      <div class="ct-hero__actions">
+        <a href="#contact-form" class="btn btn-gold">Start Enquiry <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="tel:+97142555144" class="btn btn-light">Call Office</a>
       </div>
     </div>
-  </aside>
+
+    <!-- Right card -->
+    <aside class="ct-hero-card reveal d2">
+      <div class="chc-label">
+        Dubai Office — Direct Contact
+        <span class="chc-live"><span class="live-dot"></span> Online</span>
+      </div>
+      <div class="chc-links">
+        <a href="tel:+97142555144" class="chc-link">
+          <div class="chc-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+          <div><div class="chc-link-label">Call Direct</div><div class="chc-link-val">+971 4 255 5144</div></div>
+        </a>
+        <a href="mailto:info@dbgroupfzco.com" class="chc-link">
+          <div class="chc-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+          <div><div class="chc-link-label">Email</div><div class="chc-link-val">info@dbgroupfzco.com</div></div>
+        </a>
+        <div class="chc-link">
+          <div class="chc-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="chc-link-label">Address</div><div class="chc-link-val">DAFZA, Dubai, UAE</div></div>
+        </div>
+      </div>
+      <div class="chc-sep"></div>
+      <div class="chc-response">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+        Typically responds within 1 business day
+      </div>
+    </aside>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="ct-hero-bar">
+    <div class="wrap">
+      <div class="ct-bar-inner">
+        <div class="ct-bar-item">
+          <div class="ct-bar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+          <div><div class="ct-bar-val">+971 4 255 5144</div><div class="ct-bar-lab">Phone</div></div>
+        </div>
+        <div class="ct-bar-item">
+          <div class="ct-bar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+          <div><div class="ct-bar-val">info@dbgroupfzco.com</div><div class="ct-bar-lab">Email</div></div>
+        </div>
+        <div class="ct-bar-item">
+          <div class="ct-bar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><div class="ct-bar-val">Mon–Fri 9:00–18:00</div><div class="ct-bar-lab">GST Business Hours</div></div>
+        </div>
+        <div class="ct-bar-item">
+          <div class="ct-bar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="ct-bar-val">DAFZA, Dubai</div><div class="ct-bar-lab">Office Location</div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ CONTACT CARDS ============ -->
-<section class="contact-info">
+
+<!-- ============================================================
+     2. QUICK-CONTACT CARDS
+     ============================================================ -->
+<section class="contact-cards-section">
   <div class="wrap">
     <div class="contact-cards">
-      <div class="contact-card reveal">
-        <div class="cc-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
-        </div>
-        <h3>Phone</h3>
-        <a href="tel:+97142555144">+971 4 255 5144</a>
+      <div class="ccard reveal">
+        <div class="ccard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+        <div class="ccard-label">Phone</div>
+        <a href="tel:+97142555144" class="ccard-val">+971 4 255 5144</a>
+        <div class="ccard-sub">Call us during business hours</div>
       </div>
-      <div class="contact-card reveal d1">
-        <div class="cc-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-        </div>
-        <h3>Email</h3>
-        <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
+      <div class="ccard reveal d1">
+        <div class="ccard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+        <div class="ccard-label">Email</div>
+        <a href="mailto:info@dbgroupfzco.com" class="ccard-val">info@dbgroupfzco.com</a>
+        <div class="ccard-sub">Response within 1 business day</div>
       </div>
-      <div class="contact-card reveal d2">
-        <div class="cc-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <h3>Office</h3>
-        <p>Office 605, Building 5,<br>DAFZA, Dubai, UAE</p>
+      <div class="ccard reveal d2">
+        <div class="ccard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="ccard-label">Office</div>
+        <div class="ccard-val">Office 605, Building 5</div>
+        <div class="ccard-sub">Dubai Airport Free Zone, UAE</div>
       </div>
-      <div class="contact-card reveal d3">
-        <div class="cc-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3>Working Hours</h3>
-        <p>Mon – Fri: 9:00 – 18:00<br>Sat: 9:00 – 13:00</p>
+      <div class="ccard reveal d3">
+        <div class="ccard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="ccard-label">Business Hours</div>
+        <div class="ccard-val">Mon – Fri: 9:00 – 18:00</div>
+        <div class="ccard-sub">Sat: 9:00 – 13:00 · Sun: Closed</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ CONTACT FORM + OFFICE ============ -->
-<section class="contact-main" id="contact-form">
+
+<!-- ============================================================
+     3. WHAT HAPPENS NEXT
+     ============================================================ -->
+<section class="section process-strip">
+  <div class="wrap">
+    <div class="ps-head reveal">
+      <span class="eyebrow light">Our Process</span>
+      <h2>What Happens After You Enquire</h2>
+      <p>A clear four-step response flow — so you always know what to expect from the moment you contact us.</p>
+    </div>
+    <div class="ps-steps reveal d1">
+      <div class="ps-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span class="ps-n">01</span>
+        </div>
+        <h4>You Submit</h4>
+        <p>Send us your requirements via form, email or phone.</p>
+      </div>
+      <div class="ps-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="ps-n">02</span>
+        </div>
+        <h4>We Assess</h4>
+        <p>A trade specialist reviews your need and checks market availability.</p>
+      </div>
+      <div class="ps-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
+          <span class="ps-n">03</span>
+        </div>
+        <h4>You Get a Quote</h4>
+        <p>A detailed commercial proposal with pricing, packing and incoterms.</p>
+      </div>
+      <div class="ps-step">
+        <div class="ps-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="ps-n">04</span>
+        </div>
+        <h4>Deal Executed</h4>
+        <p>Contracts signed, inspection arranged and shipment underway.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     4. FORM + OFFICE
+     ============================================================ -->
+<section class="section contact-main" id="contact-form">
   <div class="wrap">
     <div class="contact-grid">
 
-      <!-- Form -->
-      <div class="contact-form-wrap reveal">
-        <span class="eyebrow">Send a Message</span>
-        <h2>Request a Quote or Partnership</h2>
-        <p>Fill in the form and one of our trade specialists will get back to you within one business day.</p>
+      <!-- Multi-step form -->
+      <div class="ct-form-card reveal">
+        <div class="ct-form-top">
+          <span class="eyebrow">Send an Enquiry</span>
+          <h2>Request a Quote or Partnership</h2>
+          <p>Fill in the details below and one of our trade specialists will respond within one business day.</p>
 
-        <form class="cform" action="#" method="post">
-          <div class="cform-row">
-            <div>
-              <label for="cf-name">Full Name</label>
-              <input type="text" id="cf-name" name="name" placeholder="John Smith" required />
-            </div>
-            <div>
-              <label for="cf-company">Company</label>
-              <input type="text" id="cf-company" name="company" placeholder="Your Company Ltd." />
-            </div>
-          </div>
-          <div class="cform-row">
-            <div>
-              <label for="cf-email">Email Address</label>
-              <input type="email" id="cf-email" name="email" placeholder="john@company.com" required />
-            </div>
-            <div>
-              <label for="cf-phone">Phone Number</label>
-              <input type="tel" id="cf-phone" name="phone" placeholder="+971 XX XXX XXXX" />
-            </div>
-          </div>
-          <div>
-            <label for="cf-subject">Subject</label>
-            <select id="cf-subject" name="subject">
-              <option value="" disabled selected>Select a topic</option>
-              <option value="quote">Request a Quote</option>
-              <option value="sourcing">Procurement &amp; Sourcing</option>
-              <option value="logistics">Logistics &amp; Shipping</option>
-              <option value="partnership">Trade Partnership</option>
-              <option value="other">General Enquiry</option>
-            </select>
-          </div>
-          <div>
-            <label for="cf-commodity">Commodity of Interest</label>
-            <input type="text" id="cf-commodity" name="commodity" placeholder="e.g. Raw Sugar, Basmati Rice, Sunflower Oil…" />
-          </div>
-          <div>
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" placeholder="Tell us about your requirements — volume, origin preference, delivery timeline, etc."></textarea>
-          </div>
-          <div class="cform-submit">
-            <button type="submit" class="btn btn-primary">Send Message <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-          </div>
-        </form>
-        
-        <!-- Success Message -->
-        <div id="contact-success-msg" class="contact-success-msg" style="display: none; margin-top: 24px; padding: 20px; border-radius: 12px; background: #e8f5e9; border-left: 4px solid #4caf50;">
-          <div style="color: #2e7d32; font-weight: 600; display: flex; gap: 10px; align-items: center;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span>Thank you! Your message has been sent successfully. Our team will get back to you within one business day.</span>
+          <!-- Step tabs -->
+          <div class="form-tabs" role="tablist">
+            <button class="form-tab active" data-step="1" role="tab">
+              <span class="tab-num">1</span> Your Details
+            </button>
+            <button class="form-tab" data-step="2" role="tab">
+              <span class="tab-num">2</span> Trade Need
+            </button>
+            <button class="form-tab" data-step="3" role="tab">
+              <span class="tab-num">3</span> Message
+            </button>
           </div>
         </div>
+
+        <form class="ct-form" id="ctForm" novalidate>
+
+          <!-- Step 1: Your Details -->
+          <div class="form-panel active" id="panel-1">
+            <div class="frow">
+              <div class="fgroup">
+                <label for="cf-name">Full Name <span class="req">*</span></label>
+                <input type="text" id="cf-name" name="name" placeholder="John Smith" required />
+              </div>
+              <div class="fgroup">
+                <label for="cf-company">Company</label>
+                <input type="text" id="cf-company" name="company" placeholder="Your Company Ltd." />
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fgroup">
+                <label for="cf-email">Email Address <span class="req">*</span></label>
+                <input type="email" id="cf-email" name="email" placeholder="john@company.com" required />
+              </div>
+              <div class="fgroup">
+                <label for="cf-phone">Phone Number</label>
+                <input type="tel" id="cf-phone" name="phone" placeholder="+971 XX XXX XXXX" />
+              </div>
+            </div>
+            <div class="fgroup">
+              <label for="cf-country">Country / Region</label>
+              <select id="cf-country" name="country">
+                <option value="" disabled selected>Select your region</option>
+                <option>United Arab Emirates</option>
+                <option>Saudi Arabia</option>
+                <option>Egypt</option>
+                <option>Nigeria</option>
+                <option>Kenya</option>
+                <option>India</option>
+                <option>Pakistan</option>
+                <option>Bangladesh</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-nav">
+              <span></span>
+              <button type="button" class="btn-next" onclick="goStep(2)">
+                Next: Trade Need <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Trade Need -->
+          <div class="form-panel" id="panel-2">
+            <div class="fgroup">
+              <label>Commodity of Interest</label>
+              <div class="commodity-pills">
+                <span class="com-pill" onclick="togglePill(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Raw Sugar</span>
+                <span class="com-pill" onclick="togglePill(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>White Sugar</span>
+                <span class="com-pill" onclick="togglePill(this)">🌿 Sunflower Oil</span>
+                <span class="com-pill" onclick="togglePill(this)">🌿 Palm Oil</span>
+                <span class="com-pill" onclick="togglePill(this)">🌾 Basmati Rice</span>
+                <span class="com-pill" onclick="togglePill(this)">🌾 Parboiled Rice</span>
+                <span class="com-pill" onclick="togglePill(this)">🌾 Wheat</span>
+                <span class="com-pill" onclick="togglePill(this)">Other</span>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fgroup">
+                <label for="cf-volume">Estimated Volume</label>
+                <input type="text" id="cf-volume" name="volume" placeholder="e.g. 500 MT, 1000 MT/month" />
+              </div>
+              <div class="fgroup">
+                <label for="cf-subject">Enquiry Type</label>
+                <select id="cf-subject" name="subject">
+                  <option value="" disabled selected>Select a topic</option>
+                  <option value="quote">Request a Quote</option>
+                  <option value="sourcing">Procurement &amp; Sourcing</option>
+                  <option value="logistics">Logistics &amp; Shipping</option>
+                  <option value="partnership">Trade Partnership</option>
+                  <option value="other">General Enquiry</option>
+                </select>
+              </div>
+            </div>
+            <div class="fgroup">
+              <label for="cf-destination">Destination Port / Country</label>
+              <input type="text" id="cf-destination" name="destination" placeholder="e.g. Port of Lagos, Egypt, UAE" />
+            </div>
+            <div class="form-nav">
+              <button type="button" class="form-back" onclick="goStep(1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+              </button>
+              <button type="button" class="btn-next" onclick="goStep(3)">
+                Next: Your Message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Message -->
+          <div class="form-panel" id="panel-3">
+            <div class="fgroup">
+              <label for="cf-message">Your Message <span class="req">*</span></label>
+              <textarea id="cf-message" name="message" placeholder="Tell us about your requirements — origin preference, grade specification, packing requirements, delivery timeline, and any other details." required></textarea>
+            </div>
+            <div class="fgroup">
+              <label for="cf-timeline">Expected Timeline</label>
+              <select id="cf-timeline" name="timeline">
+                <option value="" disabled selected>When do you need delivery?</option>
+                <option>Within 30 days</option>
+                <option>30 – 60 days</option>
+                <option>60 – 90 days</option>
+                <option>3 – 6 months</option>
+                <option>Ongoing / recurring supply</option>
+              </select>
+            </div>
+            <div class="form-nav">
+              <button type="button" class="form-back" onclick="goStep(2)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+              </button>
+              <button type="submit" class="btn-submit">
+                Send Enquiry <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Success -->
+          <div class="form-success" id="form-success">
+            <div class="form-success-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h3>Enquiry Sent!</h3>
+            <p>Thank you — one of our trade specialists will get back to you within one business day.</p>
+            <button type="button" class="btn btn-primary back-btn" onclick="resetForm()">Send Another Enquiry</button>
+          </div>
+        </form>
       </div>
 
       <!-- Office info -->
-      <div class="contact-office reveal d1">
-        <span class="eyebrow">Our Location</span>
-        <h2>Visit Our Dubai Office</h2>
-        <p>We are headquartered in the Dubai Airport Free Zone — a world-class trade hub providing direct access to global shipping routes and financial services.</p>
-
-        <div class="office-detail">
-          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div>
-            <h4>Address</h4>
-            <p>Office 605, Building 5,<br>Dubai Airport Free Zone (DAFZA),<br>Dubai, United Arab Emirates</p>
+      <div class="ct-office-card reveal d1">
+        <div class="co-top">
+          <span class="eyebrow">Our Location</span>
+          <h2>Visit Our Dubai Office</h2>
+          <p>Headquartered in Dubai Airport Free Zone — a world-class trade hub with direct access to global shipping routes and financial services.</p>
+          <div class="office-details">
+            <div class="od-item">
+              <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div>
+                <div class="od-label">Address</div>
+                <div class="od-val">Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</div>
+              </div>
+            </div>
+            <a href="tel:+97142555144" class="od-item">
+              <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+              <div>
+                <div class="od-label">Telephone</div>
+                <div class="od-val">+971 4 255 5144</div>
+              </div>
+            </a>
+            <a href="mailto:info@dbgroupfzco.com" class="od-item">
+              <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+              <div>
+                <div class="od-label">Email</div>
+                <div class="od-val">info@dbgroupfzco.com</div>
+              </div>
+            </a>
+          </div>
+          <div class="office-hours">
+            <div class="office-hours-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Business Hours (GST)
+            </div>
+            <div class="oh-row"><span class="oh-day">Monday – Thursday</span><span class="oh-time">9:00 – 18:00</span></div>
+            <div class="oh-row"><span class="oh-day">Friday</span><span class="oh-time">9:00 – 17:00</span></div>
+            <div class="oh-row"><span class="oh-day">Saturday</span><span class="oh-time">9:00 – 13:00</span></div>
+            <div class="oh-row"><span class="oh-day">Sunday</span><span class="oh-time closed">Closed</span></div>
           </div>
         </div>
-
-        <div class="office-detail">
-          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
-          <div>
-            <h4>Telephone</h4>
-            <a href="tel:+97142555144">+971 4 255 5144</a>
-          </div>
-        </div>
-
-        <div class="office-detail">
-          <div class="od-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
-          <div>
-            <h4>Email</h4>
-            <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
-          </div>
-        </div>
-
-        <div class="office-hours">
-          <h4>Business Hours (Gulf Standard Time)</h4>
-          <ul>
-            <li><span>Monday – Thursday</span><span>9:00 – 18:00</span></li>
-            <li><span>Friday</span><span>9:00 – 17:00</span></li>
-            <li><span>Saturday</span><span>9:00 – 13:00</span></li>
-            <li><span>Sunday</span><span>Closed</span></li>
-          </ul>
-        </div>
-
-        <div class="map-placeholder">
+        <div class="ct-map">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.0647936986354!2d55.36248!3d25.25387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d4c7c4e2d93%3A0x0!2sDubai+Airport+Free+Zone!5e0!3m2!1sen!2sae!4v1234567890"
-            allowfullscreen=""
-            loading="lazy"
+            allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             title="DB Group FZCO Office Location">
           </iframe>
@@ -620,14 +1107,82 @@
   </div>
 </section>
 
-<section class="contact-final">
-  <img src="public/servicesimage/30681.jpg" alt="Agricultural supply route" />
-  <div class="wrap reveal">
-    <span class="eyebrow light">Ready to Trade?</span>
-    <h2>Build a reliable supply chain</h2>
-    <p>Speak with DB Group FZCO about sourcing, documentation, logistics and delivery planning for essential food and agri-commodities.</p>
-    <div class="hero-actions">
-      <a href="tel:+97142555144" class="btn btn-gold">Call Us Now <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+<!-- ============================================================
+     5. SOCIAL & DIRECT CHANNELS
+     ============================================================ -->
+<section class="section channels-section">
+  <div class="wrap channels-grid">
+    <!-- Left: methods -->
+    <div class="reveal">
+      <span class="eyebrow">Other Ways to Reach Us</span>
+      <h2>Multiple Channels, One Dedicated Team</h2>
+      <p class="lede" style="color:var(--muted); margin-top:16px; font-size:16px; line-height:1.75;">Whether you prefer a direct call, a quick email or a message on social — our Dubai team is reachable across all platforms and will route your enquiry to the right specialist.</p>
+      <div class="ch-methods">
+        <a href="tel:+97142555144" class="ch-method">
+          <div class="ch-m-ico navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+          <div><div class="ch-m-label">Call Direct</div><div class="ch-m-val">+971 4 255 5144</div></div>
+        </a>
+        <a href="mailto:info@dbgroupfzco.com" class="ch-method">
+          <div class="ch-m-ico blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+          <div><div class="ch-m-label">Email Us</div><div class="ch-m-val">info@dbgroupfzco.com</div></div>
+        </a>
+        <div class="ch-method">
+          <div class="ch-m-ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div><div class="ch-m-label">WhatsApp</div><div class="ch-m-val">+971 4 255 5144</div></div>
+        </div>
+      </div>
+      <div class="ch-socials">
+        <a href="#" class="ch-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg><span>LinkedIn</span></a>
+        <a href="#" class="ch-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg><span>Facebook</span></a>
+        <a href="#" class="ch-soc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a>
+        <a href="#" class="ch-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg><span>X (Twitter)</span></a>
+      </div>
+    </div>
+
+    <!-- Right: stats card -->
+    <div class="ch-right reveal d1">
+      <div class="ch-right-img">
+        <img src="assets/images/about/83377.webp" alt="DB Group Dubai office" loading="lazy" />
+      </div>
+      <div class="ch-right-body">
+        <span class="eyebrow light" style="display:block; margin-bottom:8px;">DB Group FZCO</span>
+        <h3>Dubai's Trusted Commodity Trade Desk</h3>
+        <p>Serving buyers and suppliers across MENA, Africa and Asia from the heart of Dubai's world-class free trade zone.</p>
+        <div class="ch-right-stats">
+          <div class="chrs">
+            <div class="chrs-val" data-count="15" data-suffix="+">15+</div>
+            <div class="chrs-lab">Years</div>
+          </div>
+          <div class="chrs">
+            <div class="chrs-val" data-count="30" data-suffix="+">30+</div>
+            <div class="chrs-lab">Countries</div>
+          </div>
+          <div class="chrs">
+            <div class="chrs-val">1M+</div>
+            <div class="chrs-lab">MT Delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. FULL-BLEED IMAGE CTA
+     ============================================================ -->
+<section class="ct-final">
+  <img src="assets/images/services/30681.webp" alt="Build your supply chain with DB Group" loading="lazy" />
+  <div class="wrap">
+    <div class="ct-final__inner reveal">
+      <span class="eyebrow light">Ready to Trade?</span>
+      <h2>Build a <em>Reliable</em> Supply Chain</h2>
+      <p>Speak with DB Group FZCO about sourcing, documentation, logistics and delivery planning for essential food and agri-commodities across the globe.</p>
+      <div class="ct-final__actions">
+        <a href="tel:+97142555144" class="btn btn-gold">Call Us Now <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="mailto:info@dbgroupfzco.com" class="btn btn-light">Email the Team</a>
+      </div>
     </div>
   </div>
 </section>
@@ -640,14 +1195,14 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
-          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
         <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
         <div class="foot-soc">
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
           <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
         </div>
       </div>
       <div class="foot-col">
@@ -656,8 +1211,8 @@
           <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
           <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
           <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -671,11 +1226,140 @@
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
-      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script>
+/* ---- Scroll progress bar ---- */
+const prog = document.createElement('div');
+prog.id = 'scroll-prog';
+document.body.prepend(prog);
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
+
+/* ---- Sticky header ---- */
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 40); }, { passive: true });
+
+/* ---- Reveal on scroll ---- */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ---- Counter animation ---- */
+function animateCount(el) {
+  const target = +el.dataset.count;
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
+}
+const cntObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cntObs.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+/* ---- Hero parallax ---- */
+const heroBg = document.querySelector('.ct-hero-bg img');
+if (heroBg) {
+  window.addEventListener('scroll', () => {
+    if (scrollY < innerHeight * 1.5)
+      heroBg.style.transform = `translateY(${scrollY * 0.22}px)`;
+  }, { passive: true });
+}
+
+/* ---- Multi-step form ---- */
+function goStep(n) {
+  const panels = document.querySelectorAll('.form-panel');
+  const tabs   = document.querySelectorAll('.form-tab');
+  panels.forEach((p, i) => p.classList.toggle('active', i === n - 1));
+  tabs.forEach((t, i) => {
+    t.classList.remove('active', 'done');
+    if (i < n - 1) t.classList.add('done');
+    if (i === n - 1) t.classList.add('active');
+  });
+  /* Update done tab nums to checkmarks */
+  tabs.forEach((t, i) => {
+    const num = t.querySelector('.tab-num');
+    if (t.classList.contains('done')) num.innerHTML = '✓';
+    else num.textContent = i + 1;
+  });
+  document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ---- Commodity pill toggle ---- */
+function togglePill(el) {
+  el.classList.toggle('sel');
+}
+
+/* ---- Form submit ---- */
+document.getElementById('ctForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const panels = document.querySelectorAll('.form-panel');
+  panels.forEach(p => { p.style.display = 'none'; });
+  document.querySelector('.form-tabs').style.display = 'none';
+  const success = document.getElementById('form-success');
+  success.style.display = 'block';
+});
+
+function resetForm() {
+  document.getElementById('ctForm').reset();
+  document.querySelectorAll('.com-pill').forEach(p => p.classList.remove('sel'));
+  document.querySelector('.form-tabs').style.display = '';
+  document.getElementById('form-success').style.display = 'none';
+  document.querySelectorAll('.form-panel').forEach((p, i) => {
+    p.style.display = '';
+    p.classList.toggle('active', i === 0);
+  });
+  goStep(1);
+}
+/* ---- Mobile hamburger menu ---- */
+(function() {
+  var burger = document.querySelector('.burger');
+  var menu = document.querySelector('.menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('menu--open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+</script>
 </body>
 </html>

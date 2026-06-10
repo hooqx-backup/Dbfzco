@@ -1,0 +1,569 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
+<title>Terms of Use | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+<style>
+
+/* ============================================================
+   LEGAL PAGE — Terms of Use / Privacy Policy shared styles
+   ============================================================ */
+
+.legal-hero {
+  position: relative;
+  min-height: min(420px, 60vh);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: linear-gradient(rgba(8,18,34,.62), rgba(8,18,34,.62)), url('assets/images/legal/terms.webp') center/cover no-repeat;
+  isolation: isolate;
+}
+.legal-hero::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  background-image: radial-gradient(rgba(210,154,53,.10) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.legal-hero::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; z-index: 5;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+  background-size: 300%;
+  animation: gradShift 7s ease infinite;
+}
+@keyframes gradShift { 0%,100%{background-position:0%} 50%{background-position:100%} }
+
+.legal-hero__inner {
+  position: relative; z-index: 2;
+  padding-block: clamp(100px,12vw,150px) clamp(44px,6vw,64px);
+  margin-left: 0;
+  padding-left: clamp(72px, 13vw, 180px);
+}
+.legal-hero .breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.44); margin-bottom: 18px;
+}
+.legal-hero .breadcrumb a { color: rgba(255,255,255,.44); transition: color .2s; }
+.legal-hero .breadcrumb a:hover { color: var(--gold-soft); }
+.legal-hero .breadcrumb svg { width: 12px; height: 12px; opacity: .44; }
+.legal-hero h1 {
+  color: #fff;
+  font-size: clamp(30px, 4.5vw, 56px);
+  line-height: 1.06; font-weight: 900;
+  letter-spacing: -.03em; max-width: 18ch;
+  margin-top: 14px;
+}
+.legal-hero h1 em { font-style: normal; color: var(--gold); }
+.legal-hero .lede {
+  color: #a8bdd5; margin-top: 18px;
+  font-size: clamp(14px,1.4vw,17px);
+  max-width: 52ch; line-height: 1.72;
+}
+.legal-hero-meta {
+  display: flex; gap: 24px; flex-wrap: wrap; margin-top: 28px;
+}
+.legal-meta-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+.legal-meta-item svg { width: 14px; height: 14px; color: var(--gold); flex: none; }
+
+/* ============================================================
+   LEGAL BODY
+   ============================================================ */
+.legal-body {
+  background: var(--paper-2);
+  padding-block: clamp(48px,7vw,96px);
+}
+.legal-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: clamp(32px,5vw,72px);
+  align-items: start;
+}
+
+/* Sticky TOC */
+.legal-toc {
+  position: sticky; top: 96px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.toc-head {
+  padding: 18px 20px;
+  background: var(--navy);
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 8px;
+}
+.toc-head svg { width: 14px; height: 14px; }
+.toc-list { padding: 14px 8px; }
+.toc-list a {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: .06em;
+  color: var(--muted); text-decoration: none;
+  transition: background .2s, color .2s;
+}
+.toc-list a:hover { background: var(--paper-2); color: var(--primary); }
+.toc-list a.active { background: rgba(12,30,56,.07); color: var(--navy); font-weight: 700; }
+.toc-list a svg { width: 12px; height: 12px; flex: none; opacity: .4; }
+
+/* Content card */
+.legal-content {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: clamp(28px,4vw,52px);
+}
+
+.legal-section {
+  padding-block: clamp(28px,4vw,48px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.legal-section:first-child { padding-top: 0; }
+.legal-section:last-child { border-bottom: none; padding-bottom: 0; }
+
+.legal-section-num {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-d); margin-bottom: 8px;
+}
+.legal-section h2 {
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--navy); font-weight: 800;
+  letter-spacing: -.02em; margin-bottom: 18px;
+}
+.legal-section p {
+  color: var(--ink-soft); font-size: 15.5px;
+  line-height: 1.82; margin-bottom: 14px;
+}
+.legal-section p:last-child { margin-bottom: 0; }
+.legal-section ul, .legal-section ol {
+  padding-left: 0; list-style: none;
+  display: grid; gap: 10px;
+  margin-bottom: 14px;
+}
+.legal-section ul li, .legal-section ol li {
+  display: flex; gap: 10px; align-items: flex-start;
+  color: var(--ink-soft); font-size: 15.5px; line-height: 1.72;
+}
+.legal-section ul li::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex: none; margin-top: 8px;
+}
+.legal-section ol { counter-reset: li; }
+.legal-section ol li { counter-increment: li; }
+.legal-section ol li::before {
+  content: counter(li);
+  min-width: 22px; height: 22px; border-radius: 50%;
+  background: var(--navy); color: var(--gold-soft);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  display: grid; place-items: center; flex: none;
+  margin-top: 1px;
+}
+.legal-highlight {
+  background: rgba(210,154,53,.08);
+  border: 1px solid rgba(210,154,53,.25);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-block: 18px;
+  color: var(--ink); font-size: 15px; line-height: 1.72;
+}
+.legal-contact-box {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-top: 20px;
+}
+.legal-contact-box p {
+  color: #8fa5be; font-size: 14.5px; margin-bottom: 12px;
+}
+.legal-contact-box a {
+  color: var(--gold-soft); text-decoration: none;
+  font-family: var(--font-display); font-weight: 600;
+  transition: color .2s;
+}
+.legal-contact-box a:hover { color: var(--gold); }
+.legal-contact-box .lcb-row {
+  display: flex; align-items: center; gap: 10px;
+  padding-block: 9px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: 14.5px;
+}
+.legal-contact-box .lcb-row:last-child { border-bottom: none; padding-bottom: 0; }
+.legal-contact-box .lcb-row svg { width: 15px; height: 15px; color: var(--gold); flex: none; }
+
+@media (max-width: 900px) {
+  .legal-layout { grid-template-columns: 1fr; }
+  .legal-toc { position: static; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="legal-hero">
+  <div class="wrap legal-hero__inner">
+    <div class="reveal">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        <span>Terms of Use</span>
+      </div>
+      <span class="eyebrow light">Legal</span>
+      <h1>Terms of <em>Use</em></h1>
+      <p class="lede">Please read these terms carefully before using our website or engaging with DB Group FZCO for trade services. By accessing our site you agree to these conditions.</p>
+      <div class="legal-hero-meta">
+        <div class="legal-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Last updated: 1 June 2026
+        </div>
+        <div class="legal-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Governing Law: UAE / DAFZA
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODY ============ -->
+<div class="legal-body">
+  <div class="wrap legal-layout">
+
+    <!-- Sticky TOC -->
+    <aside class="legal-toc reveal">
+      <div class="toc-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>
+        Contents
+      </div>
+      <nav class="toc-list" id="toc">
+        <a href="#acceptance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>1. Acceptance</a>
+        <a href="#use"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>2. Use of Website</a>
+        <a href="#ip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>3. Intellectual Property</a>
+        <a href="#accuracy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>4. Accuracy of Information</a>
+        <a href="#disclaimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>5. Disclaimers</a>
+        <a href="#liability"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>6. Limitation of Liability</a>
+        <a href="#thirdparty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>7. Third-Party Links</a>
+        <a href="#governing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>8. Governing Law</a>
+        <a href="#changes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>9. Changes to Terms</a>
+        <a href="#contact-legal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>10. Contact Us</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <article class="legal-content reveal d1">
+
+      <div class="legal-section" id="acceptance">
+        <div class="legal-section-num">Section 01</div>
+        <h2>Acceptance of Terms</h2>
+        <p>By accessing or using the website at <strong>dbgroupfzco.com</strong> (the "Site"), you confirm that you have read, understood, and agree to be bound by these Terms of Use and all applicable laws and regulations. If you do not agree with any part of these terms, you must not use this Site.</p>
+        <p>These terms apply to all visitors, users, and others who access or use the Site, whether as a registered user or a guest. Your continued use of the Site following any modifications to these terms constitutes your acceptance of the revised terms.</p>
+        <div class="legal-highlight">
+          These Terms of Use govern your use of the DB Group FZCO website only. Separate commercial terms and conditions govern any trade transactions, contracts, or service agreements entered into with DB Group FZCO.
+        </div>
+      </div>
+
+      <div class="legal-section" id="use">
+        <div class="legal-section-num">Section 02</div>
+        <h2>Permitted Use of the Website</h2>
+        <p>You may use the Site for lawful purposes only and in a manner that does not infringe the rights of others. You agree not to:</p>
+        <ul>
+          <li>Use the Site in any way that violates applicable UAE federal or local laws or regulations, or the rules of Dubai Airport Free Zone (DAFZA).</li>
+          <li>Transmit any unsolicited or unauthorised advertising or promotional material, including spam.</li>
+          <li>Attempt to gain unauthorised access to any part of the Site, the server on which it is stored, or any connected server, computer, or database.</li>
+          <li>Use the Site to transmit or distribute any virus, malware, spyware, or other harmful code.</li>
+          <li>Scrape, harvest, or extract data from the Site using automated tools without our prior written consent.</li>
+          <li>Impersonate DB Group FZCO, any of its employees, or any other person or entity.</li>
+          <li>Use the Site in any manner that could damage, disable, overburden, or impair it.</li>
+        </ul>
+        <p>We reserve the right to restrict or terminate your access to the Site at any time, without notice, if we reasonably believe you have violated these terms.</p>
+      </div>
+
+      <div class="legal-section" id="ip">
+        <div class="legal-section-num">Section 03</div>
+        <h2>Intellectual Property</h2>
+        <p>All content on this Site — including but not limited to text, graphics, logos, images, icons, data compilations, and software — is the property of DB Group FZCO or its content suppliers and is protected by applicable UAE and international intellectual property laws.</p>
+        <p>You are granted a limited, non-exclusive, non-transferable licence to access and use the Site for personal and non-commercial purposes only. This licence does not permit you to:</p>
+        <ul>
+          <li>Reproduce, duplicate, copy, sell, resell, or exploit any portion of the Site's content for commercial purposes without our express written permission.</li>
+          <li>Modify or create derivative works based on the Site's content.</li>
+          <li>Remove any copyright, trademark, or other proprietary notices from the content.</li>
+          <li>Frame or mirror any part of the Site on any other website or server.</li>
+        </ul>
+        <p>The DB Group FZCO name, logo, and all related marks are registered trademarks or trade names of DB Group FZCO. Unauthorised use is strictly prohibited.</p>
+      </div>
+
+      <div class="legal-section" id="accuracy">
+        <div class="legal-section-num">Section 04</div>
+        <h2>Accuracy of Information</h2>
+        <p>We endeavour to ensure that information published on this Site is accurate and up to date. However, the commodity trading industry involves rapidly changing market conditions, prices, availability, and regulatory requirements. As a result:</p>
+        <ul>
+          <li>Information on this Site is provided for general informational purposes and does not constitute a binding offer, quotation, or contract.</li>
+          <li>Prices, product specifications, and availability shown or discussed on the Site are indicative only and subject to change without notice.</li>
+          <li>We do not warrant that the content is complete, current, or free from errors. We may update content at any time without prior notice.</li>
+        </ul>
+        <p>For binding commercial terms, you must obtain a formal written quotation from DB Group FZCO directly.</p>
+      </div>
+
+      <div class="legal-section" id="disclaimer">
+        <div class="legal-section-num">Section 05</div>
+        <h2>Disclaimers</h2>
+        <p>The Site and its content are provided on an "as is" and "as available" basis, without any warranties of any kind, either express or implied, including but not limited to:</p>
+        <ul>
+          <li>Implied warranties of merchantability or fitness for a particular purpose.</li>
+          <li>Warranties that the Site will be uninterrupted, timely, secure, or error-free.</li>
+          <li>Warranties as to the accuracy, reliability, completeness, or timeliness of any information on the Site.</li>
+        </ul>
+        <p>We do not warrant that the Site is free of viruses or other harmful components. You are responsible for implementing adequate security measures on your own systems.</p>
+        <div class="legal-highlight">
+          Nothing on this Site constitutes financial, legal, tax, or investment advice. You should obtain independent professional advice before entering into any trade transaction or business arrangement.
+        </div>
+      </div>
+
+      <div class="legal-section" id="liability">
+        <div class="legal-section-num">Section 06</div>
+        <h2>Limitation of Liability</h2>
+        <p>To the fullest extent permitted by applicable law, DB Group FZCO, its directors, officers, employees, agents, and affiliates shall not be liable for any:</p>
+        <ul>
+          <li>Direct, indirect, incidental, special, consequential, or punitive damages arising from your use of, or inability to use, the Site.</li>
+          <li>Loss of profits, data, goodwill, or business opportunities.</li>
+          <li>Damages resulting from reliance on any information or content on the Site.</li>
+          <li>Unauthorised access to or alteration of your transmissions or data.</li>
+        </ul>
+        <p>This limitation applies regardless of the basis of the claim — whether in contract, tort, statute, or otherwise — even if DB Group FZCO has been advised of the possibility of such damages.</p>
+        <p>If any limitation of liability is found unenforceable, our total liability to you shall not exceed the greater of AED 500 or the amount you paid to DB Group FZCO in the twelve months preceding the claim.</p>
+      </div>
+
+      <div class="legal-section" id="thirdparty">
+        <div class="legal-section-num">Section 07</div>
+        <h2>Third-Party Links</h2>
+        <p>The Site may contain links to third-party websites or services for your convenience. These links do not signify our endorsement of those websites or their operators. We have no control over the content, policies, or practices of any third-party site and accept no responsibility for them.</p>
+        <p>We encourage you to review the privacy policies and terms of use of any external websites you visit via links from our Site.</p>
+      </div>
+
+      <div class="legal-section" id="governing">
+        <div class="legal-section-num">Section 08</div>
+        <h2>Governing Law &amp; Jurisdiction</h2>
+        <p>These Terms of Use are governed by and construed in accordance with the laws of the United Arab Emirates, including the regulations applicable within the Dubai Airport Free Zone (DAFZA).</p>
+        <p>Any dispute arising out of or in connection with these terms — including any question regarding their existence, validity, or termination — shall be subject to the exclusive jurisdiction of the courts of Dubai, UAE, unless otherwise agreed in writing by the parties.</p>
+        <p>If you access this Site from outside the UAE, you do so at your own risk and are responsible for compliance with your local laws.</p>
+      </div>
+
+      <div class="legal-section" id="changes">
+        <div class="legal-section-num">Section 09</div>
+        <h2>Changes to These Terms</h2>
+        <p>We reserve the right to revise these Terms of Use at any time. We will update the "Last updated" date at the top of this page when changes are made. It is your responsibility to review this page periodically.</p>
+        <p>Material changes will be communicated by posting a prominent notice on the Site. Your continued use of the Site following such notice constitutes acceptance of the revised terms.</p>
+      </div>
+
+      <div class="legal-section" id="contact-legal">
+        <div class="legal-section-num">Section 10</div>
+        <h2>Contact Us</h2>
+        <p>If you have any questions about these Terms of Use or wish to report a concern, please contact our legal team:</p>
+        <div class="legal-contact-box">
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="color:#8fa5be;">DB Group FZCO, Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</span>
+          </div>
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
+          </div>
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+            <a href="tel:+97142555144">+971 4 255 5144</a>
+          </div>
+        </div>
+        <p style="margin-top:18px;">Also see our <a href="privacy.html" style="color:var(--primary); font-weight:600;">Privacy Policy</a> for information about how we collect and use your personal data.</p>
+      </div>
+
+    </article>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog = document.createElement('div');
+prog.id = 'scroll-prog';
+document.body.prepend(prog);
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
+
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 40); }, { passive: true });
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Active TOC highlight on scroll */
+const sections = document.querySelectorAll('.legal-section[id]');
+const tocLinks = document.querySelectorAll('.toc-list a');
+const tocObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector('.toc-list a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => tocObs.observe(s));
+
+(function() {
+  var burger = document.querySelector('.burger');
+  var menu = document.querySelector('.menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('menu--open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
