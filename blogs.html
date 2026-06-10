@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
 <title>Insights & News | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 <style>
 
 /* ============================================================
@@ -36,7 +38,7 @@
   position: absolute;
   left: 0; right: 0;
   top: -30%; height: 160%;
-  background: url('public/HeroBanner.jpg') center / cover no-repeat;
+  background: url('assets/images/10871.webp') center / cover no-repeat;
   will-change: transform;
 }
 
@@ -326,10 +328,13 @@
 @media (max-width: 1060px) {
   .blogs-hero-layout { grid-template-columns: 1fr; }
   .blogs-hero-card { display: none; }
+  .bhc-mini-row { display: none; }
 }
 @media (max-width: 600px) {
-  .blogs-hero-stats { width: 100%; }
-  .hs { padding: 14px 18px; }
+  .blogs-hero-stats { width: 100%; flex-wrap: wrap; }
+  .hs { padding: 14px 18px; flex: 0 0 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .hs:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
+  .hs:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 /* ---- Breadcrumb ---- */
@@ -1004,7 +1009,7 @@
 .nl-banner {
   background:
     linear-gradient(rgba(8,18,34,.87), rgba(8,18,34,.87)),
-    url('public/10871.jpg') center / cover no-repeat;
+    url('assets/images/10871.webp') center / cover no-repeat;
   background-attachment: fixed;
   padding-block: clamp(56px, 8vw, 100px);
 }
@@ -1032,7 +1037,7 @@
 }
 .nl-banner-input::placeholder { color: rgba(255,255,255,.44); }
 .nl-banner-input:focus { border-color: var(--gold); background: rgba(255,255,255,.16); }
-@media (max-width: 560px) { .nl-banner-form { flex-direction: column; } }
+@media (max-width: 560px) { .nl-banner-form { flex-direction: column; } .nl-banner { background-attachment: scroll; } }
 
 /* ---- Visual Stories ---- */
 .vs-grid {
@@ -1128,7 +1133,7 @@
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
-      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
     </a>
     <nav class="menu">
       <a href="index.html">Home</a>
@@ -1138,9 +1143,6 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-right">
-      <button class="icon-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
       <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -1212,7 +1214,7 @@
         <!-- Main preview card -->
         <div class="blogs-hero-card">
           <div class="bhc-img">
-            <img src="public/30770.jpg" alt="Sugar Market Outlook" loading="eager" />
+            <img src="assets/images/30770.webp" alt="Sugar Market Outlook" loading="eager" />
             <div class="bhc-img-overlay"></div>
             <span class="bhc-img-badge">Featured</span>
           </div>
@@ -1239,14 +1241,14 @@
         <!-- Two mini cards below -->
         <div class="bhc-mini-row">
           <div class="bhc-mini">
-            <div class="bhc-mini-thumb"><img src="public/servicesimage/oil1.jpg" alt="Edible Oils" loading="eager" /></div>
+            <div class="bhc-mini-thumb"><img src="assets/images/services/oil1.webp" alt="Edible Oils" loading="eager" /></div>
             <div>
               <div class="bhc-mini-title">Palm Oil 2025 Outlook</div>
               <div class="bhc-mini-cat">Edible Oils</div>
             </div>
           </div>
           <div class="bhc-mini">
-            <div class="bhc-mini-thumb"><img src="public/servicesimage/sugar1.jpg" alt="Sugar grades" loading="eager" /></div>
+            <div class="bhc-mini-thumb"><img src="assets/images/services/sugar1.webp" alt="Sugar grades" loading="eager" /></div>
             <div>
               <div class="bhc-mini-title">ICUMSA 45 vs 100</div>
               <div class="bhc-mini-cat">Sugar &amp; Sweeteners</div>
@@ -1284,21 +1286,6 @@
   </div>
 </div>
 
-<!-- ============ CATEGORY FILTER ============ -->
-<div class="filter-section">
-  <div class="wrap">
-    <div class="filter-wrap">
-      <span class="filter-label">Filter:</span>
-      <button class="filter-pill active" onclick="setFilter(this)">All <span class="filter-count">12</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">Market Analysis <span class="filter-count">4</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">Sugar &amp; Sweeteners <span class="filter-count">3</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">Edible Oils <span class="filter-count">3</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">Logistics &amp; Trade <span class="filter-count">3</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">Compliance <span class="filter-count">2</span></button>
-      <button class="filter-pill" onclick="setFilter(this)">MENA &amp; Africa <span class="filter-count">2</span></button>
-    </div>
-  </div>
-</div>
 
 <!-- ============ FEATURED POST ============ -->
 <section class="featured-section section" style="padding-bottom:0;">
@@ -1309,7 +1296,7 @@
     </div>
     <div class="featured-card reveal d1">
       <div class="featured-img">
-        <img src="public/30770.jpg" alt="Global Sugar Market Outlook 2025" loading="lazy" />
+        <img src="assets/images/30770.webp" alt="Global Sugar Market Outlook 2025" loading="lazy" />
         <div class="featured-img-overlay"></div>
         <span class="featured-cat-badge">Market Analysis</span>
         <span class="featured-read-time">
@@ -1357,7 +1344,7 @@
           <!-- Wide card 1 -->
           <div class="post-card card-wide reveal">
             <div class="post-card-img">
-              <img src="public/servicesimage/2152020382.jpg" alt="DB Group logistics model" loading="lazy" />
+              <img src="assets/images/services/2152020382.webp" alt="DB Group logistics model" loading="lazy" />
               <span class="pc-cat c-navy">Logistics &amp; Trade</span>
             </div>
             <div class="post-card-body">
@@ -1383,7 +1370,7 @@
           <!-- Card 2 -->
           <div class="post-card reveal d1">
             <div class="post-card-img">
-              <img src="public/servicesimage/sugar1.jpg" alt="Sugar grades procurement" loading="lazy" />
+              <img src="assets/images/services/sugar1.webp" alt="Sugar grades procurement" loading="lazy" />
               <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
             </div>
             <div class="post-card-body">
@@ -1409,7 +1396,7 @@
           <!-- Card 3 -->
           <div class="post-card reveal d2">
             <div class="post-card-img">
-              <img src="public/servicesimage/oil1.jpg" alt="Edible oil trade 2025" loading="lazy" />
+              <img src="assets/images/services/oil1.webp" alt="Edible oil trade 2025" loading="lazy" />
               <span class="pc-cat c-green">Edible Oils</span>
             </div>
             <div class="post-card-body">
@@ -1435,7 +1422,7 @@
           <!-- Wide card 2 -->
           <div class="post-card card-wide reveal d1">
             <div class="post-card-img">
-              <img src="public/5.jpg" alt="Dubai DAFZA commodity hub" loading="lazy" />
+              <img src="assets/images/5.webp" alt="Dubai DAFZA commodity hub" loading="lazy" />
               <span class="pc-cat c-blue">MENA &amp; Africa</span>
             </div>
             <div class="post-card-body">
@@ -1461,7 +1448,7 @@
           <!-- Card 5 -->
           <div class="post-card reveal">
             <div class="post-card-img">
-              <img src="public/servicesimage/sugar2.jpg" alt="Brazil sugar origin" loading="lazy" />
+              <img src="assets/images/services/sugar2.webp" alt="Brazil sugar origin" loading="lazy" />
               <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
             </div>
             <div class="post-card-body">
@@ -1487,7 +1474,7 @@
           <!-- Card 6 -->
           <div class="post-card reveal d1">
             <div class="post-card-img">
-              <img src="public/servicesimage/13758.jpg" alt="Food safety compliance" loading="lazy" />
+              <img src="assets/images/services/13758.webp" alt="Food safety compliance" loading="lazy" />
               <span class="pc-cat c-blue">Compliance</span>
             </div>
             <div class="post-card-body">
@@ -1513,7 +1500,7 @@
           <!-- Card 7 -->
           <div class="post-card reveal d2">
             <div class="post-card-img">
-              <img src="public/servicesimage/oil2.jpg" alt="Palm oil Indonesia" loading="lazy" />
+              <img src="assets/images/services/oil2.webp" alt="Palm oil Indonesia" loading="lazy" />
               <span class="pc-cat c-green">Edible Oils</span>
             </div>
             <div class="post-card-body">
@@ -1539,7 +1526,7 @@
           <!-- Card 8 -->
           <div class="post-card reveal d3">
             <div class="post-card-img">
-              <img src="public/aboutimages/2151711706.jpg" alt="Africa commodity demand" loading="lazy" />
+              <img src="assets/images/about/2151711706.webp" alt="Africa commodity demand" loading="lazy" />
               <span class="pc-cat c-navy">MENA &amp; Africa</span>
             </div>
             <div class="post-card-body">
@@ -1565,7 +1552,7 @@
           <!-- Wide card 3 -->
           <div class="post-card card-wide reveal">
             <div class="post-card-img">
-              <img src="public/16191.jpg" alt="Trade finance LC documentation" loading="lazy" />
+              <img src="assets/images/16191.webp" alt="Trade finance LC documentation" loading="lazy" />
               <span class="pc-cat c-blue">Logistics &amp; Trade</span>
             </div>
             <div class="post-card-body">
@@ -1591,7 +1578,7 @@
           <!-- Card 10 -->
           <div class="post-card reveal d1">
             <div class="post-card-img">
-              <img src="public/servicesimage/30681.jpg" alt="Rice 2025 outlook" loading="lazy" />
+              <img src="assets/images/services/30681.webp" alt="Rice 2025 outlook" loading="lazy" />
               <span class="pc-cat c-navy">Market Analysis</span>
             </div>
             <div class="post-card-body">
@@ -1617,7 +1604,7 @@
           <!-- Card 11 -->
           <div class="post-card reveal d2">
             <div class="post-card-img">
-              <img src="public/servicesimage/sugar3.jpg" alt="Raw vs refined sugar" loading="lazy" />
+              <img src="assets/images/services/sugar3.webp" alt="Raw vs refined sugar" loading="lazy" />
               <span class="pc-cat c-gold">Sugar &amp; Sweeteners</span>
             </div>
             <div class="post-card-body">
@@ -1643,7 +1630,7 @@
           <!-- Card 12 -->
           <div class="post-card reveal d3">
             <div class="post-card-img">
-              <img src="public/servicesimage/64441.jpg" alt="Wheat supply chain volatile" loading="lazy" />
+              <img src="assets/images/services/64441.webp" alt="Wheat supply chain volatile" loading="lazy" />
               <span class="pc-cat c-red">Market Analysis</span>
             </div>
             <div class="post-card-body">
@@ -1668,27 +1655,6 @@
 
         </div><!-- /posts-grid -->
 
-        <!-- Load More -->
-        <div class="load-more-wrap reveal">
-          <button class="btn-outline-blue" id="loadMoreBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            Load More Articles
-          </button>
-          <p>Showing 12 of 48 articles</p>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination reveal">
-          <button class="pg-btn active">1</button>
-          <button class="pg-btn">2</button>
-          <button class="pg-btn">3</button>
-          <button class="pg-btn">4</button>
-          <button class="pg-btn" style="width:auto;padding-inline:12px;">…</button>
-          <button class="pg-btn">8</button>
-          <button class="pg-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
-        </div>
 
       </div><!-- /posts-area -->
 
@@ -1737,19 +1703,19 @@
           </div>
           <div class="sw-body" style="padding-block:14px;">
             <div class="pop-post">
-              <div class="pp-img"><img src="public/servicesimage/oil3.jpg" alt="" /></div>
+              <div class="pp-img"><img src="assets/images/services/oil3.webp" alt="" /></div>
               <div class="pp-body"><h5>Palm vs. Soybean: The 2025 Price Spread Playbook</h5><span>Edible Oils · 7 min · 4.2k reads</span></div>
             </div>
             <div class="pop-post">
-              <div class="pp-img"><img src="public/aboutimages/83377.jpg" alt="" /></div>
+              <div class="pp-img"><img src="assets/images/about/83377.webp" alt="" /></div>
               <div class="pp-body"><h5>Understanding Demurrage: How to Avoid Costly Port Delays</h5><span>Logistics &amp; Trade · 5 min · 3.8k reads</span></div>
             </div>
             <div class="pop-post">
-              <div class="pp-img"><img src="public/servicesimage/2151251991.jpg" alt="" /></div>
+              <div class="pp-img"><img src="assets/images/services/2151251991.webp" alt="" /></div>
               <div class="pp-body"><h5>India's Rice Ban: 6 Months Later — Where Are Prices?</h5><span>Market Analysis · 8 min · 3.1k reads</span></div>
             </div>
             <div class="pop-post">
-              <div class="pp-img"><img src="public/aboutimages/74772.jpg" alt="" /></div>
+              <div class="pp-img"><img src="assets/images/about/74772.webp" alt="" /></div>
               <div class="pp-body"><h5>Building a Commodity Procurement Calendar for 2025</h5><span>Compliance · 6 min · 2.7k reads</span></div>
             </div>
           </div>
@@ -1801,7 +1767,7 @@
         <div class="sidebar-widget reveal" style="background:var(--navy); position:relative; overflow:hidden;">
           <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(210,154,53,.1) 1px,transparent 1.5px);background-size:20px 20px;pointer-events:none;"></div>
           <div style="padding:26px 22px; position:relative; text-align:center;">
-            <img src="public/logo.png" alt="DB Group FZCO" style="height:40px; filter:brightness(0) invert(1); margin:0 auto 16px; display:block;" />
+            <img src="assets/images/logo.webp" alt="DB Group FZCO" style="height:40px; filter:brightness(0) invert(1); margin:0 auto 16px; display:block;" />
             <p style="color:#9fb0c4; font-size:14px; line-height:1.6; margin-bottom:18px;">Follow DB Group for real-time market updates, trade insights and industry news.</p>
             <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
               <a href="#" class="soc-follow-btn">
@@ -1831,7 +1797,7 @@
     </div>
     <div class="vs-grid reveal d1">
       <div class="vs-card">
-        <img src="public/servicesimage/2149359449.jpg" alt="Origin operations" loading="lazy" />
+        <img src="assets/images/services/2149359449.webp" alt="Origin operations" loading="lazy" />
         <div class="vs-card-overlay"></div>
         <div class="vs-card-label">
           <span class="vs-cat">Origin Operations</span>
@@ -1839,7 +1805,7 @@
         </div>
       </div>
       <div class="vs-card">
-        <img src="public/servicesimage/35744.jpg" alt="Shipping logistics" loading="lazy" />
+        <img src="assets/images/services/35744.webp" alt="Shipping logistics" loading="lazy" />
         <div class="vs-card-overlay"></div>
         <div class="vs-card-label">
           <span class="vs-cat">Sea Freight</span>
@@ -1847,7 +1813,7 @@
         </div>
       </div>
       <div class="vs-card">
-        <img src="public/aboutimages/158302.jpg" alt="Warehouse and storage" loading="lazy" />
+        <img src="assets/images/about/158302.webp" alt="Warehouse and storage" loading="lazy" />
         <div class="vs-card-overlay"></div>
         <div class="vs-card-label">
           <span class="vs-cat">Warehousing</span>
@@ -1855,7 +1821,7 @@
         </div>
       </div>
       <div class="vs-card">
-        <img src="public/aboutimages/2151252086.jpg" alt="Global trade network" loading="lazy" />
+        <img src="assets/images/about/2151252086.webp" alt="Global trade network" loading="lazy" />
         <div class="vs-card-overlay"></div>
         <div class="vs-card-label">
           <span class="vs-cat">Global Reach</span>
@@ -1890,7 +1856,7 @@
         <span class="eyebrow">Ready to Trade Smarter?</span>
         <h2>Start a Conversation With Our Team</h2>
       </div>
-      <a href="contact.html" class="btn btn-gold">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="contact.html" class="btn btn-gold">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -1903,7 +1869,7 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
-          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
         <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
         <div class="foot-soc">
@@ -1919,8 +1885,8 @@
           <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
           <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
           <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1934,7 +1900,7 @@
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
-      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
@@ -2000,14 +1966,6 @@ const cntObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
 
-/* ---- Category filter ---- */
-function setFilter(btn) {
-  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  const cards = document.querySelectorAll('.post-card, .featured-card');
-  cards.forEach(c => { c.style.transition = 'opacity .28s'; c.style.opacity = '0'; });
-  setTimeout(() => cards.forEach(c => c.style.opacity = '1'), 300);
-}
 
 /* ---- Progress bar fill on scroll (quality section) ---- */
 const fillEls = document.querySelectorAll('.bar .fill');
@@ -2080,6 +2038,28 @@ if (heroParallax) {
   document.addEventListener('click', function(e) {
     if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
   });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
 })();
 </script>
 </body>

@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
 <title>DB Group FZCO | Global Commodity Trading Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 <style>
 
 /* ============================================================
@@ -162,7 +164,14 @@
 .hbar-val { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #fff; line-height: 1; }
 .hbar-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: 3px; }
 
-@media (max-width: 1020px) { .hero-layout { grid-template-columns: 1fr; } .hero-panel { display: none; } }
+@media (max-width: 1020px) {
+  .hero-layout { grid-template-columns: 1fr; gap: 0; padding-block: clamp(110px,14vw,170px) clamp(50px,7vw,80px); }
+  .hero-panel { display: none; }
+}
+@media (max-width: 768px) {
+  .hero { justify-content: flex-start; min-height: unset; }
+  .hero-layout { padding-block: 100px 48px; }
+}
 @media (max-width: 580px) {
   .hbar-inner { flex-wrap: wrap; }
   .hbar-item { min-width: 50%; border-top: 1px solid rgba(255,255,255,.08); }
@@ -541,6 +550,7 @@
   background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
   background-size: 22px 22px;
 }
+.home-cta .wrap { padding-left: clamp(58px, 12vw, 150px); margin-left: 0; }
 .home-cta__inner { padding-block: clamp(72px,9vw,110px); max-width: 680px; }
 .home-cta h2 { color: #fff; font-size: clamp(28px,4vw,56px); line-height: .94; letter-spacing: -.03em; }
 .home-cta h2 em { font-style: normal; color: var(--gold); }
@@ -585,7 +595,7 @@
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
-      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
     </a>
     <nav class="menu">
       <a href="index.html" class="active">Home</a>
@@ -610,7 +620,7 @@
      ============================================================ -->
 <section class="hero" id="top">
   <div class="hero-bg-wrap">
-    <img src="public/HeroBanner.jpg" alt="" />
+    <img src="assets/images/HeroBanner.webp" alt="" />
   </div>
   <div class="hero-shade"></div>
   <div class="hero-dots"></div>
@@ -670,28 +680,7 @@
   </div>
 
   <!-- Bottom statsbar -->
-  <div class="hero-bar">
-    <div class="wrap">
-      <div class="hbar-inner">
-        <div class="hbar-item">
-          <div class="hbar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3"/></svg></div>
-          <div><div class="hbar-val">Sugar</div><div class="hbar-lab">Raw &amp; Refined</div></div>
-        </div>
-        <div class="hbar-item">
-          <div class="hbar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4"/></svg></div>
-          <div><div class="hbar-val">Edible Oil</div><div class="hbar-lab">Palm, Sunflower, Soy</div></div>
-        </div>
-        <div class="hbar-item">
-          <div class="hbar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-          <div><div class="hbar-val">Rice &amp; Grains</div><div class="hbar-lab">Basmati &amp; Parboiled</div></div>
-        </div>
-        <div class="hbar-item">
-          <div class="hbar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-          <div><div class="hbar-val">Logistics</div><div class="hbar-lab">Sea, Air &amp; Land</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </section>
 
 
@@ -702,7 +691,7 @@
   <div class="tiles">
     <article class="tile reveal">
       <div class="tile-img">
-        <img src="public/servicesimage/2151251991.jpg" alt="Global commodity sourcing" loading="lazy" />
+        <img src="assets/images/services/2151251991.webp" alt="Global commodity sourcing" loading="lazy" />
       </div>
       <div class="tile-body">
         <span class="tile-kick">01 - Sourcing</span>
@@ -713,7 +702,7 @@
     </article>
     <article class="tile reveal d1">
       <div class="tile-img">
-        <img src="public/handling.jpg" alt="End-to-end logistics management" loading="lazy" />
+        <img src="assets/images/handling.webp" alt="End-to-end logistics management" loading="lazy" />
       </div>
       <div class="tile-body">
         <span class="tile-kick">02 - Logistics</span>
@@ -724,7 +713,7 @@
     </article>
     <article class="tile reveal d2">
       <div class="tile-img">
-        <img src="public/storage.jpg" alt="Certified quality warehousing" loading="lazy" />
+        <img src="assets/images/storage.webp" alt="Certified quality warehousing" loading="lazy" />
       </div>
       <div class="tile-body">
         <span class="tile-kick">03 - Quality</span>
@@ -746,10 +735,10 @@
     <div class="about-visual reveal">
       <span class="about-dots"></span>
       <div class="about-disc">
-        <img src="public/aboutimages/2151252086.jpg" alt="DB Group trading operations" loading="lazy" />
+        <img src="assets/images/about/2151252086.webp" alt="DB Group trading operations" loading="lazy" />
       </div>
       <div class="about-float-img">
-        <img src="public/aboutimages/74772.jpg" alt="Commodity handling" loading="lazy" />
+        <img src="assets/images/about/74772.webp" alt="Commodity handling" loading="lazy" />
       </div>
     </div>
 
@@ -810,11 +799,11 @@
      ============================================================ -->
 <section class="section quality" id="quality">
   <div class="quality-bg-img">
-    <img src="public/3933011.jpg" alt="" aria-hidden="true" />
+    <img src="assets/images/3933011.webp" alt="" aria-hidden="true" />
   </div>
   <div class="wrap quality-grid">
     <div class="quality-pic reveal">
-      <img src="public/7755.jpg" alt="Certified quality control at DB Group" loading="lazy" />
+      <img src="assets/images/7755.webp" alt="Certified quality control at DB Group" loading="lazy" />
       <div class="quality-cert-tag">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         ISO 22000 Certified
@@ -858,7 +847,7 @@
     </div>
     <div class="svc-grid">
       <article class="svc-card reveal">
-        <img src="public/procurement.jpg" alt="Procurement and sourcing" loading="lazy" />
+        <img src="assets/images/procurement.webp" alt="Procurement and sourcing" loading="lazy" />
         <div class="svc-body">
           <div class="svc-num">01 - Procurement</div>
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M8 11h6M11 8v6"/></svg></div>
@@ -868,7 +857,7 @@
         </div>
       </article>
       <article class="svc-card reveal d1">
-        <img src="public/handling.jpg" alt="Logistics and handling" loading="lazy" style="object-position: center 70%;" />
+        <img src="assets/images/handling.webp" alt="Logistics and handling" loading="lazy" style="object-position: center 70%;" />
         <div class="svc-body">
           <div class="svc-num">02 - Logistics</div>
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
@@ -878,7 +867,7 @@
         </div>
       </article>
       <article class="svc-card reveal d2">
-        <img src="public/servicesimage/13758.jpg" alt="Storage and compliance" loading="lazy" />
+        <img src="assets/images/services/13758.webp" alt="Storage and compliance" loading="lazy" />
         <div class="svc-body">
           <div class="svc-num">03 - Compliance</div>
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
@@ -908,7 +897,7 @@
     <div class="comm-grid">
       <div class="comm-card reveal">
         <div class="comm-img">
-          <img src="public/servicesimage/sugar1.jpg" alt="Sugar commodity" loading="lazy" />
+          <img src="assets/images/services/sugar1.webp" alt="Sugar commodity" loading="lazy" />
           <div class="comm-img-overlay"></div>
           <div class="comm-flag"><span class="comm-flag-dot" style="background:#f7c948;"></span>Available Year-Round</div>
         </div>
@@ -923,7 +912,7 @@
       </div>
       <div class="comm-card reveal d1">
         <div class="comm-img">
-          <img src="public/servicesimage/oil1.jpg" alt="Edible oil commodity" loading="lazy" />
+          <img src="assets/images/services/oil1.webp" alt="Edible oil commodity" loading="lazy" />
           <div class="comm-img-overlay"></div>
           <div class="comm-flag"><span class="comm-flag-dot" style="background:#4ecf96;"></span>Multiple Origins</div>
         </div>
@@ -938,7 +927,7 @@
       </div>
       <div class="comm-card reveal d2">
         <div class="comm-img">
-          <img src="public/servicesimage/64441.jpg" alt="Rice and grains commodity" loading="lazy" />
+          <img src="assets/images/services/64441.webp" alt="Rice and grains commodity" loading="lazy" />
           <div class="comm-img-overlay"></div>
           <div class="comm-flag"><span class="comm-flag-dot" style="background:#6ab0f5;"></span>India &amp; Thailand</div>
         </div>
@@ -981,7 +970,7 @@
         <div class="tst-quote">&ldquo;</div>
         <p class="tst-text">DB Group has been a dependable partner for our bulk sugar imports. Shipments arrive certified, documented and exactly on schedule, every single time.</p>
         <div class="tst-who">
-          <div class="tst-avatar"><img src="public/aboutimages/158302.jpg" alt="Bonnie Tolbert" loading="lazy" /></div>
+          <div class="tst-avatar"><img src="assets/images/about/158302.webp" alt="Bonnie Tolbert" loading="lazy" /></div>
           <div class="tst-who-text"><b>Bonnie Tolbert</b><span>Procurement Lead, MENA</span></div>
         </div>
       </article>
@@ -996,7 +985,7 @@
         <div class="tst-quote">&ldquo;</div>
         <p class="tst-text">Their logistics team handles freight and customs end-to-end. We moved edible oil across three markets without a single delay or compliance issue.</p>
         <div class="tst-who">
-          <div class="tst-avatar"><img src="public/aboutimages/83377.jpg" alt="Sarah Albert" loading="lazy" /></div>
+          <div class="tst-avatar"><img src="assets/images/about/83377.webp" alt="Sarah Albert" loading="lazy" /></div>
           <div class="tst-who-text"><b>Sarah Albert</b><span>Supply Chain Manager, Africa</span></div>
         </div>
       </article>
@@ -1011,7 +1000,7 @@
         <div class="tst-quote">&ldquo;</div>
         <p class="tst-text">Transparent pricing, certified quality, and a team that actually answers the phone. DB Group is exactly the kind of partner this industry needs.</p>
         <div class="tst-who">
-          <div class="tst-avatar"><img src="public/aboutimages/74772.jpg" alt="Mike Smith" loading="lazy" /></div>
+          <div class="tst-avatar"><img src="assets/images/about/74772.webp" alt="Mike Smith" loading="lazy" /></div>
           <div class="tst-who-text"><b>Mike Smith</b><span>Director of Wholesale, Asia</span></div>
         </div>
       </article>
@@ -1034,18 +1023,18 @@
       <div class="lg-label">Suppliers</div>
       <div class="logo-marquee">
         <div class="logo-track">
-          <div class="logo-img"><img src="public/supplier/logo1.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo2.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo3.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo4.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo5.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo6.png" alt="Supplier" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo1.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo2.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo3.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo4.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo5.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/supplier/logo6.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo1.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo2.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo3.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo4.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo5.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo6.png" alt="Supplier" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo1.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo2.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo3.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo4.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo5.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/suppliers/logo6.png" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -1053,18 +1042,18 @@
       <div class="lg-label">Buyers</div>
       <div class="logo-marquee">
         <div class="logo-track logo-track--buyers">
-          <div class="logo-img"><img src="public/buyer/logo1.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo2.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo3.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo4.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo5.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo6.png" alt="Buyer" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo1.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo2.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo3.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo4.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo5.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/buyer/logo6.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo1.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo2.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo3.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo4.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo5.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo6.png" alt="Buyer" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo1.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo2.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo3.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo4.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo5.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/buyers/logo6.png" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -1072,14 +1061,14 @@
       <div class="lg-label">Shipping Lines</div>
       <div class="logo-marquee">
         <div class="logo-track logo-track--shipping">
-          <div class="logo-img"><img src="public/ShippingLines/logo1.png" alt="Shipping" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo2.png" alt="Shipping" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo3.png" alt="Shipping" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo4.png" alt="Shipping" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo1.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo2.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo3.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/ShippingLines/logo4.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo1.png" alt="Shipping" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo2.png" alt="Shipping" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo3.png" alt="Shipping" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo4.png" alt="Shipping" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo1.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo2.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo3.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/shipping-lines/logo4.png" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -1087,18 +1076,18 @@
       <div class="lg-label">Banks &amp; Finance</div>
       <div class="logo-marquee">
         <div class="logo-track logo-track--banks">
-          <div class="logo-img"><img src="public/banks/logo1.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo2.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo3.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo4.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo5.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo6.png" alt="Bank" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo1.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo2.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo3.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo4.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo5.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/banks/logo6.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo1.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo2.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo3.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo4.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo5.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo6.png" alt="Bank" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo1.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo2.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo3.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo4.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo5.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/banks/logo6.png" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -1106,18 +1095,18 @@
       <div class="lg-label">Insurance</div>
       <div class="logo-marquee">
         <div class="logo-track logo-track--insurance">
-          <div class="logo-img"><img src="public/Insurance/logo1.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo2.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo3.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo4.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo5.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo6.png" alt="Insurance" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo1.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo2.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo3.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo4.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo5.png" alt="" loading="lazy" /></div>
-          <div class="logo-img"><img src="public/Insurance/logo6.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo1.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo2.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo3.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo4.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo5.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo6.png" alt="Insurance" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo1.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo2.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo3.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo4.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo5.png" alt="" loading="lazy" /></div>
+          <div class="logo-img"><img src="assets/images/partners/insurance/logo6.png" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -1129,7 +1118,7 @@
      FULL-BLEED CTA
      ============================================================ -->
 <section class="home-cta">
-  <img src="public/3933011.jpg" alt="Global commodity trading" loading="lazy" />
+  <img src="assets/images/3933011.webp" alt="Global commodity trading" loading="lazy" />
   <div class="wrap">
     <div class="home-cta__inner reveal">
       <span class="eyebrow light">Trade &amp; Supply Chain Experts</span>
@@ -1151,7 +1140,7 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
-          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
         <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
         <div class="foot-soc">
@@ -1167,8 +1156,8 @@
           <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
           <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
           <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1182,7 +1171,7 @@
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
-      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
@@ -1270,6 +1259,28 @@ document.querySelectorAll('.bar-fill').forEach(el => barObs.observe(el));
       burger.setAttribute('aria-expanded', 'false');
     }
   });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
 })();
 </script>
 </body>
