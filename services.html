@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
 <title>Services | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 <style>
 
 /* ============================================================
@@ -75,6 +77,7 @@
   grid-template-columns: 1fr 420px;
   gap: clamp(40px, 6vw, 96px);
   align-items: end;
+  margin-inline-start: 6vw;
 }
 
 /* Left text */
@@ -352,6 +355,8 @@
 }
 .bento-card:hover .bento-arrow { opacity: 1; transform: translateY(0); }
 
+.bento-card.wide { grid-column: span 2; }
+
 @media (max-width: 980px) {
   .bento-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
   .bento-card.tall { grid-row: auto; }
@@ -359,7 +364,11 @@
   .bento-head-grid { grid-template-columns: 1fr; }
   .bento-head-right { text-align: left; }
 }
-@media (max-width: 560px) { .bento-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card.wide { grid-column: span 1; }
+  .bento-card { min-height: 220px; }
+}
 
 /* ============================================================
    4. COMMODITY LANES
@@ -607,7 +616,7 @@
 .cert-section {
   background:
     linear-gradient(rgba(8,18,34,.88), rgba(8,18,34,.88)),
-    url('public/servicesimage/2152020382.jpg') center/cover no-repeat;
+    url('assets/images/services/2152020382.webp') center/cover no-repeat;
   background-attachment: fixed;
 }
 .cert-grid {
@@ -659,7 +668,7 @@
 }
 .cert-badge svg { width: 12px; height: 12px; }
 
-@media (max-width: 900px) { .cert-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 900px) { .cert-grid { grid-template-columns: repeat(2,1fr); } .cert-section { background-attachment: scroll; } }
 @media (max-width: 520px) { .cert-grid { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -668,7 +677,7 @@
 .why-section {
   background:
     linear-gradient(105deg, rgba(8,18,34,.96) 0%, rgba(8,18,34,.88) 55%, rgba(8,18,34,.78) 100%),
-    url('public/aboutimages/2151711706.jpg') center/cover no-repeat;
+    url('assets/images/about/2151711706.webp') center/cover no-repeat;
   background-attachment: fixed;
 }
 .why-layout {
@@ -736,9 +745,10 @@
 
 @media (max-width: 900px) {
   .why-layout { grid-template-columns: 1fr; }
-  .why-visual { margin-top: 36px; }
-  .why-img-float { width: 36%; }
-  .why-cert-badge { top: 14px; right: -8px; }
+  .why-visual { margin-top: 36px; overflow: hidden; }
+  .why-img-float { width: 36%; left: 0; }
+  .why-cert-badge { top: 14px; right: 0; }
+  .why-section { background-attachment: scroll; }
 }
 
 /* ============================================================
@@ -768,6 +778,7 @@
   background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
   background-size: 22px 22px;
 }
+.image-cta .wrap { padding-left: clamp(58px, 12vw, 150px); margin-left: 0; }
 .image-cta__inner { padding-block: clamp(70px,9vw,110px); max-width: 680px; }
 .image-cta h2 { color: #fff; font-size: clamp(36px,5.5vw,72px); line-height: .95; letter-spacing: -.03em; }
 .image-cta h2 em { font-style: normal; color: var(--gold); }
@@ -836,7 +847,7 @@
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
-      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
     </a>
     <nav class="menu">
       <a href="index.html">Home</a>
@@ -846,9 +857,6 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-right">
-      <button class="icon-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
       <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -864,7 +872,7 @@
      ============================================================ -->
 <section class="svc-hero" id="svc-hero">
   <div class="svc-hero__bg" aria-hidden="true">
-    <img src="public/servicesimage/2152020382.jpg" alt="" />
+    <img src="assets/images/services/2152020382.webp" alt="" />
   </div>
   <div class="svc-hero__shade" aria-hidden="true"></div>
   <div class="svc-hero__grain" aria-hidden="true"></div>
@@ -1022,7 +1030,7 @@
     <div class="bento-grid">
       <!-- Tall featured card -->
       <div class="bento-card tall reveal">
-        <img src="public/servicesimage/2151251991.jpg" alt="Commodity Sourcing" loading="lazy" />
+        <img src="assets/images/services/2151251991.webp" alt="Commodity Sourcing" loading="lazy" />
         <div class="bento-body">
           <div class="bento-tag">Source</div>
           <h3>Global Commodity Sourcing</h3>
@@ -1033,7 +1041,7 @@
 
       <!-- Card 2 -->
       <div class="bento-card reveal d1">
-        <img src="public/servicesimage/13758.jpg" alt="Quality Assurance" loading="lazy" />
+        <img src="assets/images/services/13758.webp" alt="Quality Assurance" loading="lazy" />
         <div class="bento-body">
           <div class="bento-tag">Assure</div>
           <h3>Quality Assurance</h3>
@@ -1044,7 +1052,7 @@
 
       <!-- Card 3 -->
       <div class="bento-card reveal d2">
-        <img src="public/servicesimage/35744.jpg" alt="Contract Support" loading="lazy" />
+        <img src="assets/images/services/35744.webp" alt="Contract Support" loading="lazy" />
         <div class="bento-body">
           <div class="bento-tag">Trade</div>
           <h3>Contract & Documentation</h3>
@@ -1055,7 +1063,7 @@
 
       <!-- Card 4 -->
       <div class="bento-card reveal d1">
-        <img src="public/handling.jpg" alt="Shipment Control" loading="lazy" />
+        <img src="assets/images/handling.webp" alt="Shipment Control" loading="lazy" />
         <div class="bento-body">
           <div class="bento-tag">Move</div>
           <h3>Shipment Control</h3>
@@ -1066,7 +1074,7 @@
 
       <!-- Card 5 -->
       <div class="bento-card reveal d2">
-        <img src="public/storage.jpg" alt="Stock Programs" loading="lazy" />
+        <img src="assets/images/storage.webp" alt="Stock Programs" loading="lazy" />
         <div class="bento-body">
           <div class="bento-tag">Store</div>
           <h3>Stock Programs</h3>
@@ -1076,8 +1084,8 @@
       </div>
 
       <!-- Card 6 -->
-      <div class="bento-card reveal d3" style="grid-column: span 2;">
-        <img src="public/procurement.jpg" alt="Market Distribution" loading="lazy" style="object-position: center 60%;" />
+      <div class="bento-card wide reveal d3">
+        <img src="assets/images/procurement.webp" alt="Market Distribution" loading="lazy" style="object-position: center 60%;" />
         <div class="bento-body">
           <div class="bento-tag">Distribute</div>
           <h3>Market Distribution</h3>
@@ -1105,7 +1113,7 @@
       <!-- Sugar -->
       <div class="commodity-card reveal">
         <div class="commodity-img">
-          <img src="public/servicesimage/sugar2.jpg" alt="Sugar varieties" loading="lazy" />
+          <img src="assets/images/services/sugar2.webp" alt="Sugar varieties" loading="lazy" />
           <div class="commodity-img-overlay"></div>
           <div class="commodity-badge">
             <span class="commodity-badge-dot" style="background:#f7c948;"></span>
@@ -1149,7 +1157,7 @@
       <!-- Edible Oil -->
       <div class="commodity-card reveal d1">
         <div class="commodity-img">
-          <img src="public/servicesimage/oil2.jpg" alt="Edible oil" loading="lazy" />
+          <img src="assets/images/services/oil2.webp" alt="Edible oil" loading="lazy" />
           <div class="commodity-img-overlay"></div>
           <div class="commodity-badge">
             <span class="commodity-badge-dot" style="background:#4ecf96;"></span>
@@ -1193,7 +1201,7 @@
       <!-- Rice & Grains -->
       <div class="commodity-card reveal d2">
         <div class="commodity-img">
-          <img src="public/servicesimage/2149359449.jpg" alt="Rice and grains" loading="lazy" />
+          <img src="assets/images/services/2149359449.webp" alt="Rice and grains" loading="lazy" />
           <div class="commodity-img-overlay"></div>
           <div class="commodity-badge">
             <span class="commodity-badge-dot" style="background:#6ab0f5;"></span>
@@ -1332,13 +1340,13 @@
   <div class="wrap flow-wrap">
     <div class="flow-gallery reveal">
       <div class="fg-cell tall">
-        <img src="public/servicesimage/oil3.jpg" alt="Edible oil handling" loading="lazy" />
+        <img src="assets/images/services/oil3.webp" alt="Edible oil handling" loading="lazy" />
       </div>
       <div class="fg-cell offset">
-        <img src="public/servicesimage/sugar3.jpg" alt="Sugar quality" loading="lazy" />
+        <img src="assets/images/services/sugar3.webp" alt="Sugar quality" loading="lazy" />
       </div>
       <div class="fg-cell offset-up">
-        <img src="public/servicesimage/64441.jpg" alt="Bagged rice commodity" loading="lazy" />
+        <img src="assets/images/services/64441.webp" alt="Bagged rice commodity" loading="lazy" />
       </div>
     </div>
     <div>
@@ -1478,10 +1486,10 @@
         </div>
         <div class="why-img-stack">
           <div class="why-img-main">
-            <img src="public/servicesimage/oil1.jpg" alt="DB Group global operations" loading="lazy" />
+            <img src="assets/images/services/oil1.webp" alt="DB Group global operations" loading="lazy" />
           </div>
           <div class="why-img-float">
-            <img src="public/aboutimages/83377.jpg" alt="Commodity quality control" loading="lazy" />
+            <img src="assets/images/about/83377.webp" alt="Commodity quality control" loading="lazy" />
           </div>
         </div>
         <div class="why-stat-row" style="margin-top:28px;">
@@ -1499,7 +1507,7 @@
      10. FULL-BLEED IMAGE CTA
      ============================================================ -->
 <section class="image-cta">
-  <img src="public/servicesimage/sugar3.jpg" alt="Ready to trade with DB Group" loading="lazy" />
+  <img src="assets/images/services/sugar3.webp" alt="Ready to trade with DB Group" loading="lazy" />
   <div class="wrap">
     <div class="image-cta__inner reveal">
       <span class="eyebrow light">Start a Trade Conversation</span>
@@ -1521,7 +1529,7 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
-          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
         <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
         <div class="foot-soc">
@@ -1537,8 +1545,8 @@
           <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
           <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
           <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1552,7 +1560,7 @@
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
-      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
@@ -1630,6 +1638,28 @@ document.querySelectorAll('.bento-card').forEach(card => {
   document.addEventListener('click', function(e) {
     if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
   });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
 })();
 </script>
 </body>

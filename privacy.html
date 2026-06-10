@@ -1,0 +1,653 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
+<title>Privacy Policy | DB Group FZCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+<style>
+
+/* ============================================================
+   LEGAL PAGE — shared styles (same as terms.html)
+   ============================================================ */
+
+.legal-hero {
+  position: relative;
+  min-height: min(420px, 60vh);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: linear-gradient(rgba(8,18,34,.62), rgba(8,18,34,.62)), url('assets/images/legal/terms.webp') center/cover no-repeat;
+  isolation: isolate;
+}
+.legal-hero::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  background-image: radial-gradient(rgba(210,154,53,.10) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.legal-hero::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; z-index: 5;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+  background-size: 300%;
+  animation: gradShift 7s ease infinite;
+}
+@keyframes gradShift { 0%,100%{background-position:0%} 50%{background-position:100%} }
+
+.legal-hero__inner {
+  position: relative; z-index: 2;
+  padding-block: clamp(100px,12vw,150px) clamp(44px,6vw,64px);
+  margin-left: 0;
+  padding-left: clamp(72px, 13vw, 180px);
+}
+.legal-hero .breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.44); margin-bottom: 18px;
+}
+.legal-hero .breadcrumb a { color: rgba(255,255,255,.44); transition: color .2s; }
+.legal-hero .breadcrumb a:hover { color: var(--gold-soft); }
+.legal-hero .breadcrumb svg { width: 12px; height: 12px; opacity: .44; }
+.legal-hero h1 {
+  color: #fff;
+  font-size: clamp(30px, 4.5vw, 56px);
+  line-height: 1.06; font-weight: 900;
+  letter-spacing: -.03em; max-width: 18ch;
+  margin-top: 14px;
+}
+.legal-hero h1 em { font-style: normal; color: var(--gold); }
+.legal-hero .lede {
+  color: #a8bdd5; margin-top: 18px;
+  font-size: clamp(14px,1.4vw,17px);
+  max-width: 52ch; line-height: 1.72;
+}
+.legal-hero-meta {
+  display: flex; gap: 24px; flex-wrap: wrap; margin-top: 28px;
+}
+.legal-meta-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+.legal-meta-item svg { width: 14px; height: 14px; color: var(--gold); flex: none; }
+
+/* ============================================================
+   LEGAL BODY
+   ============================================================ */
+.legal-body {
+  background: var(--paper-2);
+  padding-block: clamp(48px,7vw,96px);
+}
+.legal-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: clamp(32px,5vw,72px);
+  align-items: start;
+}
+
+.legal-toc {
+  position: sticky; top: 96px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.toc-head {
+  padding: 18px 20px;
+  background: var(--navy);
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 8px;
+}
+.toc-head svg { width: 14px; height: 14px; }
+.toc-list { padding: 14px 8px; }
+.toc-list a {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: .06em;
+  color: var(--muted); text-decoration: none;
+  transition: background .2s, color .2s;
+}
+.toc-list a:hover { background: var(--paper-2); color: var(--primary); }
+.toc-list a.active { background: rgba(12,30,56,.07); color: var(--navy); font-weight: 700; }
+.toc-list a svg { width: 12px; height: 12px; flex: none; opacity: .4; }
+
+.legal-content {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: clamp(28px,4vw,52px);
+}
+
+.legal-section {
+  padding-block: clamp(28px,4vw,48px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.legal-section:first-child { padding-top: 0; }
+.legal-section:last-child { border-bottom: none; padding-bottom: 0; }
+
+.legal-section-num {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-d); margin-bottom: 8px;
+}
+.legal-section h2 {
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--navy); font-weight: 800;
+  letter-spacing: -.02em; margin-bottom: 18px;
+}
+.legal-section p {
+  color: var(--ink-soft); font-size: 15.5px;
+  line-height: 1.82; margin-bottom: 14px;
+}
+.legal-section p:last-child { margin-bottom: 0; }
+.legal-section ul, .legal-section ol {
+  padding-left: 0; list-style: none;
+  display: grid; gap: 10px;
+  margin-bottom: 14px;
+}
+.legal-section ul li, .legal-section ol li {
+  display: flex; gap: 10px; align-items: flex-start;
+  color: var(--ink-soft); font-size: 15.5px; line-height: 1.72;
+}
+.legal-section ul li::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex: none; margin-top: 8px;
+}
+.legal-section ol { counter-reset: li; }
+.legal-section ol li { counter-increment: li; }
+.legal-section ol li::before {
+  content: counter(li);
+  min-width: 22px; height: 22px; border-radius: 50%;
+  background: var(--navy); color: var(--gold-soft);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  display: grid; place-items: center; flex: none;
+  margin-top: 1px;
+}
+.legal-highlight {
+  background: rgba(210,154,53,.08);
+  border: 1px solid rgba(210,154,53,.25);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-block: 18px;
+  color: var(--ink); font-size: 15px; line-height: 1.72;
+}
+.legal-contact-box {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-top: 20px;
+}
+.legal-contact-box p {
+  color: #8fa5be; font-size: 14.5px; margin-bottom: 12px;
+}
+.legal-contact-box a {
+  color: var(--gold-soft); text-decoration: none;
+  font-family: var(--font-display); font-weight: 600;
+  transition: color .2s;
+}
+.legal-contact-box a:hover { color: var(--gold); }
+.legal-contact-box .lcb-row {
+  display: flex; align-items: center; gap: 10px;
+  padding-block: 9px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: 14.5px;
+}
+.legal-contact-box .lcb-row:last-child { border-bottom: none; padding-bottom: 0; }
+.legal-contact-box .lcb-row svg { width: 15px; height: 15px; color: var(--gold); flex: none; }
+
+/* Data table */
+.data-table {
+  width: 100%; border-collapse: collapse;
+  margin-block: 18px; font-size: 14.5px;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--line-soft);
+}
+.data-table th {
+  background: var(--navy); color: var(--gold-soft);
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 12px 16px; text-align: left;
+}
+.data-table td {
+  padding: 11px 16px; color: var(--ink-soft);
+  border-bottom: 1px solid var(--line-soft); line-height: 1.6;
+  vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: var(--paper-2); }
+
+@media (max-width: 900px) {
+  .legal-layout { grid-template-columns: 1fr; }
+  .legal-toc { position: static; }
+  .data-table { display: block; overflow-x: auto; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item tb-hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Office 605, Building 5, Dubai Airport Free Zone, UAE
+      </span>
+      <a class="tb-item" href="tel:+97142555144">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        +971 4 255 5144
+      </a>
+      <a class="tb-item tb-hide" href="mailto:info@dbgroupfzco.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        info@dbgroupfzco.com
+      </a>
+    </div>
+    <div class="tb-soc">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
+    </a>
+    <nav class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="icon-btn burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="legal-hero">
+  <div class="wrap legal-hero__inner">
+    <div class="reveal">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        <span>Privacy Policy</span>
+      </div>
+      <span class="eyebrow light">Legal</span>
+      <h1>Privacy <em>Policy</em></h1>
+      <p class="lede">We respect your privacy. This policy explains what personal data we collect, why we collect it, how it is used, and the rights you have over your information.</p>
+      <div class="legal-hero-meta">
+        <div class="legal-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Last updated: 1 June 2026
+        </div>
+        <div class="legal-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Compliant with UAE PDPL
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODY ============ -->
+<div class="legal-body">
+  <div class="wrap legal-layout">
+
+    <!-- Sticky TOC -->
+    <aside class="legal-toc reveal">
+      <div class="toc-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>
+        Contents
+      </div>
+      <nav class="toc-list" id="toc">
+        <a href="#overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>1. Overview</a>
+        <a href="#data-we-collect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>2. Data We Collect</a>
+        <a href="#how-we-use"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>3. How We Use Data</a>
+        <a href="#legal-basis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>4. Legal Basis</a>
+        <a href="#sharing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>5. Sharing Data</a>
+        <a href="#retention"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>6. Retention</a>
+        <a href="#security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>7. Security</a>
+        <a href="#cookies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>8. Cookies</a>
+        <a href="#your-rights"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>9. Your Rights</a>
+        <a href="#international"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>10. International</a>
+        <a href="#contact-privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>11. Contact Us</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <article class="legal-content reveal d1">
+
+      <div class="legal-section" id="overview">
+        <div class="legal-section-num">Section 01</div>
+        <h2>Overview &amp; Controller Identity</h2>
+        <p><strong>DB Group FZCO</strong> ("we", "us", "our") is the data controller responsible for your personal information. We are registered and operating within the Dubai Airport Free Zone (DAFZA), Dubai, United Arab Emirates.</p>
+        <p>This Privacy Policy applies to personal data collected through our website at <strong>dbgroupfzco.com</strong>, through our contact forms, and in the course of our business communications. It does not cover the practices of third-party websites that may be linked from our Site.</p>
+        <div class="legal-highlight">
+          We are committed to protecting your personal data in accordance with the UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data (PDPL) and applicable international data protection standards.
+        </div>
+      </div>
+
+      <div class="legal-section" id="data-we-collect">
+        <div class="legal-section-num">Section 02</div>
+        <h2>Personal Data We Collect</h2>
+        <p>We collect personal data in the following ways:</p>
+
+        <p><strong>Information you provide directly:</strong></p>
+        <ul>
+          <li>Name, company name, job title, and role in your organisation.</li>
+          <li>Email address, telephone number, and country or region.</li>
+          <li>Trade requirements: commodity type, estimated volume, destination port, and enquiry type submitted through our contact form.</li>
+          <li>Any other information you choose to include in messages sent to us.</li>
+        </ul>
+
+        <p><strong>Information collected automatically:</strong></p>
+        <ul>
+          <li>Technical data including your IP address, browser type and version, operating system, and referring URL.</li>
+          <li>Usage data such as pages visited, time spent on pages, and links clicked.</li>
+          <li>Cookie identifiers and session data (see Section 8 for details).</li>
+        </ul>
+
+        <p>We do not knowingly collect personal data from individuals under the age of 18. If you believe we have inadvertently collected such data, please contact us immediately.</p>
+      </div>
+
+      <div class="legal-section" id="how-we-use">
+        <div class="legal-section-num">Section 03</div>
+        <h2>How We Use Your Data</h2>
+        <p>We use personal data collected from you for the following purposes:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Purpose</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Respond to enquiries</strong></td>
+              <td>To process and respond to trade enquiries, quote requests, or partnership proposals submitted via our contact form or email.</td>
+            </tr>
+            <tr>
+              <td><strong>Business communications</strong></td>
+              <td>To send relevant trade information, commodity updates, or follow-up communications where you have expressed interest.</td>
+            </tr>
+            <tr>
+              <td><strong>Website improvements</strong></td>
+              <td>To analyse how visitors use our Site so we can improve content, performance, and user experience.</td>
+            </tr>
+            <tr>
+              <td><strong>Legal obligations</strong></td>
+              <td>To comply with applicable laws, regulations, and lawful requests from regulatory or government authorities.</td>
+            </tr>
+            <tr>
+              <td><strong>Fraud prevention</strong></td>
+              <td>To detect, investigate, and prevent fraudulent activity or misuse of our services or Site.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>We will not use your data for purposes incompatible with those described above without first obtaining your consent or establishing another lawful basis.</p>
+      </div>
+
+      <div class="legal-section" id="legal-basis">
+        <div class="legal-section-num">Section 04</div>
+        <h2>Legal Basis for Processing</h2>
+        <p>We process your personal data on the following legal grounds:</p>
+        <ul>
+          <li><strong>Consent:</strong> When you submit a contact form or enquiry, you provide voluntary consent for us to process your data to respond to your request.</li>
+          <li><strong>Legitimate interests:</strong> We process technical and usage data to improve our website and communications, where these interests are not overridden by your data protection rights.</li>
+          <li><strong>Legal obligation:</strong> Where processing is necessary to comply with UAE law, DAFZA regulations, or lawful government requests.</li>
+          <li><strong>Contractual necessity:</strong> Where processing is required to perform or prepare for a contract with you or your organisation.</li>
+        </ul>
+        <p>You may withdraw consent at any time by contacting us at <a href="mailto:info@dbgroupfzco.com" style="color:var(--primary); font-weight:600;">info@dbgroupfzco.com</a>. Withdrawal of consent does not affect the lawfulness of processing prior to withdrawal.</p>
+      </div>
+
+      <div class="legal-section" id="sharing">
+        <div class="legal-section-num">Section 05</div>
+        <h2>Sharing Your Data</h2>
+        <p>We do not sell, rent, or trade your personal data to third parties. We may share your data in the following limited circumstances:</p>
+        <ul>
+          <li><strong>Service providers:</strong> Trusted third-party companies that assist us in operating the Site or conducting our business (e.g., hosting providers, email delivery services, analytics platforms). These parties are contractually obligated to keep your data confidential and use it only for the purposes we specify.</li>
+          <li><strong>Professional advisers:</strong> Lawyers, accountants, or auditors who provide professional services to us, subject to duties of confidentiality.</li>
+          <li><strong>Regulatory authorities:</strong> DAFZA, UAE federal authorities, or other competent bodies where required by law or regulation.</li>
+          <li><strong>Business transfers:</strong> In connection with a merger, acquisition, or sale of assets, personal data may be transferred to the acquiring entity, subject to the same privacy protections.</li>
+        </ul>
+        <div class="legal-highlight">
+          We require all third parties receiving your data to implement appropriate technical and organisational security measures and to treat it in accordance with applicable data protection law.
+        </div>
+      </div>
+
+      <div class="legal-section" id="retention">
+        <div class="legal-section-num">Section 06</div>
+        <h2>Data Retention</h2>
+        <p>We retain your personal data only for as long as necessary to fulfil the purposes for which it was collected, including satisfying any legal, accounting, or reporting obligations.</p>
+        <ul>
+          <li>Enquiry and contact form data is retained for up to <strong>3 years</strong> from the date of submission, or longer if required to manage an ongoing business relationship.</li>
+          <li>Technical and usage data collected via cookies is retained in accordance with our Cookie Policy (see Section 8).</li>
+          <li>Financial and transaction records are retained in compliance with UAE commercial law requirements (typically 5–10 years).</li>
+        </ul>
+        <p>When your personal data is no longer required, we will securely delete or anonymise it.</p>
+      </div>
+
+      <div class="legal-section" id="security">
+        <div class="legal-section-num">Section 07</div>
+        <h2>Data Security</h2>
+        <p>We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, accidental loss, destruction, or disclosure. These measures include:</p>
+        <ul>
+          <li>Secure HTTPS encryption for all data transmitted through our website.</li>
+          <li>Access controls limiting internal access to personal data on a need-to-know basis.</li>
+          <li>Regular review of our information security policies and practices.</li>
+          <li>Secure disposal of data that is no longer required.</li>
+        </ul>
+        <p>While we take data security seriously, no method of transmission over the internet or method of electronic storage is 100% secure. If you become aware of any suspected data breach or security incident involving our Site, please notify us immediately at <a href="mailto:info@dbgroupfzco.com" style="color:var(--primary); font-weight:600;">info@dbgroupfzco.com</a>.</p>
+      </div>
+
+      <div class="legal-section" id="cookies">
+        <div class="legal-section-num">Section 08</div>
+        <h2>Cookies &amp; Tracking Technologies</h2>
+        <p>Our website uses cookies and similar technologies to enhance your browsing experience and help us understand how the Site is used. Cookies are small text files placed on your device.</p>
+        <p>We use the following types of cookies:</p>
+        <ul>
+          <li><strong>Strictly necessary cookies:</strong> Required for the basic functioning of the Site, such as session management and security. These cannot be disabled.</li>
+          <li><strong>Analytics cookies:</strong> Help us understand how visitors interact with our Site (e.g., pages visited, time on site). We use this data to improve content and performance. These cookies are anonymised where possible.</li>
+          <li><strong>Preference cookies:</strong> Remember your settings and preferences to improve your experience on return visits.</li>
+        </ul>
+        <p>You can control cookies through your browser settings. Please note that disabling certain cookies may affect the functionality of the Site. Most browsers allow you to refuse or accept cookies, delete existing cookies, and set your browser to notify you when a cookie is set.</p>
+        <p>We do not use advertising or retargeting cookies on this Site.</p>
+      </div>
+
+      <div class="legal-section" id="your-rights">
+        <div class="legal-section-num">Section 09</div>
+        <h2>Your Data Protection Rights</h2>
+        <p>Under the UAE PDPL and applicable data protection principles, you have the following rights regarding your personal data:</p>
+        <ul>
+          <li><strong>Right of access:</strong> Request a copy of the personal data we hold about you.</li>
+          <li><strong>Right to rectification:</strong> Request correction of inaccurate or incomplete data.</li>
+          <li><strong>Right to erasure:</strong> Request deletion of your personal data, subject to applicable legal obligations that require us to retain it.</li>
+          <li><strong>Right to restrict processing:</strong> Request that we limit the use of your personal data in certain circumstances.</li>
+          <li><strong>Right to data portability:</strong> Receive your data in a structured, commonly used format and transmit it to another controller, where technically feasible.</li>
+          <li><strong>Right to object:</strong> Object to our processing of your data based on legitimate interests.</li>
+          <li><strong>Right to withdraw consent:</strong> Withdraw your consent to data processing at any time, where consent is the legal basis for processing.</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us using the details in Section 11. We will respond within 30 days of receiving your request. We may need to verify your identity before fulfilling your request.</p>
+        <div class="legal-highlight">
+          If you believe your data protection rights have been violated, you have the right to lodge a complaint with the UAE Data Office or the relevant competent authority.
+        </div>
+      </div>
+
+      <div class="legal-section" id="international">
+        <div class="legal-section-num">Section 10</div>
+        <h2>International Data Transfers</h2>
+        <p>DB Group FZCO operates within the UAE and processes data primarily within UAE infrastructure. Where data is transferred to, or accessed by, parties outside the UAE (for example, a cloud service provider with servers in another jurisdiction), we take steps to ensure an adequate level of protection for your data, including:</p>
+        <ul>
+          <li>Engaging only with service providers that maintain appropriate data protection standards.</li>
+          <li>Implementing contractual clauses that obligate recipients to protect data at a standard equivalent to UAE requirements.</li>
+        </ul>
+        <p>We do not transfer your personal data to countries that lack adequate data protection frameworks without first implementing appropriate safeguards.</p>
+      </div>
+
+      <div class="legal-section" id="contact-privacy">
+        <div class="legal-section-num">Section 11</div>
+        <h2>Contact Our Privacy Team</h2>
+        <p>For any questions about this Privacy Policy, to exercise your rights, or to raise a concern about how we handle your personal data, please contact us:</p>
+        <div class="legal-contact-box">
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="color:#8fa5be;">DB Group FZCO, Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</span>
+          </div>
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            <a href="mailto:info@dbgroupfzco.com">info@dbgroupfzco.com</a>
+          </div>
+          <div class="lcb-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+            <a href="tel:+97142555144">+971 4 255 5144</a>
+          </div>
+        </div>
+        <p style="margin-top:18px;">Also see our <a href="terms.html" style="color:var(--primary); font-weight:600;">Terms of Use</a> for the conditions governing your use of the DB Group FZCO website.</p>
+      </div>
+
+    </article>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+        </a>
+        <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
+        <div class="foot-soc">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21h-4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.75-1.6 1.5v1.8H16l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2l7.7-8.8L1.5 2h6.8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
+          <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
+          <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul class="foot-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> +971 4 255 5144</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@dbgroupfzco.com</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Office 605, Building 5, Dubai Airport Free Zone (DAFZA), Dubai, UAE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog = document.createElement('div');
+prog.id = 'scroll-prog';
+document.body.prepend(prog);
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
+
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => { hdr.classList.toggle('scrolled', scrollY > 40); }, { passive: true });
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+const sections = document.querySelectorAll('.legal-section[id]');
+const tocLinks = document.querySelectorAll('.toc-list a');
+const tocObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector('.toc-list a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => tocObs.observe(s));
+
+(function() {
+  var burger = document.querySelector('.burger');
+  var menu = document.querySelector('.menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('menu--open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/images/favicon.ico" />
 <title>About Us | DB Group FZCO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="assets/css/styles.css" />
 <style>
 
 /* ============================================================
@@ -532,7 +534,7 @@
 .why-section {
   background:
     linear-gradient(rgba(8,18,34,.86), rgba(8,18,34,.86)),
-    url('public/aboutimages/2151252086.jpg') center / cover no-repeat;
+    url('assets/images/about/2151252086.webp') center / cover no-repeat;
   background-attachment: fixed;
 }
 .why-layout {
@@ -585,9 +587,11 @@
 
 @media (max-width: 900px) {
   .why-layout { grid-template-columns: 1fr; }
-  .why-visual { margin-top: 40px; }
-  .why-img-float { width: 38%; bottom: -14px; left: -10px; }
-  .why-cert-float { top: 12px; right: -8px; }
+  .why-visual { margin-top: 40px; overflow: hidden; }
+  .why-img-float { width: 38%; bottom: -14px; left: 0; }
+  .why-cert-float { top: 12px; right: 0; }
+  .why-img-main img { max-height: 420px; object-fit: cover; }
+  .why-section { background-attachment: scroll; }
 }
 
 /* ============================================================
@@ -633,16 +637,15 @@
 .tl-card h4 { font-size: 18px; }
 .tl-card p { color: var(--muted); font-size: 14.5px; margin-top: 8px; line-height: 1.6; }
 
-/* Left / right placement */
-.tl-item:nth-child(odd)  .tl-right { visibility: hidden; pointer-events: none; }
-.tl-item:nth-child(even) .tl-left  { visibility: hidden; pointer-events: none; }
+/* Left / right placement — hide the spacer cards */
+.tl-card[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
 
 @media (max-width: 700px) {
   .timeline::before { left: 18px; transform: none; }
-  .tl-item { grid-template-columns: auto 1fr; gap: 18px; }
-  .tl-item:nth-child(odd)  .tl-right, .tl-item:nth-child(even) .tl-left { display: none; }
-  .tl-item:nth-child(even) .tl-right { visibility: visible; }
-  .tl-item:nth-child(even) .tl-dot { order: -1; }
+  .tl-item { display: flex; align-items: flex-start; gap: 16px; }
+  .tl-card[aria-hidden="true"] { display: none !important; }
+  .tl-dot { order: -1; flex-shrink: 0; margin-top: 26px; margin-left: 9px; }
+  .tl-card:not([aria-hidden]) { flex: 1; visibility: visible !important; }
 }
 
 /* ============================================================
@@ -697,6 +700,7 @@
   background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.4px);
   background-size: 22px 22px;
 }
+.about-cta .wrap { padding-left: clamp(58px, 12vw, 150px); margin-left: 0; }
 .about-cta__inner { padding-block: clamp(72px,9vw,110px); max-width: 680px; }
 .about-cta h2 { color: #fff; font-size: clamp(36px,5.5vw,72px); line-height: .95; letter-spacing: -.03em; }
 .about-cta h2 em { font-style: normal; color: var(--gold); }
@@ -757,7 +761,7 @@
 <header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="index.html">
-      <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo" />
+      <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo" />
     </a>
     <nav class="menu">
       <a href="index.html">Home</a>
@@ -767,9 +771,6 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-right">
-      <button class="icon-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
       <a href="contact.html" class="btn btn-primary">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -785,7 +786,7 @@
      ============================================================ -->
 <section class="about-hero">
   <div class="about-hero-bg">
-    <img src="public/aboutimages/158302.jpg" alt="" />
+    <img src="assets/images/about/158302.webp" alt="" />
   </div>
   <div class="about-hero-shade"></div>
   <div class="about-hero-dots"></div>
@@ -918,10 +919,10 @@
         Years of Trade
       </div>
       <div class="story-img-main">
-        <img src="public/aboutimages/2151252086.jpg" alt="DB Group global operations" loading="lazy" />
+        <img src="assets/images/about/2151252086.webp" alt="DB Group global operations" loading="lazy" />
       </div>
       <div class="story-img-float">
-        <img src="public/aboutimages/74772.jpg" alt="Commodity handling" loading="lazy" />
+        <img src="assets/images/about/74772.webp" alt="Commodity handling" loading="lazy" />
       </div>
     </div>
 
@@ -1003,7 +1004,7 @@
     </div>
     <div class="values-grid">
       <div class="val-card reveal">
-        <img src="public/servicesimage/2151251991.jpg" alt="Mission" loading="lazy" />
+        <img src="assets/images/services/2151251991.webp" alt="Mission" loading="lazy" />
         <div class="val-body">
           <div class="val-kicker">Mission</div>
           <div class="val-icon-wrap">
@@ -1015,7 +1016,7 @@
         </div>
       </div>
       <div class="val-card reveal d1">
-        <img src="public/aboutimages/2151711706.jpg" alt="Vision" loading="lazy" />
+        <img src="assets/images/about/2151711706.webp" alt="Vision" loading="lazy" />
         <div class="val-body">
           <div class="val-kicker">Vision</div>
           <div class="val-icon-wrap">
@@ -1027,7 +1028,7 @@
         </div>
       </div>
       <div class="val-card reveal d2">
-        <img src="public/servicesimage/13758.jpg" alt="Values" loading="lazy" />
+        <img src="assets/images/services/13758.webp" alt="Values" loading="lazy" />
         <div class="val-body">
           <div class="val-kicker">Values</div>
           <div class="val-icon-wrap">
@@ -1086,23 +1087,23 @@
     </div>
     <div class="gallery-mosaic reveal d1">
       <div class="gm-cell">
-        <img src="public/aboutimages/74772.jpg" alt="Commodity operations" loading="lazy" />
+        <img src="assets/images/about/74772.webp" alt="Commodity operations" loading="lazy" />
         <span class="gm-cell-caption">Global Sourcing</span>
       </div>
       <div class="gm-cell">
-        <img src="public/aboutimages/83377.jpg" alt="Quality control" loading="lazy" />
+        <img src="assets/images/about/83377.webp" alt="Quality control" loading="lazy" />
         <span class="gm-cell-caption">Quality Control</span>
       </div>
       <div class="gm-cell">
-        <img src="public/aboutimages/2151711706.jpg" alt="Logistics and shipping" loading="lazy" />
+        <img src="assets/images/about/2151711706.webp" alt="Logistics and shipping" loading="lazy" />
         <span class="gm-cell-caption">Logistics</span>
       </div>
       <div class="gm-cell">
-        <img src="public/aboutimages/158302.jpg" alt="Inspection process" loading="lazy" />
+        <img src="assets/images/about/158302.webp" alt="Inspection process" loading="lazy" />
         <span class="gm-cell-caption">Inspection</span>
       </div>
       <div class="gm-cell">
-        <img src="public/aboutimages/2151252086.jpg" alt="Trade operations" loading="lazy" />
+        <img src="assets/images/about/2151252086.webp" alt="Trade operations" loading="lazy" />
         <span class="gm-cell-caption">Trade Operations</span>
       </div>
     </div>
@@ -1231,10 +1232,10 @@
         <span style="font-size:11px; font-weight:600; opacity:.7;">Certified</span>
       </div>
       <div class="why-img-main">
-        <img src="public/aboutimages/2151711706.jpg" alt="DB Group global commodity operations" loading="lazy" />
+        <img src="assets/images/about/2151711706.webp" alt="DB Group global commodity operations" loading="lazy" />
       </div>
       <div class="why-img-float">
-        <img src="public/aboutimages/83377.jpg" alt="Quality and compliance" loading="lazy" />
+        <img src="assets/images/about/83377.webp" alt="Quality and compliance" loading="lazy" />
       </div>
     </div>
   </div>
@@ -1315,31 +1316,31 @@
   </div>
   <div class="logo-track-wrap">
     <div class="logo-track" id="logoTrack">
-      <div class="logo-item"><img src="public/supplier/logo1.png" alt="Supplier 1" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo2.png" alt="Supplier 2" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo3.png" alt="Supplier 3" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo4.png" alt="Supplier 4" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo5.png" alt="Supplier 5" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo6.png" alt="Supplier 6" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo1.png" alt="Buyer 1" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo2.png" alt="Buyer 2" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo3.png" alt="Buyer 3" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo4.png" alt="Buyer 4" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo5.png" alt="Buyer 5" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo6.png" alt="Buyer 6" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo1.png" alt="Supplier 1" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo2.png" alt="Supplier 2" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo3.png" alt="Supplier 3" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo4.png" alt="Supplier 4" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo5.png" alt="Supplier 5" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo6.png" alt="Supplier 6" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo1.png" alt="Buyer 1" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo2.png" alt="Buyer 2" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo3.png" alt="Buyer 3" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo4.png" alt="Buyer 4" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo5.png" alt="Buyer 5" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo6.png" alt="Buyer 6" loading="lazy" /></div>
       <!-- Duplicate for seamless loop -->
-      <div class="logo-item"><img src="public/supplier/logo1.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo2.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo3.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo4.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo5.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/supplier/logo6.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo1.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo2.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo3.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo4.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo5.png" alt="" loading="lazy" /></div>
-      <div class="logo-item"><img src="public/buyer/logo6.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo1.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo2.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo3.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo4.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo5.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/suppliers/logo6.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo1.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo2.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo3.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo4.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo5.png" alt="" loading="lazy" /></div>
+      <div class="logo-item"><img src="assets/images/partners/buyers/logo6.png" alt="" loading="lazy" /></div>
     </div>
   </div>
 </section>
@@ -1349,14 +1350,14 @@
      12. FULL-BLEED IMAGE CTA
      ============================================================ -->
 <section class="about-cta">
-  <img src="public/8675.jpg" alt="Start trading with DB Group" loading="lazy" />
+  <img src="assets/images/8675.webp" alt="Start trading with DB Group" loading="lazy" />
   <div class="wrap">
     <div class="about-cta__inner reveal">
       <span class="eyebrow light">Start a Conversation</span>
       <h2>Ready to <em>Simplify</em> Your Commodity Supply Chain?</h2>
       <p>Tell us what you need — commodity, volume, destination and timeline. Our team will build a practical, compliant and cost-effective route from origin to your door.</p>
       <div class="about-cta__actions">
-        <a href="contact.html" class="btn btn-gold">Get a Quote <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="contact.html" class="btn btn-gold">Contact Us <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a href="services.html" class="btn btn-light">Explore Services</a>
       </div>
     </div>
@@ -1371,7 +1372,7 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html">
-          <img src="public/logo.png" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
+          <img src="assets/images/logo.webp" alt="DB Group FZCO" class="brand-logo brand-logo--footer" />
         </a>
         <p class="foot-about">DB Group FZCO is a Dubai-based commodity trading company specialising in the sourcing, logistics and distribution of essential food and agri-commodities: sugar, rice, edible oil, wheat and more.</p>
         <div class="foot-soc">
@@ -1387,8 +1388,8 @@
           <li><a href="about.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> About</a></li>
           <li><a href="services.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Services</a></li>
           <li><a href="blogs.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Blogs</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
-          <li><a href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
+          <li><a href="terms.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Terms &amp; Conditions</a></li>
+          <li><a href="privacy.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg> Privacy Policy</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1402,7 +1403,7 @@
     </div>
     <div class="foot-bot">
       <span>&copy; 2026 DB Group FZCO. All rights reserved.</span>
-      <span><a href="#">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="#">Privacy Policy</a></span>
+      <span><a href="terms.html">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
@@ -1467,6 +1468,28 @@ if (heroBg) {
   document.addEventListener('click', function(e) {
     if (!menu.contains(e.target) && !burger.contains(e.target)) { menu.classList.remove('menu--open'); burger.setAttribute('aria-expanded', 'false'); }
   });
+})();
+</script>
+
+<button id="scroll-fab" aria-label="Scroll">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+    <path id="scroll-fab-path" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+<style>
+#scroll-fab{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#0C1E38;border:2px solid #D29A35;color:#D29A35;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;transition:background .2s,color .2s;}
+#scroll-fab:hover{background:#D29A35;color:#0C1E38;}
+</style>
+<script>
+(function(){
+  var btn=document.getElementById('scroll-fab');
+  var path=document.getElementById('scroll-fab-path');
+  var UP='M5 15l7-7 7 7', DOWN='M19 9l-7 7-7-7';
+  function pct(){var t=document.documentElement.scrollHeight-window.innerHeight;return t>0?window.scrollY/t*100:0;}
+  function update(){path.setAttribute('d',pct()<50?DOWN:UP);}
+  btn.addEventListener('click',function(){window.scrollTo({top:pct()<50?document.documentElement.scrollHeight:0,behavior:'smooth'});});
+  window.addEventListener('scroll',update,{passive:true});
+  update();
 })();
 </script>
 </body>
